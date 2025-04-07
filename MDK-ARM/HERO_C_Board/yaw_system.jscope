@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<JScopeProject>
+    <FileVersion major="1" minor="1" />
+    <Project>
+        <Configuration>
+            <JLink>
+                <Options Connection="1" IsRTTSession="0" IsRTTWithTimeStamp="0" SamplingPeriod="100" SerialNo="0" JTAG_IRPre="0" JTAG_DRPre="0" IP="" TargetDevice="STM32F407IG" TargetInterface="SWD" InterfaceSpeed="4000" />
+            </JLink>
+            <ElfFile Name="D:\32_\HERO_C_Board\MDK-ARM\HERO_C_Board\HERO_C_Board.axf" />
+            <Scope>
+                <Options TimeResolutionUs="1000000" />
+            </Scope>
+            <Trigger>
+                <Options Level="0" Symbol="data[0]" On="0" Auto="0" Rise="0" Fall="0" />
+            </Trigger>
+        </Configuration>
+        <Windows>
+            <Graph Show="1" />
+            <Watch Show="1" />
+        </Windows>
+        <SelectedSymbols>
+            <Symbol>
+                <Options Name="data[0]" Address="0x2001E298" Type="int" TypeID="12" Size="4" GraphColorRed="255" GraphColorGreen="0" GraphColorBlue="0" YMinSampled="-999" YMaxSampled="999" YAvgSampled="-0.12407" Offset="4" ShowInGraph="1" YOffset="0" IsAutoConfig="0" YResolution="500" MaxValue="2147483647" File="D:\32_\HERO_C_Board\MDK-ARM/../application/Gimbal\Gimbal.c" DrawStyle="0" NameWithParents=".uartsend_buff.data[0]" />
+            </Symbol>
+            <Symbol>
+                <Options Name="data[1]" Address="0x2001E29C" Type="int" TypeID="12" Size="4" GraphColorRed="0" GraphColorGreen="0" GraphColorBlue="255" YMinSampled="-1700" YMaxSampled="722" YAvgSampled="-1.64533" Offset="8" ShowInGraph="1" YOffset="0" IsAutoConfig="0" YResolution="1000" MaxValue="2147483647" File="D:\32_\HERO_C_Board\MDK-ARM/../application/Gimbal\Gimbal.c" DrawStyle="0" NameWithParents=".uartsend_buff.data[1]" />
+            </Symbol>
+        </SelectedSymbols>
+    </Project>
+</JScopeProject>
