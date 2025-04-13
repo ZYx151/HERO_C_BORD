@@ -60,7 +60,7 @@ static  Gimbal_action_t        Communication_Action_Tx;
 Aim_Action_e Aim_Action = AIM_STOP;   // 手动自瞄开关
 extern Aim_Data_t Aim_Ref;
 /* 舵机云台    倍镜       图传*/
-ServoInstance *LES_Servo, *Image_Servo;
+//ServoInstance *LES_Servo, *Image_Servo;
 void Gimbal_Cmd_Init()
 {	
 	// 定义发布者订阅者
@@ -95,31 +95,34 @@ void Gimbal_Cmd_Init()
 	ins     = INS_Init();
 
 	/** 初始化舵机 **/
-	Servo_Init_Config_s les_config = {
-		.servo_type = PWM_Servo,
-	    .pwm_init_config = {
-		    .htim = &htim1,
-			.channel = TIM_CHANNEL_1,
-			.period = 0.02f,
-			.dutyratio = 0.0f,
-		},
-	}, 
-	image_config = {
-		.servo_type = PWM_Servo,
-	    .pwm_init_config = {
-		    .htim = &htim1,
-			.channel = TIM_CHANNEL_2,
-			.period = 0.02f,
-			.dutyratio = 0.0f,
-		},
-	};
-	LES_Servo = ServoInit(&les_config);
-	Image_Servo = ServoInit(&image_config);
+//	Servo_Init_Config_s les_config = {
+//		.servo_type = PWM_Servo,
+//	    .pwm_init_config = {
+//		    .htim = &htim1,
+//			.channel = TIM_CHANNEL_1,
+//			.period = 0.02f,
+//			.dutyratio = 0.50f,
+//		},
+//	}, 
+//	image_config = {
+//		.servo_type = PWM_Servo,
+//	    .pwm_init_config = {
+//		    .htim = &htim1,
+//			.channel = TIM_CHANNEL_2,
+//			.period = 0.02f,
+//			.dutyratio = 0.50f,
+//		},
+//	};
+////	LES_Servo = ServoInit(&les_config);
+//	Image_Servo = ServoInit(&image_config);
 }
 
+
+/**    **/
 void Gimbal_board_CMD_Update()
 {
-    static uint16_t tim; // 用于云台归中	
+    
+	static uint16_t tim; // 用于云台归中	
     if (can_cmd_comm->Dog->state != Dog_Online) {
 		 gimbal_control.rotate_feedforward = 0;  // 底盘小陀螺前馈
 		 shoot_control.bullet_speed_fdb = 0;     // 实时弹速
@@ -202,7 +205,8 @@ void Gimbal_board_CMD_Update()
 		switch (rc_data->RemoteMode) {
 			case REMOTE_INPUT:        	// 遥控器控制模式
 				remote_mode_update(); send_data.Close_flag = 0; send_data.soft_reset_flag = 0; 
-			    ServoSetAngle(LES_Servo, 0.5f);ServoSetAngle(Image_Servo, 0.5f); break;
+//			    ServoSetAngle(LES_Servo, 0.5f);ServoSetAngle(Image_Servo, 0.5f);
+			break;
 			case KEY_MOUSE_INPUT:
 				mouse_key_mode_update(); send_data.Close_flag = 0; send_data.soft_reset_flag = 0; break;
 			case STOP :    // 急停  todo : 修改为期望速度为零
@@ -437,7 +441,7 @@ void remote_mode_update()
 
 /**  键鼠控制  **/
 float mouse_key_shift = 1.0f;
-int16_t SHOOT_OFFSET = 0;
+int16_t SHOOT_OFFSET = 0, PWM_LES = 1225, PWM_IMAGE = 1000;
 void mouse_key_mode_update()
 {
 	static Chassis_mode_e last_chassis;
@@ -529,10 +533,12 @@ void mouse_key_mode_update()
 	if(shoot->bullet_mode != BULLET_CONTINUE)
 	  switch (rc_data->key_count[KEY_PRESS][Key_G] % 2) {
 		  case 0 :
+			  __HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_1, 1100);  //400  关    600开
 			  shoot->bullet_mode = BULLET_SINGLE; // 单发
 			  break;
 		  case 1:
-			  shoot->bullet_mode = BULLET_DOUBLE; // 双发
+			  shoot->bullet_mode = BULLET_SINGLE; // 单发
+			  __HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_1, PWM_LES);  //400  关    600开
 			  break;
 		  default:
 			  shoot->bullet_mode = BULLET_SINGLE;

@@ -31,8 +31,6 @@ void Task_Init()
     taskENTER_CRITICAL(); // 进入临界区
 	 /* 外设初始化 */
 	DWT_Init(168);
-    HAL_TIM_Base_Start(&htim5);
-    HAL_TIM_Base_Start(&htim1);
 
 /* 创建任务 */
 #ifdef WT931_IMU
@@ -58,6 +56,18 @@ void Task_Init()
 	xTaskCreate((TaskFunction_t)Task_Referee,           "Task_Referee",          128*4, NULL, 7, &Task_Referee_Handle);
 #endif
 	xTaskCreate((TaskFunction_t)Task_Protect,           "Task_Protect",          128*2, NULL, 6, &Task_Protect_Handle);
+
+    HAL_TIM_Base_Start(&htim5);
+    HAL_TIM_Base_Start(&htim1);
+    HAL_TIM_PWM_Start(&htim1,TIM_CHANNEL_1);
+    __HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_1, 900);  //400  关    600开
+    HAL_TIM_PWM_Start(&htim1,TIM_CHANNEL_2);
+    __HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_2, 1000);  //400  关    600开
+
+//    HAL_TIM_PWM_Start(&htim8,TIM_CHANNEL_1);
+//    __HAL_TIM_SET_COMPARE(&htim8,TIM_CHANNEL_1, 5000);  //400  关    600开
+//    HAL_TIM_PWM_Start(&htim8,TIM_CHANNEL_2);
+//    __HAL_TIM_SET_COMPARE(&htim8,TIM_CHANNEL_2, 2000);  //400  关    600开
 
     taskEXIT_CRITICAL(); // 退出临界区
     vTaskDelete(NULL);   // 删除开始空闲任务

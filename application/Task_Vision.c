@@ -386,7 +386,6 @@ static float k4_u, k4_p;
 
 float Bullet_Offset(float horizontal, float vertical, float bullet_speed, float k)
 {
-//    float temp_vertical = vertical;
     float pitch_new = atan2(vertical, horizontal);
 	float error, temp_vertical;
 
@@ -430,7 +429,7 @@ float Bullet_Offset(float horizontal, float vertical, float bullet_speed, float 
 		// 误差更新
 		error = vertical - y;        
         // 误差判断
-        if(fabs(error) < 0.01f)
+        if(fabs(error) < 0.001f)
 	    {
             pitch_new = atan2(temp_vertical , horizontal);
             break;

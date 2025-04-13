@@ -42,8 +42,8 @@ static PID Shoot_Speed_PID[3] = {{.Kp = 15, .Ki = 0.0f, .Kd = 0.0f, .interlimit 
 						  {.Kp = 15, .Ki = 0.0f, .Kd = 0.0f, .interlimit = 3000, .outlimit = 16000, .DeadBand = 0.50f, .inter_threLow = 500, .inter_threUp = 1000}};                 // 摩擦轮上
 
 							  
-static PID_Smis Pluck_Place_PIDS = {.Kp = 8.0f, .Ki = 0, .Kd = 0.4f, .interlimit = 3000, .outlimit = 16000, .DeadBand = 0.0f, .inter_threLow = 500, .inter_threUp = 1000};         //拨弹盘单发位置环
-static PID Pluck_Speed_PID = {.Kp = 6.50f, .Ki = 0.0f, .Kd = 0.0f, .interlimit = 4000, .outlimit = 15000, .DeadBand = 0.0f, .inter_threLow = 20, .inter_threUp = 5000};                   //拨弹盘单发速度环
+static PID_Smis Pluck_Place_PIDS = {.Kp = 6.0f, .Ki = 0, .Kd = 0.4f, .interlimit = 3000, .outlimit = 16000, .DeadBand = 0.0f, .inter_threLow = 500, .inter_threUp = 1000};         //拨弹盘单发位置环
+static PID Pluck_Speed_PID = {.Kp = 20.0f, .Ki = 0.0f, .Kd = 0.0f, .interlimit = 4000, .outlimit = 15000, .DeadBand = 0.0f, .inter_threLow = 20, .inter_threUp = 5000};                   //拨弹盘单发速度环
 static PID Pluck_Continue_PID = {.Kp = 10, .Ki = 0, .Kd = 0, .interlimit = 3000, .outlimit = 15000, .DeadBand = 5.0f, .inter_threLow = 500, .inter_threUp = 1000};               //拨弹盘连发模式
 
 void Shoot_Init()
@@ -330,7 +330,7 @@ static void Shoot_load_Update()
 			  else if ( shoot_ctrl_cmd->bullet_mode != BULLET_CONTINUE) 
 			  {
 				 DJIMotorOuterLoop(loader, ANGLE_LOOP);
-				 RAMP_Angle_Target = RAMP_float(Angle_Target, RAMP_Angle_Target, 3);
+				 RAMP_Angle_Target = RAMP_float(Angle_Target, RAMP_Angle_Target, 22);
 				 DJIMotorSetRef(loader, RAMP_Angle_Target);
     		  }
 	      }

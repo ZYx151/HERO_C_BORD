@@ -16,7 +16,7 @@
 #define USE_SUPER_CAPACITOR 1
 // 缓冲功率置信度
 #define POWER_PD_KP 20.0f
-#define POWER_PD_KD 0.5f
+#define POWER_PD_KD 0.55f
 #define clamp(x, min, max) ((x < min) ? min : (x > max) ? max : x)
 
 static RM_Status  isInitialized; // 初始化标志位 检测初始化成功
@@ -45,8 +45,8 @@ const static float CAP_BASE_BUFFSET     = 40.0f;
 const float REFEREE_FULL_BUFFSET        = 60.0f;  // 裁判系统最大缓冲能量
 const float REFEREE_BASE_BUFFSET        = 45.0f;  // 功率限制使用的基础缓冲能量  作为PID的期望使用缓冲功率
 /* 功率重分配阈值(期望速度误差) */
-const float error_powerDistribution_set = 20.0f;  // 功率分配在限制功率基础上增加
-const float prop_powerDistribution_set  = 15.0f;  // 功率分配在限制功率基础上增加
+const float error_powerDistribution_set = 30.0f;  // 功率分配在限制功率基础上增加
+const float prop_powerDistribution_set  = 5.0f;  // 功率分配在限制功率基础上增加
 
 /* 尝试超级电容动态功率参数 */
 const float CAP_OFFLINE_ENERGY_RUNOUT_POWER_THRESHOLD = 43.0f;  // 为连接裁判系统时测试用 使能能量最低阈值
@@ -166,7 +166,6 @@ float getLatestFeedbackJudgePowerLimit(Chassis_Manager_s *manager) { return mana
  *
  **/
 float newCmdPower_sum;
-// newpower_1, newpower_2, newpower_3, newpower_4, oldpower_1, oldpower_2, oldpower_3, oldpower_4, power_1, powerlimit_flag;  // 测试模式 测试重分配后的功率
 float *getControlledOutput(PowerObj_s *objs[4])
 {
 	// 电流输出缩放比例
@@ -408,12 +407,12 @@ void Task_PowerController(void *pvParameters)
 			  LATEST_FEEDBACK_JUDGE_ROBOT_LEVEL = fmax(1u, chassis_power_get.robot_level);
 			 /**  设置最大限制功率  **/
 #if USE_SUPER_CAPACITOR == 1 // 使用超电
-		  if ( !isFlagged(&Chassis_Manager.error, CAPDisConnect) && SuperCap_Rx.cap_power >= 50.0f)  // 超电在线使用缓冲能量
+		  if ( !isFlagged(&Chassis_Manager.error, CAPDisConnect) && SuperCap_Rx.cap_power >= 60.0f)  // 超电在线使用缓冲能量
   			  Chassis_Manager.powerUpperLimit = Chassis_Manager.refereeMaxPower + MAX_CAP_POWER_OUT;
 		  else // 超电离线保守控制
 			  Chassis_Manager.powerUpperLimit = Chassis_Manager.refereeMaxPower - PID_Control(sqrtf(chassis_power_get.send_power.power_buffer), sqrtf(REFEREE_BASE_BUFFSET), &powerPD_buff);
 #else
-		  Chassis_Manager.powerUpperLimit = Chassis_Manager.refereeMaxPower - PID_Control(sqrtf(chassis_power_get.send_power.power_buffer), sqrtf(REFEREE_BASE_BUFFSET));
+		  Chassis_Manager.powerUpperLimit = Chassis_Manager.refereeMaxPower - PID_Control(sqrtf(chassis_power_get.send_power.power_buffer), sqrtf(REFEREE_BASE_BUFFSET), &powerPD_buff);
 #endif
 		  // 裁判系统不在线 使用离线前记录的等级限制功
 		} else {      // 裁判系统离线后处理
@@ -521,7 +520,7 @@ void Task_PowerController(void *pvParameters)
                SuperCAP_Send(&hcan2, 0x210, chassis_power_get.send_power.power_limit - 5, chassis_power_get.send_power.power_buffer); // 超电正常运行
 	    }
 		
-        vTaskDelayUntil(&currentTime, 1);
+        vTaskDelayUntil(&currentTime, 2);
 	}
 }
 

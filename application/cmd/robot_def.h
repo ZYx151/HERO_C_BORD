@@ -6,8 +6,8 @@
 
 /* 开发板类型定义 */
 //#define ONE_BOARD     // 单片机控整车
-//#define CHASSIS_BOARD // 底盘板
-#define GIMBAL_BOARD  // 云台板
+#define CHASSIS_BOARD // 底盘板
+//#define GIMBAL_BOARD  // 云台板
 
 #define VISION_USE_VCP  // 使用虚拟串口发送视觉数据
 // #define VISION_USE_UART // 使用串口发送视觉数据
@@ -57,7 +57,7 @@
 
 // 发射参数
 //!< @brief 摩擦轮电机速度环PID的期望值  /5800 3508电机Speed_Max: 
-#define SHOOT_SPEED            5800
+#define SHOOT_SPEED            5300
 //!< @brief 拨盘一圈的装载量
 #define SHOOT_NUM_PER_CIRCLE   5
 //!< @brief 拨弹盘电机连发时速度环PID的期望值 /19.0 (RPM) SHOOT_LOADER_MOTOR_ONE * 弹频

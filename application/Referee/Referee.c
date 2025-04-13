@@ -23,7 +23,7 @@ void Task_Referee(void *pvParameters)
     {
         currentTime = xTaskGetTickCount();
         unpack_referee_system_data(&Referee_queue);//裁判系统解包
-        vTaskDelayUntil(&currentTime, 2);
+        vTaskDelayUntil(&currentTime, 3);
     }
 }
 
@@ -44,7 +44,6 @@ void Referee_Init()
 		    .module_callback = 0,
 	};
 	Referee_Uart6 = (USARTInstance *)RMLIB_MALLOC(sizeof(USARTInstance));
-//	Referee_Uart6 = USARTRegister(&referee_config );
     
     RMQueueInit(&Referee_queue, REFEREE_BUFFER_LEN, RM_QUEUE_LEN);
     HAL_NVIC_DisableIRQ(USART6_IRQn);	// DMA发送需在对应DMA中断中清除状态

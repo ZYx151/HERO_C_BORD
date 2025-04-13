@@ -37,7 +37,7 @@ static void Gimbal_SystemCalc(float Gimbal_pitch, float Gimbal_yaw); /** 云台�
 static float auto_rotate_param(void);
 
 static PID_Smis Gimbal_Pos_PID[2][4] = {{{.Kp = 3.0f, .Ki = 0, .Kd = -20.0f, .interlimit = 3000, .outlimit = 25000, .DeadBand = 10.0f, .inter_threLow = 50, .inter_threUp = 500  },   // YAW轴归中
-                              {.Kp = 10.0f, .Ki = 0.0f, .Kd = -40.0f,  .interlimit = 2000, .outlimit = 25000, .DeadBand = 0.01f, .inter_threLow = 5, .inter_threUp = 10},        // YAW轴陀螺仪
+                              {.Kp =  8.0f, .Ki = 0.0f, .Kd = -40.0f,  .interlimit = 2000, .outlimit = 25000, .DeadBand = 0.01f, .inter_threLow = 5, .inter_threUp = 10},        // YAW轴陀螺仪
 							  {.Kp = 10.0f, .Ki = 0.0f, .Kd = -45.0f,  .interlimit = 2000, .outlimit = 25000, .DeadBand = 2, .inter_threLow = 5, .inter_threUp = 10},
                               {.Kp = 15.0f, .Ki = 0.0f, .Kd = -40.0f,  .interlimit = 2000, .outlimit = 25000, .DeadBand = 0.001f, .inter_threLow = 5, .inter_threUp = 10},},       // YAW轴发射
 
@@ -47,12 +47,12 @@ static PID_Smis Gimbal_Pos_PID[2][4] = {{{.Kp = 3.0f, .Ki = 0, .Kd = -20.0f, .in
                              {.Kp = 1.8f,  .Ki = 0, .Kd = -5.0f, .interlimit = 2000, .outlimit = 1000, .DeadBand = 0.0f, .inter_threLow = 5, .inter_threUp = 10}}};   // PITCH轴发射
 						     
 static PID Gimbal_Speed_PID[2][4] = {{{.Kp = 10.0f, .Ki = 5.0f, .Kd = 0.0f, .interlimit = 3000, .outlimit = 25000, .DeadBand = 1, .inter_threLow = 500, .inter_threUp = 1000},
-							   {.Kp = 400.0f, .Ki = 5.0f, .Kd = 0.0f, .interlimit = 3000, .outlimit = 29000, .DeadBand = 1, .inter_threLow = 5, .inter_threUp = 30},
+							   {.Kp = 450.0f, .Ki = 5.0f, .Kd = 0.0f, .interlimit = 3000, .outlimit = 29000, .DeadBand = 1, .inter_threLow = 5, .inter_threUp = 30},
 							   {.Kp = 12.0f,  .Ki = 0.0f, .Kd = 0.0f,   .interlimit = 2000,  .outlimit = 29000, .DeadBand = 0, .inter_threLow = 100, .inter_threUp = 500},
 							   {.Kp = 250.0f, .Ki = 0.0f, .Kd = 0.0f, .interlimit = 3000, .outlimit = 29000, .DeadBand = 0, .inter_threLow = 50, .inter_threUp = 100}},
 							
                             {{.Kp = 1.0f,  .Ki = 0.0f,  .Kd = 0.0f, .interlimit = 50, .outlimit = 1000, .DeadBand = 0.5f, .inter_threLow = 500, .inter_threUp = 1000},
-                             {.Kp = 2.0f,  .Ki = 0.0f,  .Kd = 0.0f, .interlimit = 50, .outlimit = 1000, .DeadBand = 0.0f, .inter_threLow = 5, .inter_threUp = 15},
+                             {.Kp = 2.8f,  .Ki = 0.0f,  .Kd = 0.0f, .interlimit = 50, .outlimit = 1000, .DeadBand = 0.0f, .inter_threLow = 5, .inter_threUp = 15},
                              {.Kp = 1.8f,  .Ki = 0.0f,  .Kd = 0.0f, .interlimit = 50, .outlimit = 1000, .DeadBand = 0.0f, .inter_threLow = 20, .inter_threUp = 50},
                              {.Kp = 2.0f,  .Ki = 0.0f,  .Kd = 0.0f, .interlimit = 50, .outlimit = 1000, .DeadBand = 0.0f, .inter_threLow = 10, .inter_threUp = 50}}};
 
@@ -398,7 +398,7 @@ static float auto_rotate_param()
 			angle = ABS(705.0f - offset_angle) / 2050.57f;
 		if (offset_angle <= 8191 && offset_angle >= 7880)
 			angle = ABS(705.0f + 8191.0f - offset_angle) / 2050.57f;
-		rotate_ = 3000.0f * PI;// + 1500.0f * PI * arm_cos_f32(angle*PI);
+		rotate_ = 3500.0f * PI;// + 1500.0f * PI * arm_cos_f32(angle*PI);
 	}
 	else if (gimbal_get_ctrl->chassis_mode == CHASSIS_NORMAL) 
 	{

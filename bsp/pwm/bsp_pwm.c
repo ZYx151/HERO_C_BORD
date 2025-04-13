@@ -41,12 +41,13 @@ PWMInstance *PWMRegister(PWM_Init_Config_s *config)
 	 if(config->callback)
 	    PWM->callback = config->callback;
 	 PWM->id = config->id;
-     PWM->tclk = PWMSelectTclk(PWM->htim);
+	 PWM->dutyratio = config->dutyratio;
+//     PWM->tclk = PWMSelectTclk(PWM->htim);
 
     // 启动PWM
-    HAL_TIM_PWM_Start(PWM->htim, PWM->channel);
-    PWMSetPeriod(PWM, PWM->period);
-    PWMSetDutyRatio(PWM, PWM->dutyratio);
+     HAL_TIM_PWM_Start(PWM->htim, PWM->channel);
+//    PWMSetPeriod(PWM, PWM->period);
+	 PWMSetDutyRatio(PWM, PWM->dutyratio);
 	 pwm_instance[idx++] = PWM;
 	 return PWM;
 }
@@ -82,7 +83,7 @@ void PWMSetPeriod(PWMInstance *pwm, float period)
 */
 void PWMSetDutyRatio(PWMInstance *pwm, float dutyratio)
 {
-    __HAL_TIM_SetCompare(pwm->htim, pwm->channel, dutyratio * (pwm->htim->Instance->ARR));
+    __HAL_TIM_SET_COMPARE(pwm->htim, pwm->channel, dutyratio * (pwm->htim->Instance->ARR));
 }
 
 /* 只是对HAL的函数进行了形式上的封装 */

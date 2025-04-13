@@ -20,7 +20,7 @@ void aRGB_led_show(uint32_t aRGB)
     red = ((aRGB & 0x00FF0000) >> 16) * alpha;
     green = ((aRGB & 0x0000FF00) >> 8) * alpha;
     blue = ((aRGB & 0x000000FF) >> 0) * alpha;
-
+	
     __HAL_TIM_SetCompare(&htim5, TIM_CHANNEL_1, blue);
     __HAL_TIM_SetCompare(&htim5, TIM_CHANNEL_2, green);
     __HAL_TIM_SetCompare(&htim5, TIM_CHANNEL_3, red);

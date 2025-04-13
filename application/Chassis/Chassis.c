@@ -266,13 +266,15 @@ void mecanum_calculate()
 	static Chassis_speed_s planningVelocity;
     /* 速度规划 */
 	if(receive_action.move_status == rotate) {
-		slope_X.Increase_Value  = 36.0f / 1000.0f;
-		slope_Y.Increase_Value  = 36.0f / 1000.0f;
-        slope_Omega.Increase_Value = 20.0f / 1000.0f;
+		slope_X.Increase_Value  = 30.0f / 1000.0f;
+		slope_Y.Increase_Value  = 30.0f / 1000.0f;
+        slope_Omega.Increase_Value = 40.0f / 1000.0f;
+		slope_Omega.Decrease_Value = 5.0f / 1000.0f;
 	} else {
 		slope_X.Increase_Value  = 28.0f / 1000.0f;
 		slope_Y.Increase_Value  = 28.0f / 1000.0f;
-        slope_Omega.Increase_Value = 25.0f / 1000.f;
+        slope_Omega.Increase_Value = 25.0f / 1000.0f;
+		slope_Omega.Decrease_Value = 15.0f / 1000.0f;
 	} 
 	
 	planningVelocity.X = Slope_Calc(&slope_X, targetVelocity.X, measuredVelocity.X);
@@ -299,15 +301,25 @@ void mecanum_calculate()
 void Chassis_Flay()
 {   
 	const float k = 0.5f;
-	float cos_theat, sin_theat, cos_beta, sin_beta;
+	float cos_theat, sin_theat, cos_beta, sin_beta, forward_offset, back_offset;
     
 	DEADLINE_LIMIT(Slope_theta, 3);
-	cos_theat = arm_cos_f32(Slope_theta); sin_theat = arm_cos_f32(Slope_theta);
-	cos_beta  = arm_cos_f32(Slope_beta);  sin_beta  = arm_cos_f32(Slope_beta);
-	speed_target[lf] *= 1 - sin_beta * 1.414f;
-	speed_target[lb] *= 1 - sin_beta * 1.414f;
-	speed_target[rb] *= 1 + sin_beta * 1.414f;
-	speed_target[rf] *= 1 + sin_beta * 1.414f;
+	limit(Slope_theta, 45, -45);
+	forward_offset = -sin_theat * 0.7f;
+	back_offset = sin_theat * 0.7f;
+	if(fabs(Slope_theta) >  5)
+	{
+		cos_theat = arm_cos_f32(Slope_theta); sin_theat = arm_cos_f32(Slope_theta);
+		cos_beta  = arm_cos_f32(Slope_beta);  sin_beta  = arm_cos_f32(Slope_beta);
+		
+		back_offset     =  back_offset * cos_beta - forward_offset * sin_beta;  // left_right_ref 
+		forward_offset  =  back_offset * sin_beta + forward_offset * cos_beta;  // forward_back_ref
+
+		speed_target[lf] *= 1 - forward_offset;
+		speed_target[lb] *= 1 - forward_offset;
+		speed_target[rb] *= 1 + back_offset;
+		speed_target[rf] *= 1 + back_offset;
+	}
 } 
 
 /**
@@ -391,7 +403,7 @@ void Chassis_Upeadt()
 			targetVelocity.Y      =  Referee_SendData.level_gain * chassis_cmd_recv.vy/1500.0f;
             if(receive_action.move_status == rotate )
                 targetVelocity.Omega  =  Referee_SendData.level_gain * chassis_cmd_recv.rotate/1500.0f;
-             else (targetVelocity.Omega  =  chassis_cmd_recv.rotate/2000.0f);
+             else (targetVelocity.Omega  =  chassis_cmd_recv.rotate/1500.0f);
 			chassis_cmd_recv.dispatch_mode = chassis_dispatch_without_acc_limit;
 		}
     }
@@ -409,7 +421,9 @@ void Chassis_Upeadt()
         mtor_detect = 0;
 	}
 	
-	Self_Resolution();    // 自身运动学正解算
+	// 自身运动学正解算
+	Self_Resolution();
+	
 	// 底盘控制
 	if (chassis_cmd_recv.mode == CHASSIS_ZERO_FORCE) {
 	  for (uint8_t j = 0; j < 4; j++)
