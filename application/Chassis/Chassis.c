@@ -14,12 +14,18 @@ extern Gimbal_data_t    receive_vision;
 extern Gimbal_action_t  receive_action; 
 
 // 轮向电机摩擦阻力连续化的角速度阈值
-float Wheel_Resistance_Omega_Threshold = 0.8f;
+float Wheel_Resistance_Omega_Threshold = 0.5f;
 // 轮向电机动摩擦阻力电流值
-float Dynamic_Resistance_Wheel_Current[4] = {0.18f,
-											 0.18f,
-											 0.18f,
-											 0.18f};
+float Dynamic_Resistance_Wheel_Current[4] = {0.16f,
+											 0.16f,
+											 0.16f,
+											 0.16f};
+float Dynamic_Resistance_Wheel_Current_Rpm[4] = {0.4f,
+											 0.4f,
+											 0.4f,
+											 0.4f};
+float Dynamic_Resistance_Wheel_Current_Rpm_Final[4];
+
 /* 斜坡函数（int16_t） */
 static Slope_s slope_X ,slope_Y ,slope_Omega;
 
@@ -64,8 +70,8 @@ extern Referee_data_t Referee_SendData;
 void Chassis_Init()
 {
 		// 底盘期望速度斜坡
-	Slope_Init(&slope_X, 6.0f / 1000.0f, 30.0f / 1000.0f, SLOPE_FIRST_REAL);
-	Slope_Init(&slope_Y, 6.0f / 1000.0f, 30.0f / 1000.0f, SLOPE_FIRST_REAL);
+	Slope_Init(&slope_X, 6.0f / 1000.0f, 40.0f / 1000.0f, SLOPE_FIRST_REAL);
+	Slope_Init(&slope_Y, 6.0f / 1000.0f, 40.0f / 1000.0f, SLOPE_FIRST_REAL);
 	Slope_Init(&slope_Omega, 3.0f * PI / 1000.0f, 30.0f * PI / 1000.0f, SLOPE_FIRST_REAL);
 	
 Motor_Init_config_s LF_config = {
@@ -205,7 +211,6 @@ void Self_Resolution(void)
 	Get_Chassis_Inter();
 }
 
-
 /**
  * @brief 运动学逆解算 
  *
@@ -268,11 +273,11 @@ void mecanum_calculate()
 	if(receive_action.move_status == rotate) {
 		slope_X.Increase_Value  = 30.0f / 1000.0f;
 		slope_Y.Increase_Value  = 30.0f / 1000.0f;
-        slope_Omega.Increase_Value = 40.0f / 1000.0f;
-		slope_Omega.Decrease_Value = 5.0f / 1000.0f;
+        slope_Omega.Increase_Value = 35.0f / 1000.0f;
+		slope_Omega.Decrease_Value = 8.0f / 1000.0f;
 	} else {
-		slope_X.Increase_Value  = 28.0f / 1000.0f;
-		slope_Y.Increase_Value  = 28.0f / 1000.0f;
+		slope_X.Increase_Value  = 36.0f / 1000.0f;
+		slope_Y.Increase_Value  = 36.0f / 1000.0f;
         slope_Omega.Increase_Value = 25.0f / 1000.0f;
 		slope_Omega.Decrease_Value = 15.0f / 1000.0f;
 	} 
@@ -298,28 +303,24 @@ void mecanum_calculate()
  * @brief 底盘飞坡处理 仅飞坡和爬坡模式调用
  * @todo 待底盘添加陀螺仪之后进行斜坡角度判断 加入角度判断后或可以不用限制模式 可在车底盘中央添加一个测距判断前轮是否先飞出地面
 */
+float cos_theat, sin_theat, cos_beta, sin_beta, forward_offset, back_offset;
 void Chassis_Flay()
 {   
-	const float k = 0.5f;
-	float cos_theat, sin_theat, cos_beta, sin_beta, forward_offset, back_offset;
-    
 	DEADLINE_LIMIT(Slope_theta, 3);
 	limit(Slope_theta, 45, -45);
-	forward_offset = -sin_theat * 0.7f;
-	back_offset = sin_theat * 0.7f;
 	if(fabs(Slope_theta) >  5)
 	{
-		cos_theat = arm_cos_f32(Slope_theta); sin_theat = arm_cos_f32(Slope_theta);
-		cos_beta  = arm_cos_f32(Slope_beta);  sin_beta  = arm_cos_f32(Slope_beta);
-		
-		back_offset     =  back_offset * cos_beta - forward_offset * sin_beta;  // left_right_ref 
-		forward_offset  =  back_offset * sin_beta + forward_offset * cos_beta;  // forward_back_ref
+		cos_theat = arm_cos_f32(Slope_theta*ANGLE2RADIAN); sin_theat = arm_sin_f32(Slope_theta*ANGLE2RADIAN);
+		cos_beta  = arm_cos_f32(Slope_beta*ANGLE2RADIAN);  sin_beta  = arm_sin_f32(Slope_beta*ANGLE2RADIAN);
 
-		speed_target[lf] *= 1 - forward_offset;
-		speed_target[lb] *= 1 - forward_offset;
-		speed_target[rb] *= 1 + back_offset;
-		speed_target[rf] *= 1 + back_offset;
-	}
+		Dynamic_Resistance_Wheel_Current_Rpm_Final[lf] = Dynamic_Resistance_Wheel_Current[lf] + Dynamic_Resistance_Wheel_Current_Rpm[lf]*(1-sin_theat*0.6f);
+		Dynamic_Resistance_Wheel_Current_Rpm_Final[lb] = Dynamic_Resistance_Wheel_Current[lb] + Dynamic_Resistance_Wheel_Current_Rpm[lb]*(1+sin_theat*0.6f);
+		Dynamic_Resistance_Wheel_Current_Rpm_Final[rb] = Dynamic_Resistance_Wheel_Current[rb] + Dynamic_Resistance_Wheel_Current_Rpm[rb]*(1+sin_theat*0.6f);
+		Dynamic_Resistance_Wheel_Current_Rpm_Final[rf] = Dynamic_Resistance_Wheel_Current[rf] + Dynamic_Resistance_Wheel_Current_Rpm[rf]*(1-sin_theat*0.6f);
+	} else 
+		for(uint8_t i = 0; i < 4 ; i++)
+	  Dynamic_Resistance_Wheel_Current_Rpm_Final[i] = Dynamic_Resistance_Wheel_Current[i];
+
 } 
 
 /**
@@ -342,12 +343,13 @@ void chassis_powerlimit()
 			Can2Send_Chassis[i] = PID_Control(currentAv[i], Rampspeed[i] , &Chassis_Speed_PID[i]);
 		// 底盘摩擦力补偿
 		if( speed_target[i] > Wheel_Resistance_Omega_Threshold) {
-		    Can2Send_Chassis[i] += Dynamic_Resistance_Wheel_Current[i] * CURRENT2OUT;
+		    Can2Send_Chassis[i] += Dynamic_Resistance_Wheel_Current_Rpm_Final[i] * CURRENT2OUT;
 		} else if( speed_target[i] < -Wheel_Resistance_Omega_Threshold) {
-		    Can2Send_Chassis[i] -= Dynamic_Resistance_Wheel_Current[i] * CURRENT2OUT;
+		    Can2Send_Chassis[i] -= Dynamic_Resistance_Wheel_Current_Rpm_Final[i] * CURRENT2OUT;
 		} else {
-            Can2Send_Chassis[i] += speed_target[i] / Wheel_Resistance_Omega_Threshold * Dynamic_Resistance_Wheel_Current[i] * CURRENT2OUT;
+            Can2Send_Chassis[i] += speed_target[i] / Wheel_Resistance_Omega_Threshold * Dynamic_Resistance_Wheel_Current_Rpm_Final[i] * CURRENT2OUT;
 		}
+		
 		speed_sum += ABS(chassis_motor[i]->measure.SpeedFilter);
 		current_sum += ABS(Can2Send_Chassis[i]);
 	}
@@ -366,9 +368,8 @@ void chassis_powerlimit()
 		chassis_power[j].curAv = currentAv[j];
 		chassis_power[j].setAv = Rampspeed[j];
 		chassis_power[j].pidOutput = Can2Send_Chassis[j];
-//		chassis_power[j].errorAv = (chassis_power[j].setAv - chassis_power[j].curAv) > 0.01f ? chassis_power[j].setAv - chassis_power[j].curAv : 0.0f;
 		chassis_power[j].errorAv = fabs(chassis_power[j].setAv - chassis_power[j].curAv)/19.203f;
-		chassis_power[j].pidMaxOutput = 15000;
+		chassis_power[j].pidMaxOutput = 15500;
 	}
 	    
 	// 底盘功率限制
@@ -432,7 +433,7 @@ void Chassis_Upeadt()
 //        Kinematics_Inverse_Resolution();
 //        Dynamics_Inverse_Resolution();
 		
-//		Chassis_Flay();
+		Chassis_Flay();
         mecanum_calculate();           // 麦轮解算
         chassis_powerlimit();          // 底盘功率限制
 	}
@@ -468,7 +469,7 @@ void Slope_Direction()
 void Get_Chassis_Inter()
 { 	
 	Slope_Direction();
-	arm_sqrt_f32(Slope_Direction_Y * Slope_Direction_Y + Slope_Direction_X * Slope_Direction_X, &sqrt_theat );
+	arm_sqrt_f32(Slope_Direction_Y * Slope_Direction_Y + Slope_Direction_X * Slope_Direction_X, &sqrt_theat);
     Slope_theta = atan2(sqrt_theat, Slope_Direction_Z)/ANGLE2RADIAN;
 	
 	Slope_beta = atan2(Slope_Direction_Y / arm_sin_f32(Slope_theta*ANGLE2RADIAN), Slope_Direction_X / arm_sin_f32(Slope_theta*ANGLE2RADIAN))/ANGLE2RADIAN;

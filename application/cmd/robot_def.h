@@ -6,8 +6,8 @@
 
 /* 开发板类型定义 */
 //#define ONE_BOARD     // 单片机控整车
-#define CHASSIS_BOARD // 底盘板
-//#define GIMBAL_BOARD  // 云台板
+//#define CHASSIS_BOARD // 底盘板
+#define GIMBAL_BOARD  // 云台板
 
 #define VISION_USE_VCP  // 使用虚拟串口发送视觉数据
 // #define VISION_USE_UART // 使用串口发送视觉数据
@@ -21,7 +21,7 @@
 
 /* 机器人重要参数定义,注意根据不同机器人进行修改,浮点数需要以.0或f结尾,无符号以u结尾 */
 // 云台参数
-#define Yaw_Mid_Front   2258       //!< @brief Yaw轴电机中值（机器人前方）
+#define Yaw_Mid_Front   3800       //!< @brief Yaw轴电机中值（机器人前方）
 /* 根据机器人正前方Yaw轴机械角度算出机器人剩下三个方向Yaw轴机械角度（6020正装，反装将左右相反） */
 #if (Yaw_Mid_Front + 2048) > 8191 
 #define Yaw_Mid_Left Yaw_Mid_Front - 6143
@@ -41,7 +41,7 @@
 #define Yaw_Mid_Right Yaw_Mid_Back + 2048
 #endif
 //!< @brief Pitch轴电机归中机械角度
-#define Pitch_Mid        2101
+#define Pitch_Mid        2301
 //!< @brief Pitch轴电机上限位与水平位差值
 #define P_ADD_limit      0
 //!< @brief Pitch轴电机下限位与水平位差值
@@ -51,13 +51,13 @@
 //!< @brief IMU下限位（Pitch轴）
 #define IMU_DOWN_limit   -40.0f
 //!< @brief IMU上限位（Pitch轴）
-#define MCH_UP_limit     35.0f
+#define MCH_UP_limit     30.0f
 //!< @brief IMU下限位（Pitch轴）
-#define MCH_DOWN_limit   -15.0f
+#define MCH_DOWN_limit   -30.0f
 
 // 发射参数
 //!< @brief 摩擦轮电机速度环PID的期望值  /5800 3508电机Speed_Max: 
-#define SHOOT_SPEED            5300
+#define SHOOT_SPEED            5350
 //!< @brief 拨盘一圈的装载量
 #define SHOOT_NUM_PER_CIRCLE   5
 //!< @brief 拨弹盘电机连发时速度环PID的期望值 /19.0 (RPM) SHOOT_LOADER_MOTOR_ONE * 弹频

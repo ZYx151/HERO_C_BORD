@@ -34,7 +34,7 @@ static void Shoot_load_Update(void);     // 拨弹盘控制
 static void Shoot_friction_Update(void); // 摩擦轮控制
 static void Shoot_Calc(void);
 static void Shoot_STOP(void);
-static void Shoot_Get_OffsetAngle(float load_delta_pos);
+static void Shoot_Get_OffsetAngle(int16_t load_delta_pos);
 	
 static Smc shoot_smc[3];
 static PID Shoot_Speed_PID[3] = {{.Kp = 15, .Ki = 0.0f, .Kd = 0.0f, .interlimit = 3000, .outlimit = 16000, .DeadBand = 0.50f, .inter_threLow = 500, .inter_threUp = 1000},            //摩擦轮左
@@ -43,7 +43,7 @@ static PID Shoot_Speed_PID[3] = {{.Kp = 15, .Ki = 0.0f, .Kd = 0.0f, .interlimit 
 
 							  
 static PID_Smis Pluck_Place_PIDS = {.Kp = 6.0f, .Ki = 0, .Kd = 0.4f, .interlimit = 3000, .outlimit = 16000, .DeadBand = 0.0f, .inter_threLow = 500, .inter_threUp = 1000};         //拨弹盘单发位置环
-static PID Pluck_Speed_PID = {.Kp = 20.0f, .Ki = 0.0f, .Kd = 0.0f, .interlimit = 4000, .outlimit = 15000, .DeadBand = 0.0f, .inter_threLow = 20, .inter_threUp = 5000};                   //拨弹盘单发速度环
+static PID Pluck_Speed_PID = {.Kp = 8.0f, .Ki = 0.0f, .Kd = 0.0f, .interlimit = 4000, .outlimit = 15000, .DeadBand = 0.0f, .inter_threLow = 20, .inter_threUp = 5000};                   //拨弹盘单发速度环
 static PID Pluck_Continue_PID = {.Kp = 10, .Ki = 0, .Kd = 0, .interlimit = 3000, .outlimit = 15000, .DeadBand = 5.0f, .inter_threLow = 500, .inter_threUp = 1000};               //拨弹盘连发模式
 
 void Shoot_Init()
@@ -180,7 +180,7 @@ static void Shoot_load_Update()
     static uint16_t  Stuck_time   = 0, continur_tims = 0;//!< @brief 检测卡弹的时间 连发计时
 	static uint8_t Add_Angle_Flag = 0;               	 //!< @brief 拨弹盘角度+1标志位
     static float Stuck_Angle_Target = 0;                 //!< @brief 拨弹盘卡弹退弹期望角度
-    static const uint16_t Stuck_thre = 800;              //!< @brief 卡弹阈值，卡弹超过此时间便认为卡弹
+    static const uint16_t Stuck_thre = 1000;              //!< @brief 卡弹阈值，卡弹超过此时间便认为卡弹
 	static float Target_Continue_Speed = -360.0f * REDUCTION_RATIO_WHEEL / SHOOT_NUM_PER_CIRCLE * 1.0f;  // 播弹盘连发速度
 	// 设定拨弹盘转动角度
 //	static int16_t load_delta_pos = -360.0f * 19.203f / SHOOT_NUM_PER_CIRCLE * 0.98f;
@@ -191,7 +191,8 @@ static void Shoot_load_Update()
 	{
 		shoot_ctrl_cmd->bullet_mode = BULLET_HOLDON;
 		/** 卡弹时间清零  **/
-		Stuck_time = 0; 
+		Stuck_time = 0;
+		Off_Angle = 0;
 //        ABS(Last_Target_Pluck) <= 200 ? Off_Angle = 0 
 //		    : ( Off_Angle = (int16_t )(loader->measure.Angle_DEG - Last_Target_Pluck) % (int16_t)load_delta_pos);
 		DJIMotorOuterLoop(loader, ANGLE_LOOP);   // 修改为角度控制
@@ -207,6 +208,7 @@ static void Shoot_load_Update()
 				Stuck_time ++;
 			}
 		}
+		
 //		if(shoot_ctrl_cmd->mode == SHOOT_AIM) {
 //			if(Aim_Ref.fire_on ) 
 //			{
@@ -225,6 +227,7 @@ static void Shoot_load_Update()
 //				Add_Angle_Flag = 0;
 //			}
 //	    }
+		
 		/**  连发设置  **/
 		if(shoot_ctrl_cmd->mode == SHOOT_NOMAL) 
 		{
@@ -236,19 +239,21 @@ static void Shoot_load_Update()
 			}
 		} else	continur_tims  = 0; 
 		/** 判断卡弹时间 **/ 
-		 if(Stuck_time >= Stuck_thre)
+		if(Stuck_time >= Stuck_thre)
 		 	 shoot_ctrl_cmd->mode = SHOOT_STUCKING;
-		/** 计算角度补偿 **/
+		
+		 /** 计算角度补偿 **/
 		Shoot_Get_OffsetAngle(load_delta_pos);
+		
 		/** 卡弹检测 **/
 	    if(shoot_ctrl_cmd->bullet_mode != BULLET_CONTINUE && shoot_ctrl_cmd->mode != SHOOT_STUCKING)    
 	    {
 		     abs_deltaSpeed = fabs(loader->measure.SpeedFilter);
 		     abs_deltePlack = fabs(Angle_Target - loader->measure.Angle_DEG);
-		     if(abs_deltePlack > fabs(load_delta_pos * 0.6f) && abs_deltaSpeed <= 50.0f )
+		     if(abs_deltePlack > fabs(load_delta_pos * 0.6f) && abs_deltaSpeed <= 25.0f )
 			     Stuck_time ++;
-			 if(abs_deltaSpeed >= 200 && Stuck_time > 100)
-			   Stuck_time = 0;
+			 if(abs_deltaSpeed >= 50 && Stuck_time > 50)
+			     Stuck_time = 0;
 			 
 			/* 卡弹时可能卡在摩擦轮中 */
 		    if(shoot_ctrl_cmd->mode == SHOOT_READY) 
@@ -268,12 +273,12 @@ static void Shoot_load_Update()
 	     /** 卡弹反转  **/
 	     if(shoot_ctrl_cmd->mode == SHOOT_STUCKING) 
 	     {
-		   Stuck_Angle_Target = -Target_Continue_Speed * 0.4f;
+		   Stuck_Angle_Target = -Target_Continue_Speed * 0.8f;
 		   DJIMotorOuterLoop(loader, SPEED_LOOP);
 		   DJIMotorSetRef(loader, Stuck_Angle_Target);
 	       Stuck_time ++;
 			
-		   if(Stuck_time >= Stuck_thre * 1.25f)
+		   if(Stuck_time >= Stuck_thre * 1.15f)
 		       Stuck_time = 0;
 	     }
 	     else /* 未卡弹 */
@@ -289,12 +294,13 @@ static void Shoot_load_Update()
 					case BULLET_HOLDON :
 						DJIMotorOuterLoop(loader, ANGLE_LOOP); // 修改为角度控制
 						Angle_Target = loader->measure.Angle_DEG;
+				        RAMP_Angle_Target = loader->measure.Angle_DEG;
 						DJIMotorSetRef(loader, Angle_Target);
 					break;
 					
 					case BULLET_SINGLE : // 单发
 						DJIMotorOuterLoop(loader, ANGLE_LOOP);
-						Angle_Target = loader->measure.Angle_DEG + load_delta_pos - Off_Angle;
+						Angle_Target = Angle_Target + load_delta_pos - Off_Angle;
 						cooldown_tim   = 100; // 时间间隔
 					break;
 					
@@ -330,7 +336,7 @@ static void Shoot_load_Update()
 			  else if ( shoot_ctrl_cmd->bullet_mode != BULLET_CONTINUE) 
 			  {
 				 DJIMotorOuterLoop(loader, ANGLE_LOOP);
-				 RAMP_Angle_Target = RAMP_float(Angle_Target, RAMP_Angle_Target, 22);
+				 RAMP_Angle_Target = RAMP_float(Angle_Target, RAMP_Angle_Target, 15);
 				 DJIMotorSetRef(loader, RAMP_Angle_Target);
     		  }
 	      }
@@ -416,9 +422,11 @@ void Shoot_Upeadt()
 	{
 		Shoot_STOP();
 		RAMP_Angle_Target = Angle_Target = loader->measure.Angle_DEG;
-		Off_Angle = 0;
-		if(shoot_feedback_data.shoot_status == Device_Online)
+
+		if(shoot_feedback_data.shoot_status == Device_Online) {
 			Last_Target_Pluck = Angle_Target;
+		    Off_Angle = 0;
+		}
     }
 	else 
 	{
@@ -486,9 +494,9 @@ static void Shoot_STOP()
 }
 
 // 用于计算拨弹盘补偿角度
-void Shoot_Get_OffsetAngle(float load_delta_pos)
+void Shoot_Get_OffsetAngle(int16_t load_delta_pos)
 {
-	if(Last_Bullet_mode != shoot_ctrl_cmd->bullet_mode)
+	if(Last_Bullet_mode != shoot_ctrl_cmd->bullet_mode && shoot_ctrl_cmd->mode != SHOOT_STUCKING)
         ABS(Last_Target_Pluck) <= 200 ? Off_Angle = 0 
 		    : ( Off_Angle = (int16_t )(loader->measure.Angle_DEG - Last_Target_Pluck) % (int16_t)load_delta_pos);
 }

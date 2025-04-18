@@ -60,7 +60,7 @@ void Task_Init()
     HAL_TIM_Base_Start(&htim5);
     HAL_TIM_Base_Start(&htim1);
     HAL_TIM_PWM_Start(&htim1,TIM_CHANNEL_1);
-    __HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_1, 900);  //400  关    600开
+    __HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_1, 2300);  //400  关    600开
     HAL_TIM_PWM_Start(&htim1,TIM_CHANNEL_2);
     __HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_2, 1000);  //400  关    600开
 
