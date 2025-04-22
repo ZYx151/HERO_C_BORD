@@ -14,17 +14,18 @@ extern Gimbal_data_t    receive_vision;
 extern Gimbal_action_t  receive_action; 
 
 // 轮向电机摩擦阻力连续化的角速度阈值
-float Wheel_Resistance_Omega_Threshold = 0.5f;
+static float Wheel_Resistance_Omega_Threshold = 0.5f;
 // 轮向电机动摩擦阻力电流值
-float Dynamic_Resistance_Wheel_Current[4] = {0.16f,
-											 0.16f,
-											 0.16f,
-											 0.16f};
-float Dynamic_Resistance_Wheel_Current_Rpm[4] = {0.4f,
-											 0.4f,
-											 0.4f,
-											 0.4f};
-float Dynamic_Resistance_Wheel_Current_Rpm_Final[4];
+static float Dynamic_Resistance_Wheel_Current[4] = {0.2f,
+											 0.2f,
+											 0.2f,
+											 0.2f};
+static float Dynamic_Resistance_Wheel_Current_Rpm[4] = {1.0f,
+											 1.0f,
+											 1.0f,
+											 1.0f};
+
+static float Dynamic_Resistance_Wheel_Current_Rpm_Final[4];
 
 /* 斜坡函数（int16_t） */
 static Slope_s slope_X ,slope_Y ,slope_Omega;
@@ -43,7 +44,7 @@ static DeviceState_e chassis_state;
 static DJIMotor_Instance *chassis_motor[4];
 static PowerObj_s chassis_power[4];  // 功率重分配所需变量
 static float currentAv[4];           // 电机转速(rad/s)
-  int16_t Can2Send_Chassis[4];  // 向电机发送电流值
+static int16_t Can2Send_Chassis[4];  // 向电机发送电流值
 static attitude_t *ins;              // 底盘陀螺仪
 
 static Publisher_t *chassis_pub;            // 云台控制消息发布者
@@ -64,14 +65,18 @@ static void Get_Chassis_Inter(void);  /* 斜坡相对于底盘的角度矢量 */
 static float  Slope_Direction_X, Slope_Direction_Y, Slope_Direction_Z;
 static float  Slope_theta, Slope_beta;
 static float  sqrt_theat, sqrt_beta;
+/**                                   lf     lb        rb      rf    对应chassis.h坐标系**/
+static float  chassis_matr[4][2] = {{-1,1}, {-1,-1}, {1,-1}, {1,1}};
 extern Referee_data_t Referee_SendData;
+/* 底盘轮子位置解算 */ 
+static void Pose_Resolution(float v[5][3]);
 
 /**  底盘初始化  **/
 void Chassis_Init()
 {
 		// 底盘期望速度斜坡
-	Slope_Init(&slope_X, 6.0f / 1000.0f, 40.0f / 1000.0f, SLOPE_FIRST_REAL);
-	Slope_Init(&slope_Y, 6.0f / 1000.0f, 40.0f / 1000.0f, SLOPE_FIRST_REAL);
+	Slope_Init(&slope_X, 6.0f / 1000.0f, 80.0f / 1000.0f, SLOPE_FIRST_REAL);
+	Slope_Init(&slope_Y, 6.0f / 1000.0f, 80.0f / 1000.0f, SLOPE_FIRST_REAL);
 	Slope_Init(&slope_Omega, 3.0f * PI / 1000.0f, 30.0f * PI / 1000.0f, SLOPE_FIRST_REAL);
 	
 Motor_Init_config_s LF_config = {
@@ -173,7 +178,7 @@ Motor_Init_config_s RF_config = {
 	DJIMotorClose(chassis_motor[lb]);
 	DJIMotorClose(chassis_motor[rb]);
 	/**  功率计算  **/
-    Manager_Init(chassis_motor, HERO, RLS_Enable, 0.0091f, 350, 0.7f); //    0.0187587207f  1.18e-05f // 0.   0.000148522042                1.16999999e-07
+    Manager_Init(chassis_motor, HERO, RLS_Enable, 0.0091f, 400, 0.7f); //    0.0187587207f  1.18e-05f // 0.   0.000148522042                1.16999999e-07
       
     /** 移动速度计算 线速度m/s  **/
 #if USE_MECANUM_CHASSIS
@@ -271,16 +276,18 @@ void mecanum_calculate()
 	static Chassis_speed_s planningVelocity;
     /* 速度规划 */
 	if(receive_action.move_status == rotate) {
-		slope_X.Increase_Value  = 30.0f / 1000.0f;
-		slope_Y.Increase_Value  = 30.0f / 1000.0f;
-        slope_Omega.Increase_Value = 35.0f / 1000.0f;
-		slope_Omega.Decrease_Value = 8.0f / 1000.0f;
+		slope_X.Increase_Value  = 50.0f / 1000.0f;
+		slope_Y.Increase_Value  = 50.0f / 1000.0f;
+        slope_Omega.Increase_Value = (40.0f + chassis_cmd_recv.robot_levels) / 1000.0f ;
+		slope_Omega.Decrease_Value = (10.0f  + chassis_cmd_recv.robot_levels) / 1000.0f ;
 	} else {
-		slope_X.Increase_Value  = 36.0f / 1000.0f;
-		slope_Y.Increase_Value  = 36.0f / 1000.0f;
-        slope_Omega.Increase_Value = 25.0f / 1000.0f;
-		slope_Omega.Decrease_Value = 15.0f / 1000.0f;
+		slope_X.Increase_Value  = 50.0f / 1000.0f;
+		slope_Y.Increase_Value  = 50.0f / 1000.0f;
+        slope_Omega.Increase_Value = 45.0f / 1000.0f;
+		slope_Omega.Decrease_Value = (50.0f + chassis_cmd_recv.robot_levels) / 1000.0f ;
 	} 
+	slope_X.Decrease_Value = (80.0f + chassis_cmd_recv.robot_levels*2) / 1000.0f ;
+	slope_Y.Decrease_Value = (80.0f + chassis_cmd_recv.robot_levels*2) / 1000.0f ;
 	
 	planningVelocity.X = Slope_Calc(&slope_X, targetVelocity.X, measuredVelocity.X);
     planningVelocity.Y = Slope_Calc(&slope_Y, targetVelocity.Y, measuredVelocity.Y);
@@ -303,24 +310,37 @@ void mecanum_calculate()
  * @brief 底盘飞坡处理 仅飞坡和爬坡模式调用
  * @todo 待底盘添加陀螺仪之后进行斜坡角度判断 加入角度判断后或可以不用限制模式 可在车底盘中央添加一个测距判断前轮是否先飞出地面
 */
-float cos_theat, sin_theat, cos_beta, sin_beta, forward_offset, back_offset;
+float cos_theat, sin_theat, cos_beta, sin_beta, forward_offset, back_offset, wheel_pose[5][3];
 void Chassis_Flay()
 {   
+	static float chassis_k[4];
 	DEADLINE_LIMIT(Slope_theta, 3);
 	limit(Slope_theta, 45, -45);
+	
 	if(fabs(Slope_theta) >  5)
 	{
-		cos_theat = arm_cos_f32(Slope_theta*ANGLE2RADIAN); sin_theat = arm_sin_f32(Slope_theta*ANGLE2RADIAN);
-		cos_beta  = arm_cos_f32(Slope_beta*ANGLE2RADIAN);  sin_beta  = arm_sin_f32(Slope_beta*ANGLE2RADIAN);
-
-		Dynamic_Resistance_Wheel_Current_Rpm_Final[lf] = Dynamic_Resistance_Wheel_Current[lf] + Dynamic_Resistance_Wheel_Current_Rpm[lf]*(1-sin_theat*0.6f);
-		Dynamic_Resistance_Wheel_Current_Rpm_Final[lb] = Dynamic_Resistance_Wheel_Current[lb] + Dynamic_Resistance_Wheel_Current_Rpm[lb]*(1+sin_theat*0.6f);
-		Dynamic_Resistance_Wheel_Current_Rpm_Final[rb] = Dynamic_Resistance_Wheel_Current[rb] + Dynamic_Resistance_Wheel_Current_Rpm[rb]*(1+sin_theat*0.6f);
-		Dynamic_Resistance_Wheel_Current_Rpm_Final[rf] = Dynamic_Resistance_Wheel_Current[rf] + Dynamic_Resistance_Wheel_Current_Rpm[rf]*(1-sin_theat*0.6f);
+		cos_theat = arm_cos_f32(Slope_theta*ANGLE2RADIAN);         sin_theat = arm_sin_f32(Slope_theta*ANGLE2RADIAN);
+		cos_beta  = arm_cos_f32((Slope_beta+90.0f)*ANGLE2RADIAN);  sin_beta  = arm_sin_f32((Slope_beta+90.0f)*ANGLE2RADIAN);
+		for(uint8_t i = 0; i < 4; i++)
+		{
+			wheel_pose[i][0] = chassis_matr[i][0] * cos_beta - sin_beta * chassis_matr[i][1]; 
+		    wheel_pose[i][1] = chassis_matr[i][0] * cos_beta + sin_beta * chassis_matr[i][1]; 
+		    if(wheel_pose[i][1] >= wheel_pose[4][0])
+		       wheel_pose[4][0] = wheel_pose[i][1];
+			else if (wheel_pose[i][1] < wheel_pose[4][1])
+				wheel_pose[4][1] = wheel_pose[i][1];
+		}
+		/* 电流增益 */
+		wheel_pose[4][2] = sin_theat/0.8f;
+		Pose_Resolution(wheel_pose);
+		
+		Dynamic_Resistance_Wheel_Current_Rpm_Final[lf] = Dynamic_Resistance_Wheel_Current[lf] + wheel_pose[lf][2];//Dynamic_Resistance_Wheel_Current_Rpm[lf]*(1-sin_theat/0.8f)*cos_beta;
+		Dynamic_Resistance_Wheel_Current_Rpm_Final[lb] = Dynamic_Resistance_Wheel_Current[lb] + wheel_pose[lb][2];//Dynamic_Resistance_Wheel_Current_Rpm[lb]*(1+sin_theat/0.8f)*cos_beta;
+		Dynamic_Resistance_Wheel_Current_Rpm_Final[rb] = Dynamic_Resistance_Wheel_Current[rb] + wheel_pose[rb][2];//Dynamic_Resistance_Wheel_Current_Rpm[rb]*(1+sin_theat/0.8f)*cos_beta;
+		Dynamic_Resistance_Wheel_Current_Rpm_Final[rf] = Dynamic_Resistance_Wheel_Current[rf] + wheel_pose[rf][2];//Dynamic_Resistance_Wheel_Current_Rpm[rf]*(1-sin_theat/0.8f)*cos_beta;
 	} else 
 		for(uint8_t i = 0; i < 4 ; i++)
-	  Dynamic_Resistance_Wheel_Current_Rpm_Final[i] = Dynamic_Resistance_Wheel_Current[i];
-
+	        Dynamic_Resistance_Wheel_Current_Rpm_Final[i] = Dynamic_Resistance_Wheel_Current[i];
 } 
 
 /**
@@ -404,7 +424,8 @@ void Chassis_Upeadt()
 			targetVelocity.Y      =  Referee_SendData.level_gain * chassis_cmd_recv.vy/1500.0f;
             if(receive_action.move_status == rotate )
                 targetVelocity.Omega  =  Referee_SendData.level_gain * chassis_cmd_recv.rotate/1500.0f;
-             else (targetVelocity.Omega  =  chassis_cmd_recv.rotate/1500.0f);
+             else (targetVelocity.Omega  =  chassis_cmd_recv.rotate/1700.0f);
+			
 			chassis_cmd_recv.dispatch_mode = chassis_dispatch_without_acc_limit;
 		}
     }
@@ -475,6 +496,13 @@ void Get_Chassis_Inter()
 	Slope_beta = atan2(Slope_Direction_Y / arm_sin_f32(Slope_theta*ANGLE2RADIAN), Slope_Direction_X / arm_sin_f32(Slope_theta*ANGLE2RADIAN))/ANGLE2RADIAN;
 }
 
+void Pose_Resolution(float v[5][3])
+{
+    float len = sqrt((v[4][0]-v[4][1]) * (v[4][0]-v[4][1]));
+	for(uint8_t i = 0; i < 4; i++) {
+		v[i][2] = (v[4][0] - v[i][1]) / len * Dynamic_Resistance_Wheel_Current_Rpm[i] * v[4][2];
+	}
+}
 
 /** 底盘相对于世界坐标系旋转矩阵（内旋） **/
 //  static float cos_alpha, sin_alpha, cos_beta, sin_beta, cos_theta, sin_theta ;

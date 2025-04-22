@@ -13,7 +13,7 @@
 #define REFEREE_SYSTEM_ENABLE  1
 
 /* 获取数据使能 */
-#define Match_status_data                                       REFEREE_SYSTEM_DISABLE      //!<@brief 比赛状态
+#define Match_status_data                                       REFEREE_SYSTEM_ENABLE      //!<@brief 比赛状态
 #define Match_result_data                                       REFEREE_SYSTEM_DISABLE      //!<@brief 比赛结果
 #define Match_all_robot_HP_data                                 REFEREE_SYSTEM_ENABLE       //!<@brief 全体机器人血量
 #define Site_event_data                                         REFEREE_SYSTEM_DISABLE      //!<@brief 场地事件
@@ -27,7 +27,7 @@
 #define Air_robot_energy_status_data                            REFEREE_SYSTEM_DISABLE       //!<@brief 空中机器人状态
 #define Damage_status_data                                      REFEREE_SYSTEM_ENABLE       //!<@brief 扣血原因
 #define Real_time_shooting_data                                 REFEREE_SYSTEM_ENABLE       //!<@brief 实时射击信息
-#define Ammo_remind_data                                        REFEREE_SYSTEM_DISABLE       //!<@brief 允许发弹量
+#define Ammo_remind_data                                        REFEREE_SYSTEM_ENABLE       //!<@brief 允许发弹量
 #define Robot_RFID_state_data                                   REFEREE_SYSTEM_ENABLE       //!<@brief 机器人RFID状态
 #define Darts_client_cmd                                        REFEREE_SYSTEM_DISABLE       //!<@brief 飞镖选手端指令
 #define Robot_position_to_Sentry_data                           REFEREE_SYSTEM_DISABLE       //!<@brief 本方地面机器人位置

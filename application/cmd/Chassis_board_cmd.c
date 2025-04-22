@@ -179,15 +179,18 @@ void Chassis_board_CMD_Update()
 		  chassis_power_send.send_power.power_limit  = Referee_SendData.chassis_power_limit;          // 底盘功率限制
 		  chassis_power_send.refree_status = Referee_SendData.refree_status;
 		 
-		  send_data.shoot_referee_data.robot_color  = Referee_SendData.robot_color;            // 机器人颜色
-		  send_data.shoot_referee_data.robot_level  = Referee_SendData.robot_level;            // 机器人等级
-		  send_data.shoot_referee_data.bullet_speed_now  = Referee_SendData.bullet_speed_now;  // 实时弹速
+//		  send_data.shoot_referee_data.robot_color  = Referee_SendData.robot_color;            // 机器人颜色
+//		  send_data.shoot_referee_data.robot_level  = Referee_SendData.robot_level;            // 机器人等级
+//		  send_data.shoot_referee_data.bullet_speed_now  = Referee_SendData.bullet_speed_now;  // 实时弹速
 		  send_data.shoot_referee_data.heat_limit_remain = Referee_SendData.shooter_barrel_heat_limit - Referee_SendData.heat_now_remain; // 剩余热量
+		  send_data.shoot_referee_data.ammo_num          = Referee_SendData.Ammo_consume;
+		  
 	 }
 	 
 	 chassis_power_send.robot_level = Referee_SendData.robot_level;
 //	 chassis_power_send.superCAP_Enable = 1;
 	 PubPushMessage(rls_power_pub, (void *)&chassis_power_send);
+	 chassis_cmd_ctrl.robot_levels = Referee_SendData.robot_level;
 	 switch(Referee_SendData.robot_level)
      {
          case 1:   Referee_SendData.level_gain = 1;     break;

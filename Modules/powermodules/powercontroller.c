@@ -43,9 +43,9 @@ const static float CAP_BASE_BUFFSET     = 40.0f;
 
 /* 裁判系统缓冲能量 */
 const float REFEREE_FULL_BUFFSET        = 60.0f;  // 裁判系统最大缓冲能量
-const float REFEREE_BASE_BUFFSET        = 45.0f;  // 功率限制使用的基础缓冲能量  作为PID的期望使用缓冲功率
+const float REFEREE_BASE_BUFFSET        = 35.0f;  // 功率限制使用的基础缓冲能量  作为PID的期望使用缓冲功率
 /* 功率重分配阈值(期望速度误差) */
-const float error_powerDistribution_set = 30.0f;  // 功率分配在限制功率基础上增加
+const float error_powerDistribution_set = 25.0f;  // 功率分配在限制功率基础上增加
 const float prop_powerDistribution_set  = 5.0f;  // 功率分配在限制功率基础上增加
 
 /* 尝试超级电容动态功率参数 */
@@ -58,8 +58,8 @@ float REFEREE_GG_COE                            = 0.95f;
 float CAP_REFEREE_BOTH_GG_COE                   = 0.85f;
 
 /* 最大限制功率计算 */
-static PID powerPD_base = {.Kp = POWER_PD_KP, .Ki = 0.0f, .Kd = POWER_PD_KD, .interlimit = 100, .outlimit = 120, .DeadBand = 0.1f, .inter_threLow = 5, .inter_threUp = 20},
-           powerPD_full = {.Kp = POWER_PD_KP, .Ki = 0.0f, .Kd = POWER_PD_KD, .interlimit = 100, .outlimit = 120, .DeadBand = 0.1f, .inter_threLow = 5, .inter_threUp = 20},
+static PID powerPD_base = {.Kp = POWER_PD_KP, .Ki = 0.0f, .Kd = POWER_PD_KD,      .interlimit = 100, .outlimit = 120, .DeadBand = 0.1f, .inter_threLow = 5, .inter_threUp = 20},
+           powerPD_full = {.Kp = POWER_PD_KP, .Ki = 0.0f, .Kd = POWER_PD_KD,      .interlimit = 100, .outlimit = 120, .DeadBand = 0.1f, .inter_threLow = 5, .inter_threUp = 20},
 		   powerPD_buff = {.Kp = 15,          .Ki = 0.0f, .Kd = POWER_PD_KD+0.2f, .interlimit = 100, .outlimit = 40,  .DeadBand = 0.1f, .inter_threLow = 5, .inter_threUp = 20};
 
 /**
@@ -121,6 +121,7 @@ void Manager_Init(DJIMotor_Instance *motor[4], const Division_e division_, RLSEn
 	float initParams[2] = {k1_, k2_ };
 //	Matrixf upfateParams;
 //	Matrixf_Init(&upfateParams, 2, 1, initParams);
+	
     // 初始化RLS参数矩阵
 	RLS_setParamVector(&Chassis_Manager.rls, initParams);
 	
@@ -408,7 +409,7 @@ void Task_PowerController(void *pvParameters)
 			 /**  设置最大限制功率  **/
 #if USE_SUPER_CAPACITOR == 1 // 使用超电
 		  if ( !isFlagged(&Chassis_Manager.error, CAPDisConnect) && SuperCap_Rx.cap_power >= 60.0f)  // 超电在线使用缓冲能量
-  			  Chassis_Manager.powerUpperLimit = Chassis_Manager.refereeMaxPower + MAX_CAP_POWER_OUT;
+  			  Chassis_Manager.powerUpperLimit = Chassis_Manager.refereeMaxPower + MAX_CAP_POWER_OUT - 0.6f * PID_Control(sqrtf(chassis_power_get.send_power.power_buffer), sqrtf(REFEREE_BASE_BUFFSET), &powerPD_buff);
 		  else // 超电离线保守控制
 			  Chassis_Manager.powerUpperLimit = Chassis_Manager.refereeMaxPower - PID_Control(sqrtf(chassis_power_get.send_power.power_buffer), sqrtf(REFEREE_BASE_BUFFSET), &powerPD_buff);
 #else
@@ -498,12 +499,12 @@ void Task_PowerController(void *pvParameters)
 //		 Chassis_Manager.powerStatus.Errorflags             = (ErrorFlags_e )Chassis_Manager.error;
         
 		 // 更新RLS参数 添加死区 因为裁判系统无法检测到负功率，导致实际测量失败 所以用估计的功率来评估这种情况
-		if (Chassis_Manager.RLSEnableflag == RLS_Enable && Chassis_Manager.measuredPower > 5.0f && effectivePower < 0) //  
-		{
-			params = RLS_Update(&Chassis_Manager.rls, &samples, Chassis_Manager.measuredPower - effectivePower - Chassis_Manager.k3);
-			Chassis_Manager.k1 = fmax(params.arm_mat_.pData[0], 1e-5f);  // In case the k1 diverge to negative number
-			Chassis_Manager.k2 = fmax(params.arm_mat_.pData[1], 1e-5f);  // In case the k2 diverge to negative number
-		}
+//		if (Chassis_Manager.RLSEnableflag == RLS_Enable && Chassis_Manager.measuredPower > 5.0f && effectivePower < 0) //  
+//		{
+//			params = RLS_Update(&Chassis_Manager.rls, &samples, Chassis_Manager.measuredPower - effectivePower - Chassis_Manager.k3);
+//			Chassis_Manager.k1 = fmax(params.arm_mat_.pData[0], 1e-5f);  // In case the k1 diverge to negative number
+//			Chassis_Manager.k2 = fmax(params.arm_mat_.pData[1], 1e-5f);  // In case the k2 diverge to negative number
+//		}
 		
 	   /** 向超级电容更新功率和缓冲能量 **/
 		if(SuperCap_Rx.cap_percent == 0 && SuperCap_Rx.cap_v != 0)

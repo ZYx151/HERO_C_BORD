@@ -6,8 +6,8 @@
 
 /* 开发板类型定义 */
 //#define ONE_BOARD     // 单片机控整车
-//#define CHASSIS_BOARD // 底盘板
-#define GIMBAL_BOARD  // 云台板
+#define CHASSIS_BOARD // 底盘板
+//#define GIMBAL_BOARD  // 云台板
 
 #define VISION_USE_VCP  // 使用虚拟串口发送视觉数据
 // #define VISION_USE_UART // 使用串口发送视觉数据
@@ -18,6 +18,9 @@
 /* 陀螺仪选择 */
 #define BMI088_INS
 //#define WT931_IMU
+
+/*  拨弹盘角度控制速度控制选择  */
+#define LOADER_SPEED 0
 
 /* 机器人重要参数定义,注意根据不同机器人进行修改,浮点数需要以.0或f结尾,无符号以u结尾 */
 // 云台参数
@@ -47,17 +50,17 @@
 //!< @brief Pitch轴电机下限位与水平位差值
 #define P_LOSE_limit     0
 //!< @brief IMU上限位（Pitch轴）
-#define IMU_UP_limit     16.0f
+#define IMU_UP_limit     17.0f
 //!< @brief IMU下限位（Pitch轴）
-#define IMU_DOWN_limit   -40.0f
+#define IMU_DOWN_limit   -38.0f
 //!< @brief IMU上限位（Pitch轴）
-#define MCH_UP_limit     30.0f
+#define MCH_UP_limit     31.0f
 //!< @brief IMU下限位（Pitch轴）
-#define MCH_DOWN_limit   -30.0f
+#define MCH_DOWN_limit   -31.0f
 
 // 发射参数
 //!< @brief 摩擦轮电机速度环PID的期望值  /5800 3508电机Speed_Max: 
-#define SHOOT_SPEED            5350
+#define SHOOT_SPEED            5800
 //!< @brief 拨盘一圈的装载量
 #define SHOOT_NUM_PER_CIRCLE   5
 //!< @brief 拨弹盘电机连发时速度环PID的期望值 /19.0 (RPM) SHOOT_LOADER_MOTOR_ONE * 弹频
@@ -161,7 +164,7 @@ typedef enum Chassis_dispatch_mode_e {
 } Chassis_dispatch_mode;
 
 // 云台模式设置
-typedef enum{
+typedef enum {
     GIMBAL_ZERO_FORCE = 0,  //!< @brief 电流零输入
 	GIMBAL_MECH_MODE,       //!< @brief 机械,云台跟随底盘
 	GIMBAL_GYRO_MODE,       //!< @brief 陀螺仪,底盘跟随云台
@@ -170,7 +173,7 @@ typedef enum{
 } Gimbal_mode_e;
 
 // 发射模式设置
-typedef enum{
+typedef enum {
     SHOOT_ZERO_FORCE = 0,     //!< @brief  电流零输入
 	SHOOT_AIM        = 1,     //!< @brief  自瞄控制发射
 	SHOOT_STOP       = 2,     //!< @brief  停止发射（摩擦轮、拨弹盘停止）
@@ -253,6 +256,7 @@ typedef struct  {
 	uint8_t Close_flag;				  // 底盘关闭标志位
     uint8_t soft_reset_flag;               // Shift跑路
     Chassis_dispatch_mode dispatch_mode;  // 底盘运行模式
+	uint8_t robot_levels;                // 机器人等级
 } Chassis_ctrl_cmd_t;
 
 // 对发射机构的控制量
@@ -264,6 +268,7 @@ typedef struct  {
     float fire_rate;            // 射频（发/秒）
     int16_t heat_limit_remain;  // 剩余热量，cooling_limit-cooling_heat
     float bullet_speed_fdb;     // 实时弹速
+	int16_t ammo_num;          // 发射的弹丸数目
 } Shoot_ctrl_cmd_t;
 
 // 对云台的控制量
@@ -317,7 +322,7 @@ typedef struct  {
 } Gimbal_status_t;
 
 typedef struct  {
-	uint16_t vision_distance;           
+	int16_t Fric_Speed;           
 	int16_t Pitch_angle;
 	int16_t Yaw_angle;
 	int16_t Offset_Angle;
@@ -356,7 +361,7 @@ typedef struct {
 	DeviceState_e shoot_status;
     Shoot_mode_e mode;
     Bullet_mode_e bullet_mode;    // 发射模式
-    float real_bullet_speed;
+	int16_t fire_speed;
 } Shoot_upload_t;
 
 // RLS计算
@@ -400,10 +405,11 @@ typedef struct  {
 //    uint8_t chassis_board_status;  // 同步底盘是否有重要模块掉线
 //    uint8_t robot_id;
     struct {
-		uint8_t  robot_color;       // 机器人颜色
-		uint8_t  robot_level;       // 机器人等级
+//		uint8_t  robot_color;       // 机器人颜色
+		uint8_t  ammo_num;         // 机器人发射弹丸数目
+//		uint8_t  robot_level;       // 机器人等级
         uint16_t heat_limit_remain; // 剩余热量
-        uint16_t bullet_speed_now;  // 实时弹速
+        uint16_t robot_levels;  // 实时弹速
     } shoot_referee_data;
 } Chassis_board_send_t;
 
@@ -422,8 +428,9 @@ typedef struct{
     uint8_t  chassis_output;                   //!< @brief 底盘电流输出
     uint8_t  Ammo_remain; 
     uint16_t Max_HP;
-    uint16_t Ammo_consume;
+    int16_t Ammo_consume;
     float level_gain;
+	int16_t Ammo_add;
 } Referee_data_t;
 
 /** 自瞄消息处理后数据 **/

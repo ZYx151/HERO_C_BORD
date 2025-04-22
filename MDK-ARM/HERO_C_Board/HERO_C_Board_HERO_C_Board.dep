@@ -1,6 +1,6 @@
 Dependencies for Project 'HERO_C_Board', Target 'HERO_C_Board': (DO NOT MODIFY !)
 CompilerVersion: 6190000::V6.19::ARMCLANG
-F (startup_stm32f407xx.s)(0x68022937)(--target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -masm=auto  -Wa,armasm,--diag_suppress=A1950W -c-gdwarf-4 -Wa,armasm,--pd,"__MICROLIB SETA 1" -I ../Inc -I ../Drivers/CMSIS/Include-I./RTE/_HERO_C_Board-ID:/32/keil_v5/ARM/CMSIS/5.9.0/CMSIS/Core/Include-ID:/32/keil_v5/Keil/STM32F4xx_DFP/2.15.0/Drivers/CMSIS/Device/ST/STM32F4xx/Include-Wa,armasm,--pd,"__UVISION_VERSION SETA 538" -Wa,armasm,--pd,"_RTE_ SETA 1" -Wa,armasm,--pd,"STM32F407xx SETA 1" -Wa,armasm,--pd,"_RTE_ SETA 1"-o hero_c_board/startup_stm32f407xx.o)
+F (startup_stm32f407xx.s)(0x68076F26)(--target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -masm=auto  -Wa,armasm,--diag_suppress=A1950W -c-gdwarf-4 -Wa,armasm,--pd,"__MICROLIB SETA 1" -I ../Inc -I ../Drivers/CMSIS/Include-I./RTE/_HERO_C_Board-ID:/32/keil_v5/ARM/CMSIS/5.9.0/CMSIS/Core/Include-ID:/32/keil_v5/Keil/STM32F4xx_DFP/2.15.0/Drivers/CMSIS/Device/ST/STM32F4xx/Include-Wa,armasm,--pd,"__UVISION_VERSION SETA 538" -Wa,armasm,--pd,"_RTE_ SETA 1" -Wa,armasm,--pd,"STM32F407xx SETA 1" -Wa,armasm,--pd,"_RTE_ SETA 1"-o hero_c_board/startup_stm32f407xx.o)
 F (../Src/main.c)(0x67F79F1D)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__MICROLIB -gdwarf-4 -Ofast -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../bsp -I ../bsp/can -I ../bsp/double_dma -I ../bsp/dwt -I ../bsp/gpio -I ../bsp/iic -I ../bsp/spi -I ../bsp/supervise -I ../bsp/usart -I ../bsp/usb -I ../application -I ../application/Chassis -I ../application/cmd -I ../application/Gimbal -I ../application/Referee -I ../application/Shoot -I ../Modules -I ../Modules/algorithm -I ../Modules/BMI088 -I ../Modules/can_comm -I ../Modules/circular_queue -I ../Modules/controller -I ../Modules/imu -I ../Modules/ist8310 -I ../Modules/motor -I ../Modules/motor/DJIMotor -I ../Modules/motor/DMmotor -I ../Modules/powermodules -I ../Modules/Referee_UI -I ../Modules/remote -I ../Modules/watch_dog -I ../RM_Lib/Inc/sys -I ../RM_Lib/Inc -I ../Drivers/CMSIS/DSP/Include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I ../bsp/buzzer -I ../application/Music -I ../bsp/pwm -I ../Modules/motor/servo_motor-I./RTE/_HERO_C_Board-ID:/32/keil_v5/ARM/CMSIS/5.9.0/CMSIS/Core/Include-ID:/32/keil_v5/Keil/STM32F4xx_DFP/2.15.0/Drivers/CMSIS/Device/ST/STM32F4xx/Include-D__UVISION_VERSION="538" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__TARGET_FPU_VFP -D__CUSTOM_FILE_IO__-o hero_c_board/main.o -MD)
 I (..\Inc\main.h)(0x673948A0)
 I (..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal.h)(0x66DADB6A)
@@ -776,7 +776,7 @@ I (..\Middlewares\Third_Party\FreeRTOS\Source\include\list.h)(0x66DADB43)
 I (..\bsp\usart\bsp_usart.h)(0x67EF2CA7)
 I (..\Inc\usart.h)(0x6748052E)
 I (..\Modules\watch_dog\WatchDog.h)(0x6728AC8E)
-I (D:\32\keil_v5\ARM\ARMCLANG\include\math.h)(0x63884908)
+I (D:\32\keil_v5\ARM\ARMCLANG\include\math.h)(0x68037BCD)
 F (../Src/stm32f4xx_hal_msp.c)(0x67E67A5E)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__MICROLIB -gdwarf-4 -Ofast -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../bsp -I ../bsp/can -I ../bsp/double_dma -I ../bsp/dwt -I ../bsp/gpio -I ../bsp/iic -I ../bsp/spi -I ../bsp/supervise -I ../bsp/usart -I ../bsp/usb -I ../application -I ../application/Chassis -I ../application/cmd -I ../application/Gimbal -I ../application/Referee -I ../application/Shoot -I ../Modules -I ../Modules/algorithm -I ../Modules/BMI088 -I ../Modules/can_comm -I ../Modules/circular_queue -I ../Modules/controller -I ../Modules/imu -I ../Modules/ist8310 -I ../Modules/motor -I ../Modules/motor/DJIMotor -I ../Modules/motor/DMmotor -I ../Modules/powermodules -I ../Modules/Referee_UI -I ../Modules/remote -I ../Modules/watch_dog -I ../RM_Lib/Inc/sys -I ../RM_Lib/Inc -I ../Drivers/CMSIS/DSP/Include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I ../bsp/buzzer -I ../application/Music -I ../bsp/pwm -I ../Modules/motor/servo_motor-I./RTE/_HERO_C_Board-ID:/32/keil_v5/ARM/CMSIS/5.9.0/CMSIS/Core/Include-ID:/32/keil_v5/Keil/STM32F4xx_DFP/2.15.0/Drivers/CMSIS/Device/ST/STM32F4xx/Include-D__UVISION_VERSION="538" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__TARGET_FPU_VFP -D__CUSTOM_FILE_IO__-o hero_c_board/stm32f4xx_hal_msp.o -MD)
 I (..\Inc\main.h)(0x673948A0)
 I (..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal.h)(0x66DADB6A)
@@ -2454,7 +2454,7 @@ I (..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_uart.h)(0x66DADB6A)
 I (..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_pcd.h)(0x66DADB6A)
 I (..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_ll_usb.h)(0x66DADB6A)
 I (..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_pcd_ex.h)(0x66DADB6A)
-I (..\application\cmd\robot_def.h)(0x6800EFBC)
+I (..\application\cmd\robot_def.h)(0x68078AA0)
 I (D:\32\keil_v5\ARM\ARMCLANG\include\stdlib.h)(0x63884908)
 F (..\bsp\dwt\bsp_dwt.c)(0x6784AC35)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__MICROLIB -gdwarf-4 -Ofast -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../bsp -I ../bsp/can -I ../bsp/double_dma -I ../bsp/dwt -I ../bsp/gpio -I ../bsp/iic -I ../bsp/spi -I ../bsp/supervise -I ../bsp/usart -I ../bsp/usb -I ../application -I ../application/Chassis -I ../application/cmd -I ../application/Gimbal -I ../application/Referee -I ../application/Shoot -I ../Modules -I ../Modules/algorithm -I ../Modules/BMI088 -I ../Modules/can_comm -I ../Modules/circular_queue -I ../Modules/controller -I ../Modules/imu -I ../Modules/ist8310 -I ../Modules/motor -I ../Modules/motor/DJIMotor -I ../Modules/motor/DMmotor -I ../Modules/powermodules -I ../Modules/Referee_UI -I ../Modules/remote -I ../Modules/watch_dog -I ../RM_Lib/Inc/sys -I ../RM_Lib/Inc -I ../Drivers/CMSIS/DSP/Include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I ../bsp/buzzer -I ../application/Music -I ../bsp/pwm -I ../Modules/motor/servo_motor-I./RTE/_HERO_C_Board-ID:/32/keil_v5/ARM/CMSIS/5.9.0/CMSIS/Core/Include-ID:/32/keil_v5/Keil/STM32F4xx_DFP/2.15.0/Drivers/CMSIS/Device/ST/STM32F4xx/Include-D__UVISION_VERSION="538" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__TARGET_FPU_VFP -D__CUSTOM_FILE_IO__-o hero_c_board/bsp_dwt.o -MD)
 I (..\bsp\dwt\bsp_dwt.h)(0x673B2596)
@@ -2893,9 +2893,9 @@ I (..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_pcd_ex.h)(0x66DADB6A)
 I (D:\32\keil_v5\ARM\ARMCLANG\include\string.h)(0x63884908)
 F (..\bsp\usb\usb_typdef.h)(0x67CAF268)()
 F (..\bsp\bsp_def.h)(0x67393DF6)()
-F (..\application\cmd\Gimbal_board_cmd.c)(0x68022A08)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__MICROLIB -gdwarf-4 -Ofast -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../bsp -I ../bsp/can -I ../bsp/double_dma -I ../bsp/dwt -I ../bsp/gpio -I ../bsp/iic -I ../bsp/spi -I ../bsp/supervise -I ../bsp/usart -I ../bsp/usb -I ../application -I ../application/Chassis -I ../application/cmd -I ../application/Gimbal -I ../application/Referee -I ../application/Shoot -I ../Modules -I ../Modules/algorithm -I ../Modules/BMI088 -I ../Modules/can_comm -I ../Modules/circular_queue -I ../Modules/controller -I ../Modules/imu -I ../Modules/ist8310 -I ../Modules/motor -I ../Modules/motor/DJIMotor -I ../Modules/motor/DMmotor -I ../Modules/powermodules -I ../Modules/Referee_UI -I ../Modules/remote -I ../Modules/watch_dog -I ../RM_Lib/Inc/sys -I ../RM_Lib/Inc -I ../Drivers/CMSIS/DSP/Include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I ../bsp/buzzer -I ../application/Music -I ../bsp/pwm -I ../Modules/motor/servo_motor-I./RTE/_HERO_C_Board-ID:/32/keil_v5/ARM/CMSIS/5.9.0/CMSIS/Core/Include-ID:/32/keil_v5/Keil/STM32F4xx_DFP/2.15.0/Drivers/CMSIS/Device/ST/STM32F4xx/Include-D__UVISION_VERSION="538" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__TARGET_FPU_VFP -D__CUSTOM_FILE_IO__-o hero_c_board/gimbal_board_cmd.o -MD)
+F (..\application\cmd\Gimbal_board_cmd.c)(0x68078ACC)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__MICROLIB -gdwarf-4 -Ofast -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../bsp -I ../bsp/can -I ../bsp/double_dma -I ../bsp/dwt -I ../bsp/gpio -I ../bsp/iic -I ../bsp/spi -I ../bsp/supervise -I ../bsp/usart -I ../bsp/usb -I ../application -I ../application/Chassis -I ../application/cmd -I ../application/Gimbal -I ../application/Referee -I ../application/Shoot -I ../Modules -I ../Modules/algorithm -I ../Modules/BMI088 -I ../Modules/can_comm -I ../Modules/circular_queue -I ../Modules/controller -I ../Modules/imu -I ../Modules/ist8310 -I ../Modules/motor -I ../Modules/motor/DJIMotor -I ../Modules/motor/DMmotor -I ../Modules/powermodules -I ../Modules/Referee_UI -I ../Modules/remote -I ../Modules/watch_dog -I ../RM_Lib/Inc/sys -I ../RM_Lib/Inc -I ../Drivers/CMSIS/DSP/Include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I ../bsp/buzzer -I ../application/Music -I ../bsp/pwm -I ../Modules/motor/servo_motor-I./RTE/_HERO_C_Board-ID:/32/keil_v5/ARM/CMSIS/5.9.0/CMSIS/Core/Include-ID:/32/keil_v5/Keil/STM32F4xx_DFP/2.15.0/Drivers/CMSIS/Device/ST/STM32F4xx/Include-D__UVISION_VERSION="538" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__TARGET_FPU_VFP -D__CUSTOM_FILE_IO__-o hero_c_board/gimbal_board_cmd.o -MD)
 I (..\application\cmd\Gimbal_board_cmd.h)(0x673C8E7C)
-I (..\application\cmd\robot_def.h)(0x6800EFBC)
+I (..\application\cmd\robot_def.h)(0x68078AA0)
 I (D:\32\keil_v5\ARM\ARMCLANG\include\stdint.h)(0x63884908)
 I (D:\32\keil_v5\ARM\ARMCLANG\include\stdlib.h)(0x63884908)
 I (..\application\Task_Init.h)(0x67DBF365)
@@ -2955,7 +2955,7 @@ I (..\Modules\motor\motor_def.h)(0x67A88FB4)
 I (..\Modules\controller\Controller.h)(0x67A889AD)
 I (..\bsp\dwt\bsp_dwt.h)(0x673B2596)
 I (..\Inc\main.h)(0x673948A0)
-I (D:\32\keil_v5\ARM\ARMCLANG\include\math.h)(0x63884908)
+I (D:\32\keil_v5\ARM\ARMCLANG\include\math.h)(0x68037BCD)
 I (..\Drivers\CMSIS\DSP\Include\arm_math.h)(0x66DADB41)
 I (..\Drivers\CMSIS\DSP\Include\arm_math_types.h)(0x66DADB41)
 I (D:\32\keil_v5\ARM\ARMCLANG\include\float.h)(0x63884908)
@@ -3002,7 +3002,7 @@ I (..\Modules\algorithm\QuaternionEKF.h)(0x66598D42)
 I (..\Modules\algorithm\kalman_filter.h)(0x674EF708)
 I (..\Modules\controller\user_lib.h)(0x67A95426)
 I (..\Middlewares\Third_Party\FreeRTOS\Source\CMSIS_RTOS_V2\cmsis_os.h)(0x66DADB43)
-F (..\application\cmd\Chassis_board_cmd.c)(0x67E7D80F)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__MICROLIB -gdwarf-4 -Ofast -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../bsp -I ../bsp/can -I ../bsp/double_dma -I ../bsp/dwt -I ../bsp/gpio -I ../bsp/iic -I ../bsp/spi -I ../bsp/supervise -I ../bsp/usart -I ../bsp/usb -I ../application -I ../application/Chassis -I ../application/cmd -I ../application/Gimbal -I ../application/Referee -I ../application/Shoot -I ../Modules -I ../Modules/algorithm -I ../Modules/BMI088 -I ../Modules/can_comm -I ../Modules/circular_queue -I ../Modules/controller -I ../Modules/imu -I ../Modules/ist8310 -I ../Modules/motor -I ../Modules/motor/DJIMotor -I ../Modules/motor/DMmotor -I ../Modules/powermodules -I ../Modules/Referee_UI -I ../Modules/remote -I ../Modules/watch_dog -I ../RM_Lib/Inc/sys -I ../RM_Lib/Inc -I ../Drivers/CMSIS/DSP/Include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I ../bsp/buzzer -I ../application/Music -I ../bsp/pwm -I ../Modules/motor/servo_motor-I./RTE/_HERO_C_Board-ID:/32/keil_v5/ARM/CMSIS/5.9.0/CMSIS/Core/Include-ID:/32/keil_v5/Keil/STM32F4xx_DFP/2.15.0/Drivers/CMSIS/Device/ST/STM32F4xx/Include-D__UVISION_VERSION="538" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__TARGET_FPU_VFP -D__CUSTOM_FILE_IO__-o hero_c_board/chassis_board_cmd.o -MD)
+F (..\application\cmd\Chassis_board_cmd.c)(0x68078B24)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__MICROLIB -gdwarf-4 -Ofast -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../bsp -I ../bsp/can -I ../bsp/double_dma -I ../bsp/dwt -I ../bsp/gpio -I ../bsp/iic -I ../bsp/spi -I ../bsp/supervise -I ../bsp/usart -I ../bsp/usb -I ../application -I ../application/Chassis -I ../application/cmd -I ../application/Gimbal -I ../application/Referee -I ../application/Shoot -I ../Modules -I ../Modules/algorithm -I ../Modules/BMI088 -I ../Modules/can_comm -I ../Modules/circular_queue -I ../Modules/controller -I ../Modules/imu -I ../Modules/ist8310 -I ../Modules/motor -I ../Modules/motor/DJIMotor -I ../Modules/motor/DMmotor -I ../Modules/powermodules -I ../Modules/Referee_UI -I ../Modules/remote -I ../Modules/watch_dog -I ../RM_Lib/Inc/sys -I ../RM_Lib/Inc -I ../Drivers/CMSIS/DSP/Include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I ../bsp/buzzer -I ../application/Music -I ../bsp/pwm -I ../Modules/motor/servo_motor-I./RTE/_HERO_C_Board-ID:/32/keil_v5/ARM/CMSIS/5.9.0/CMSIS/Core/Include-ID:/32/keil_v5/Keil/STM32F4xx_DFP/2.15.0/Drivers/CMSIS/Device/ST/STM32F4xx/Include-D__UVISION_VERSION="538" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__TARGET_FPU_VFP -D__CUSTOM_FILE_IO__-o hero_c_board/chassis_board_cmd.o -MD)
 I (..\application\cmd\Chassis_board_cmd.h)(0x6751ACCC)
 I (..\Modules\can_comm\can_comm.h)(0x6784714D)
 I (..\bsp\can\bsp_can.h)(0x67847101)
@@ -3063,7 +3063,7 @@ I (..\Middlewares\Third_Party\FreeRTOS\Source\include\task.h)(0x66DADB43)
 I (..\Middlewares\Third_Party\FreeRTOS\Source\include\list.h)(0x66DADB43)
 I (..\Modules\watch_dog\WatchDog.h)(0x6728AC8E)
 I (..\bsp\supervise\bsp_supervise.h)(0x671A433A)
-I (..\application\cmd\robot_def.h)(0x6800EFBC)
+I (..\application\cmd\robot_def.h)(0x68078AA0)
 I (..\Modules\pub_sub.h)(0x671F549E)
 I (..\RM_Lib\Inc\RMQueue.h)(0x6710D718)
 I (..\bsp\dwt\bsp_dwt.h)(0x673B2596)
@@ -3077,7 +3077,7 @@ I (..\Modules\controller\user_lib.h)(0x67A95426)
 I (..\Middlewares\Third_Party\FreeRTOS\Source\CMSIS_RTOS_V2\cmsis_os.h)(0x66DADB43)
 I (..\Drivers\CMSIS\DSP\Include\arm_math.h)(0x66DADB41)
 I (..\Drivers\CMSIS\DSP\Include\arm_math_types.h)(0x66DADB41)
-I (D:\32\keil_v5\ARM\ARMCLANG\include\math.h)(0x63884908)
+I (D:\32\keil_v5\ARM\ARMCLANG\include\math.h)(0x68037BCD)
 I (D:\32\keil_v5\ARM\ARMCLANG\include\float.h)(0x63884908)
 I (D:\32\keil_v5\ARM\ARMCLANG\include\limits.h)(0x63884908)
 I (..\Drivers\CMSIS\DSP\Include\arm_math_memory.h)(0x66DADB41)
@@ -3100,7 +3100,7 @@ I (..\Drivers\CMSIS\DSP\Include\dsp\filtering_functions.h)(0x66DADB41)
 I (..\Drivers\CMSIS\DSP\Include\dsp\quaternion_math_functions.h)(0x66DADB41)
 I (..\Modules\controller\controller.h)(0x67A889AD)
 I (..\application\Referee\Referee.h)(0x67307604)
-F (..\application\cmd\robot_def.h)(0x6800EFBC)()
+F (..\application\cmd\robot_def.h)(0x68078AA0)()
 F (..\application\Task_Init.c)(0x67FFBBBD)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__MICROLIB -gdwarf-4 -Ofast -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../bsp -I ../bsp/can -I ../bsp/double_dma -I ../bsp/dwt -I ../bsp/gpio -I ../bsp/iic -I ../bsp/spi -I ../bsp/supervise -I ../bsp/usart -I ../bsp/usb -I ../application -I ../application/Chassis -I ../application/cmd -I ../application/Gimbal -I ../application/Referee -I ../application/Shoot -I ../Modules -I ../Modules/algorithm -I ../Modules/BMI088 -I ../Modules/can_comm -I ../Modules/circular_queue -I ../Modules/controller -I ../Modules/imu -I ../Modules/ist8310 -I ../Modules/motor -I ../Modules/motor/DJIMotor -I ../Modules/motor/DMmotor -I ../Modules/powermodules -I ../Modules/Referee_UI -I ../Modules/remote -I ../Modules/watch_dog -I ../RM_Lib/Inc/sys -I ../RM_Lib/Inc -I ../Drivers/CMSIS/DSP/Include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I ../bsp/buzzer -I ../application/Music -I ../bsp/pwm -I ../Modules/motor/servo_motor-I./RTE/_HERO_C_Board-ID:/32/keil_v5/ARM/CMSIS/5.9.0/CMSIS/Core/Include-ID:/32/keil_v5/Keil/STM32F4xx_DFP/2.15.0/Drivers/CMSIS/Device/ST/STM32F4xx/Include-D__UVISION_VERSION="538" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__TARGET_FPU_VFP -D__CUSTOM_FILE_IO__-o hero_c_board/task_init.o -MD)
 I (..\application\Task_Init.h)(0x67DBF365)
 I (..\Middlewares\Third_Party\FreeRTOS\Source\include\FreeRTOS.h)(0x66DADB43)
@@ -3162,7 +3162,7 @@ I (..\Inc\usart.h)(0x6748052E)
 I (..\Modules\remote\remote.h)(0x67E8B71D)
 I (..\Modules\watch_dog\WatchDog.h)(0x6728AC8E)
 I (..\bsp\usart\bsp_usart.h)(0x67EF2CA7)
-I (..\application\cmd\robot_def.h)(0x6800EFBC)
+I (..\application\cmd\robot_def.h)(0x68078AA0)
 I (..\Modules\imu\ins_task.h)(0x676559F6)
 I (..\Modules\imu\BMI088driver.h)(0x673B2AC4)
 I (..\Modules\algorithm\QuaternionEKF.h)(0x66598D42)
@@ -3171,7 +3171,7 @@ I (..\Modules\controller\user_lib.h)(0x67A95426)
 I (..\Middlewares\Third_Party\FreeRTOS\Source\CMSIS_RTOS_V2\cmsis_os.h)(0x66DADB43)
 I (..\Drivers\CMSIS\DSP\Include\arm_math.h)(0x66DADB41)
 I (..\Drivers\CMSIS\DSP\Include\arm_math_types.h)(0x66DADB41)
-I (D:\32\keil_v5\ARM\ARMCLANG\include\math.h)(0x63884908)
+I (D:\32\keil_v5\ARM\ARMCLANG\include\math.h)(0x68037BCD)
 I (D:\32\keil_v5\ARM\ARMCLANG\include\float.h)(0x63884908)
 I (D:\32\keil_v5\ARM\ARMCLANG\include\limits.h)(0x63884908)
 I (..\Drivers\CMSIS\DSP\Include\arm_math_memory.h)(0x66DADB41)
@@ -3250,7 +3250,7 @@ I (..\Middlewares\Third_Party\FreeRTOS\Source\include\mpu_wrappers.h)(0x66DADB43
 I (..\Middlewares\Third_Party\FreeRTOS\Source\CMSIS_RTOS_V2\cmsis_os2.h)(0x66DADB43)
 I (..\Middlewares\Third_Party\FreeRTOS\Source\include\task.h)(0x66DADB43)
 I (..\Middlewares\Third_Party\FreeRTOS\Source\include\list.h)(0x66DADB43)
-I (..\Modules\Referee_UI\Referee_unpack.h)(0x67F10B03)
+I (..\Modules\Referee_UI\Referee_unpack.h)(0x680780D5)
 I (..\RM_Lib\Inc\RMQueue.h)(0x6710D718)
 I (..\RM_Lib\Inc\CRC.h)(0x676BD011)
 I (..\Modules\imu\ins_task.h)(0x676559F6)
@@ -3262,7 +3262,7 @@ I (..\Modules\controller\user_lib.h)(0x67A95426)
 I (..\Middlewares\Third_Party\FreeRTOS\Source\CMSIS_RTOS_V2\cmsis_os.h)(0x66DADB43)
 I (..\Drivers\CMSIS\DSP\Include\arm_math.h)(0x66DADB41)
 I (..\Drivers\CMSIS\DSP\Include\arm_math_types.h)(0x66DADB41)
-I (D:\32\keil_v5\ARM\ARMCLANG\include\math.h)(0x63884908)
+I (D:\32\keil_v5\ARM\ARMCLANG\include\math.h)(0x68037BCD)
 I (D:\32\keil_v5\ARM\ARMCLANG\include\float.h)(0x63884908)
 I (D:\32\keil_v5\ARM\ARMCLANG\include\limits.h)(0x63884908)
 I (..\Drivers\CMSIS\DSP\Include\arm_math_memory.h)(0x66DADB41)
@@ -3290,7 +3290,7 @@ I (D:\32\keil_v5\ARM\ARMCLANG\include\stdbool.h)(0x63884908)
 I (..\bsp\usb\usb_typdef.h)(0x67CAF268)
 I (..\bsp\usb\attribute_typedef.h)(0x66CFCEB6)
 I (..\bsp\usb\struct_typedef.h)(0x67DBF28E)
-I (..\application\cmd\robot_def.h)(0x6800EFBC)
+I (..\application\cmd\robot_def.h)(0x68078AA0)
 F (..\application\Task_Protect.c)(0x67F70479)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__MICROLIB -gdwarf-4 -Ofast -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../bsp -I ../bsp/can -I ../bsp/double_dma -I ../bsp/dwt -I ../bsp/gpio -I ../bsp/iic -I ../bsp/spi -I ../bsp/supervise -I ../bsp/usart -I ../bsp/usb -I ../application -I ../application/Chassis -I ../application/cmd -I ../application/Gimbal -I ../application/Referee -I ../application/Shoot -I ../Modules -I ../Modules/algorithm -I ../Modules/BMI088 -I ../Modules/can_comm -I ../Modules/circular_queue -I ../Modules/controller -I ../Modules/imu -I ../Modules/ist8310 -I ../Modules/motor -I ../Modules/motor/DJIMotor -I ../Modules/motor/DMmotor -I ../Modules/powermodules -I ../Modules/Referee_UI -I ../Modules/remote -I ../Modules/watch_dog -I ../RM_Lib/Inc/sys -I ../RM_Lib/Inc -I ../Drivers/CMSIS/DSP/Include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I ../bsp/buzzer -I ../application/Music -I ../bsp/pwm -I ../Modules/motor/servo_motor-I./RTE/_HERO_C_Board-ID:/32/keil_v5/ARM/CMSIS/5.9.0/CMSIS/Core/Include-ID:/32/keil_v5/Keil/STM32F4xx_DFP/2.15.0/Drivers/CMSIS/Device/ST/STM32F4xx/Include-D__UVISION_VERSION="538" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__TARGET_FPU_VFP -D__CUSTOM_FILE_IO__-o hero_c_board/task_protect.o -MD)
 I (..\application\Task_Protect.h)(0x66F7E8B2)
 I (..\application\Task_Init.h)(0x67DBF365)
@@ -3409,52 +3409,16 @@ I (..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_pcd.h)(0x66DADB6A)
 I (..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_ll_usb.h)(0x66DADB6A)
 I (..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_pcd_ex.h)(0x66DADB6A)
 I (..\Middlewares\Third_Party\FreeRTOS\Source\CMSIS_RTOS_V2\cmsis_os2.h)(0x66DADB43)
-I (..\application\cmd\robot_def.h)(0x6800EFBC)
-I (..\application\cmd\Gimbal_board_cmd.h)(0x673C8E7C)
-I (..\bsp\dwt\bsp_dwt.h)(0x673B2596)
-I (..\Inc\main.h)(0x673948A0)
-I (..\application\Gimbal\Gimbal.h)(0x67CA5ACD)
-I (..\application\Shoot\Shoot.h)(0x671DACA6)
-I (..\Modules\motor\DJIMotor\DJIMotor.h)(0x67CA4203)
-I (..\Modules\motor\motor_def.h)(0x67A88FB4)
-I (..\Modules\controller\Controller.h)(0x67A889AD)
-I (D:\32\keil_v5\ARM\ARMCLANG\include\math.h)(0x63884908)
-I (..\Drivers\CMSIS\DSP\Include\arm_math.h)(0x66DADB41)
-I (..\Drivers\CMSIS\DSP\Include\arm_math_types.h)(0x66DADB41)
-I (D:\32\keil_v5\ARM\ARMCLANG\include\float.h)(0x63884908)
-I (D:\32\keil_v5\ARM\ARMCLANG\include\limits.h)(0x63884908)
-I (..\Drivers\CMSIS\DSP\Include\arm_math_memory.h)(0x66DADB41)
-I (..\Drivers\CMSIS\DSP\Include\dsp\none.h)(0x66DADB41)
-I (..\Drivers\CMSIS\DSP\Include\dsp\utils.h)(0x66DADB41)
-I (..\Drivers\CMSIS\DSP\Include\dsp\basic_math_functions.h)(0x66DADB41)
-I (..\Drivers\CMSIS\DSP\Include\dsp\interpolation_functions.h)(0x66DADB41)
-I (..\Drivers\CMSIS\DSP\Include\dsp\bayes_functions.h)(0x66DADB41)
-I (..\Drivers\CMSIS\DSP\Include\dsp\statistics_functions.h)(0x66DADB41)
-I (..\Drivers\CMSIS\DSP\Include\dsp\fast_math_functions.h)(0x66DADB41)
-I (..\Drivers\CMSIS\DSP\Include\dsp\matrix_functions.h)(0x66DADB41)
-I (..\Drivers\CMSIS\DSP\Include\dsp\complex_math_functions.h)(0x66DADB41)
-I (..\Drivers\CMSIS\DSP\Include\dsp\controller_functions.h)(0x66DADB41)
-I (..\Drivers\CMSIS\DSP\Include\dsp\support_functions.h)(0x66DADB41)
-I (..\Drivers\CMSIS\DSP\Include\dsp\distance_functions.h)(0x66DADB41)
-I (..\Drivers\CMSIS\DSP\Include\dsp\svm_functions.h)(0x66DADB41)
-I (..\Drivers\CMSIS\DSP\Include\dsp\svm_defines.h)(0x66DADB41)
-I (..\Drivers\CMSIS\DSP\Include\dsp\transform_functions.h)(0x66DADB41)
-I (..\Drivers\CMSIS\DSP\Include\dsp\filtering_functions.h)(0x66DADB41)
-I (..\Drivers\CMSIS\DSP\Include\dsp\quaternion_math_functions.h)(0x66DADB41)
+I (..\application\cmd\robot_def.h)(0x68078AA0)
+I (..\application\cmd\Chassis_board_cmd.h)(0x6751ACCC)
+I (..\Modules\can_comm\can_comm.h)(0x6784714D)
 I (..\bsp\can\bsp_can.h)(0x67847101)
 I (..\Inc\can.h)(0x6739489E)
+I (..\Inc\main.h)(0x673948A0)
 I (..\Modules\watch_dog\WatchDog.h)(0x6728AC8E)
-I (..\RM_Lib\Inc\PID.h)(0x67DC0DC7)
-I (..\RM_Lib\Inc\motor.h)(0x67CA5EDB)
-I (..\RM_Lib\Inc\CANDrive.h)(0x652921F8)
-I (..\RM_Lib\Inc\RMQueue.h)(0x6710D718)
-I (..\Modules\pub_sub.h)(0x671F549E)
-I (..\Modules\motor\DMmotor\DMmotor.h)(0x67A9AFD4)
-I (..\Modules\controller\user_lib.h)(0x67A95426)
-I (..\Middlewares\Third_Party\FreeRTOS\Source\CMSIS_RTOS_V2\cmsis_os.h)(0x66DADB43)
-I (..\Modules\remote\remote.h)(0x67E8B71D)
-I (..\bsp\usart\bsp_usart.h)(0x67EF2CA7)
-I (..\Inc\usart.h)(0x6748052E)
+I (..\bsp\supervise\bsp_supervise.h)(0x671A433A)
+I (..\application\Chassis\Chassis.h)(0x6802E614)
+I (..\application\Referee\Referee.h)(0x67307604)
 F (..\Modules\imu\ins_task.c)(0x67EE6B4E)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__MICROLIB -gdwarf-4 -Ofast -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../bsp -I ../bsp/can -I ../bsp/double_dma -I ../bsp/dwt -I ../bsp/gpio -I ../bsp/iic -I ../bsp/spi -I ../bsp/supervise -I ../bsp/usart -I ../bsp/usb -I ../application -I ../application/Chassis -I ../application/cmd -I ../application/Gimbal -I ../application/Referee -I ../application/Shoot -I ../Modules -I ../Modules/algorithm -I ../Modules/BMI088 -I ../Modules/can_comm -I ../Modules/circular_queue -I ../Modules/controller -I ../Modules/imu -I ../Modules/ist8310 -I ../Modules/motor -I ../Modules/motor/DJIMotor -I ../Modules/motor/DMmotor -I ../Modules/powermodules -I ../Modules/Referee_UI -I ../Modules/remote -I ../Modules/watch_dog -I ../RM_Lib/Inc/sys -I ../RM_Lib/Inc -I ../Drivers/CMSIS/DSP/Include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I ../bsp/buzzer -I ../application/Music -I ../bsp/pwm -I ../Modules/motor/servo_motor-I./RTE/_HERO_C_Board-ID:/32/keil_v5/ARM/CMSIS/5.9.0/CMSIS/Core/Include-ID:/32/keil_v5/Keil/STM32F4xx_DFP/2.15.0/Drivers/CMSIS/Device/ST/STM32F4xx/Include-D__UVISION_VERSION="538" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__TARGET_FPU_VFP -D__CUSTOM_FILE_IO__-o hero_c_board/ins_task.o -MD)
 I (..\Modules\imu\ins_task.h)(0x676559F6)
 I (D:\32\keil_v5\ARM\ARMCLANG\include\stdint.h)(0x63884908)
@@ -3516,7 +3480,7 @@ I (..\Middlewares\Third_Party\FreeRTOS\Source\CMSIS_RTOS_V2\cmsis_os2.h)(0x66DAD
 I (..\Drivers\CMSIS\DSP\Include\arm_math.h)(0x66DADB41)
 I (..\Drivers\CMSIS\DSP\Include\arm_math_types.h)(0x66DADB41)
 I (D:\32\keil_v5\ARM\ARMCLANG\include\string.h)(0x63884908)
-I (D:\32\keil_v5\ARM\ARMCLANG\include\math.h)(0x63884908)
+I (D:\32\keil_v5\ARM\ARMCLANG\include\math.h)(0x68037BCD)
 I (D:\32\keil_v5\ARM\ARMCLANG\include\float.h)(0x63884908)
 I (D:\32\keil_v5\ARM\ARMCLANG\include\limits.h)(0x63884908)
 I (..\Drivers\CMSIS\DSP\Include\arm_math_memory.h)(0x66DADB41)
@@ -3604,7 +3568,7 @@ I (..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_pcd.h)(0x66DADB6A)
 I (..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_ll_usb.h)(0x66DADB6A)
 I (..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_pcd_ex.h)(0x66DADB6A)
 I (..\Middlewares\Third_Party\FreeRTOS\Source\CMSIS_RTOS_V2\cmsis_os2.h)(0x66DADB43)
-I (..\application\cmd\robot_def.h)(0x6800EFBC)
+I (..\application\cmd\robot_def.h)(0x68078AA0)
 I (..\bsp\buzzer\bsp_buzzer.h)(0x67DBF40E)
 I (..\bsp\usb\struct_typedef.h)(0x67DBF28E)
 I (D:\32\keil_v5\ARM\ARMCLANG\include\stdbool.h)(0x63884908)
@@ -3670,7 +3634,7 @@ I (..\bsp\usart\bsp_usart.h)(0x67EF2CA7)
 I (..\Inc\main.h)(0x673948A0)
 I (..\Inc\usart.h)(0x6748052E)
 I (D:\32\keil_v5\ARM\ARMCLANG\include\time.h)(0x63884908)
-I (D:\32\keil_v5\ARM\ARMCLANG\include\math.h)(0x63884908)
+I (D:\32\keil_v5\ARM\ARMCLANG\include\math.h)(0x68037BCD)
 F (..\Modules\imu\BMI088driver.c)(0x67596702)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__MICROLIB -gdwarf-4 -Ofast -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../bsp -I ../bsp/can -I ../bsp/double_dma -I ../bsp/dwt -I ../bsp/gpio -I ../bsp/iic -I ../bsp/spi -I ../bsp/supervise -I ../bsp/usart -I ../bsp/usb -I ../application -I ../application/Chassis -I ../application/cmd -I ../application/Gimbal -I ../application/Referee -I ../application/Shoot -I ../Modules -I ../Modules/algorithm -I ../Modules/BMI088 -I ../Modules/can_comm -I ../Modules/circular_queue -I ../Modules/controller -I ../Modules/imu -I ../Modules/ist8310 -I ../Modules/motor -I ../Modules/motor/DJIMotor -I ../Modules/motor/DMmotor -I ../Modules/powermodules -I ../Modules/Referee_UI -I ../Modules/remote -I ../Modules/watch_dog -I ../RM_Lib/Inc/sys -I ../RM_Lib/Inc -I ../Drivers/CMSIS/DSP/Include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I ../bsp/buzzer -I ../application/Music -I ../bsp/pwm -I ../Modules/motor/servo_motor-I./RTE/_HERO_C_Board-ID:/32/keil_v5/ARM/CMSIS/5.9.0/CMSIS/Core/Include-ID:/32/keil_v5/Keil/STM32F4xx_DFP/2.15.0/Drivers/CMSIS/Device/ST/STM32F4xx/Include-D__UVISION_VERSION="538" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__TARGET_FPU_VFP -D__CUSTOM_FILE_IO__-o hero_c_board/bmi088driver.o -MD)
 I (..\Modules\imu\BMI088driver.h)(0x673B2AC4)
 I (D:\32\keil_v5\ARM\ARMCLANG\include\stdint.h)(0x63884908)
@@ -3717,7 +3681,7 @@ I (..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_pcd_ex.h)(0x66DADB6A)
 I (..\Modules\imu\BMI088reg.h)(0x66598D44)
 I (..\Modules\imu\BMI088Middleware.h)(0x66598D42)
 I (..\bsp\dwt\bsp_dwt.h)(0x673B2596)
-I (D:\32\keil_v5\ARM\ARMCLANG\include\math.h)(0x63884908)
+I (D:\32\keil_v5\ARM\ARMCLANG\include\math.h)(0x68037BCD)
 F (..\Modules\imu\BMI088reg.h)(0x66598D44)()
 F (..\Modules\ist8310\ist8310.c)(0x6738933E)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__MICROLIB -gdwarf-4 -Ofast -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../bsp -I ../bsp/can -I ../bsp/double_dma -I ../bsp/dwt -I ../bsp/gpio -I ../bsp/iic -I ../bsp/spi -I ../bsp/supervise -I ../bsp/usart -I ../bsp/usb -I ../application -I ../application/Chassis -I ../application/cmd -I ../application/Gimbal -I ../application/Referee -I ../application/Shoot -I ../Modules -I ../Modules/algorithm -I ../Modules/BMI088 -I ../Modules/can_comm -I ../Modules/circular_queue -I ../Modules/controller -I ../Modules/imu -I ../Modules/ist8310 -I ../Modules/motor -I ../Modules/motor/DJIMotor -I ../Modules/motor/DMmotor -I ../Modules/powermodules -I ../Modules/Referee_UI -I ../Modules/remote -I ../Modules/watch_dog -I ../RM_Lib/Inc/sys -I ../RM_Lib/Inc -I ../Drivers/CMSIS/DSP/Include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I ../bsp/buzzer -I ../application/Music -I ../bsp/pwm -I ../Modules/motor/servo_motor-I./RTE/_HERO_C_Board-ID:/32/keil_v5/ARM/CMSIS/5.9.0/CMSIS/Core/Include-ID:/32/keil_v5/Keil/STM32F4xx_DFP/2.15.0/Drivers/CMSIS/Device/ST/STM32F4xx/Include-D__UVISION_VERSION="538" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__TARGET_FPU_VFP -D__CUSTOM_FILE_IO__-o hero_c_board/ist8310.o -MD)
 I (..\bsp\dwt\bsp_dwt.h)(0x673B2596)
@@ -4008,7 +3972,7 @@ I (..\bsp\usart\bsp_usart.h)(0x67EF2CA7)
 I (..\Inc\main.h)(0x673948A0)
 I (..\Inc\usart.h)(0x6748052E)
 I (..\RM_Lib\Inc\PID.h)(0x67DC0DC7)
-I (D:\32\keil_v5\ARM\ARMCLANG\include\math.h)(0x63884908)
+I (D:\32\keil_v5\ARM\ARMCLANG\include\math.h)(0x68037BCD)
 F (..\Modules\watch_dog\WatchDog.c)(0x67A970A6)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__MICROLIB -gdwarf-4 -Ofast -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../bsp -I ../bsp/can -I ../bsp/double_dma -I ../bsp/dwt -I ../bsp/gpio -I ../bsp/iic -I ../bsp/spi -I ../bsp/supervise -I ../bsp/usart -I ../bsp/usb -I ../application -I ../application/Chassis -I ../application/cmd -I ../application/Gimbal -I ../application/Referee -I ../application/Shoot -I ../Modules -I ../Modules/algorithm -I ../Modules/BMI088 -I ../Modules/can_comm -I ../Modules/circular_queue -I ../Modules/controller -I ../Modules/imu -I ../Modules/ist8310 -I ../Modules/motor -I ../Modules/motor/DJIMotor -I ../Modules/motor/DMmotor -I ../Modules/powermodules -I ../Modules/Referee_UI -I ../Modules/remote -I ../Modules/watch_dog -I ../RM_Lib/Inc/sys -I ../RM_Lib/Inc -I ../Drivers/CMSIS/DSP/Include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I ../bsp/buzzer -I ../application/Music -I ../bsp/pwm -I ../Modules/motor/servo_motor-I./RTE/_HERO_C_Board-ID:/32/keil_v5/ARM/CMSIS/5.9.0/CMSIS/Core/Include-ID:/32/keil_v5/Keil/STM32F4xx_DFP/2.15.0/Drivers/CMSIS/Device/ST/STM32F4xx/Include-D__UVISION_VERSION="538" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__TARGET_FPU_VFP -D__CUSTOM_FILE_IO__-o hero_c_board/watchdog.o -MD)
 I (..\Modules\watch_dog\WatchDog.h)(0x6728AC8E)
 I (..\RM_Lib\Inc\RMLibHead.h)(0x6745A886)
@@ -4224,7 +4188,7 @@ I (..\Middlewares\Third_Party\FreeRTOS\Source\CMSIS_RTOS_V2\cmsis_os2.h)(0x66DAD
 I (..\Drivers\CMSIS\DSP\Include\arm_math.h)(0x66DADB41)
 I (..\Drivers\CMSIS\DSP\Include\arm_math_types.h)(0x66DADB41)
 I (D:\32\keil_v5\ARM\ARMCLANG\include\string.h)(0x63884908)
-I (D:\32\keil_v5\ARM\ARMCLANG\include\math.h)(0x63884908)
+I (D:\32\keil_v5\ARM\ARMCLANG\include\math.h)(0x68037BCD)
 I (D:\32\keil_v5\ARM\ARMCLANG\include\float.h)(0x63884908)
 I (D:\32\keil_v5\ARM\ARMCLANG\include\limits.h)(0x63884908)
 I (..\Drivers\CMSIS\DSP\Include\arm_math_memory.h)(0x66DADB41)
@@ -4252,7 +4216,7 @@ I (..\bsp\dwt\bsp_dwt.h)(0x673B2596)
 F (..\Modules\algorithm\adrc.c)(0x6728B894)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__MICROLIB -gdwarf-4 -Ofast -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../bsp -I ../bsp/can -I ../bsp/double_dma -I ../bsp/dwt -I ../bsp/gpio -I ../bsp/iic -I ../bsp/spi -I ../bsp/supervise -I ../bsp/usart -I ../bsp/usb -I ../application -I ../application/Chassis -I ../application/cmd -I ../application/Gimbal -I ../application/Referee -I ../application/Shoot -I ../Modules -I ../Modules/algorithm -I ../Modules/BMI088 -I ../Modules/can_comm -I ../Modules/circular_queue -I ../Modules/controller -I ../Modules/imu -I ../Modules/ist8310 -I ../Modules/motor -I ../Modules/motor/DJIMotor -I ../Modules/motor/DMmotor -I ../Modules/powermodules -I ../Modules/Referee_UI -I ../Modules/remote -I ../Modules/watch_dog -I ../RM_Lib/Inc/sys -I ../RM_Lib/Inc -I ../Drivers/CMSIS/DSP/Include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I ../bsp/buzzer -I ../application/Music -I ../bsp/pwm -I ../Modules/motor/servo_motor-I./RTE/_HERO_C_Board-ID:/32/keil_v5/ARM/CMSIS/5.9.0/CMSIS/Core/Include-ID:/32/keil_v5/Keil/STM32F4xx_DFP/2.15.0/Drivers/CMSIS/Device/ST/STM32F4xx/Include-D__UVISION_VERSION="538" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__TARGET_FPU_VFP -D__CUSTOM_FILE_IO__-o hero_c_board/adrc.o -MD)
 I (..\Modules\algorithm\adrc.h)(0x66ED65A0)
 I (D:\32\keil_v5\ARM\ARMCLANG\include\string.h)(0x63884908)
-I (D:\32\keil_v5\ARM\ARMCLANG\include\math.h)(0x63884908)
+I (D:\32\keil_v5\ARM\ARMCLANG\include\math.h)(0x68037BCD)
 I (..\Modules\controller\controller.h)(0x67A889AD)
 I (..\RM_Lib\Inc\RMLibHead.h)(0x6745A886)
 I (D:\32\keil_v5\ARM\ARMCLANG\include\stdlib.h)(0x63884908)
@@ -4389,7 +4353,7 @@ I (..\Middlewares\Third_Party\FreeRTOS\Source\CMSIS_RTOS_V2\cmsis_os2.h)(0x66DAD
 I (..\Drivers\CMSIS\DSP\Include\arm_math.h)(0x66DADB41)
 I (..\Drivers\CMSIS\DSP\Include\arm_math_types.h)(0x66DADB41)
 I (D:\32\keil_v5\ARM\ARMCLANG\include\string.h)(0x63884908)
-I (D:\32\keil_v5\ARM\ARMCLANG\include\math.h)(0x63884908)
+I (D:\32\keil_v5\ARM\ARMCLANG\include\math.h)(0x68037BCD)
 I (D:\32\keil_v5\ARM\ARMCLANG\include\float.h)(0x63884908)
 I (D:\32\keil_v5\ARM\ARMCLANG\include\limits.h)(0x63884908)
 I (..\Drivers\CMSIS\DSP\Include\arm_math_memory.h)(0x66DADB41)
@@ -4471,7 +4435,7 @@ I (..\Middlewares\Third_Party\FreeRTOS\Source\include\task.h)(0x66DADB43)
 I (..\Middlewares\Third_Party\FreeRTOS\Source\include\list.h)(0x66DADB43)
 I (..\bsp\dwt\bsp_dwt.h)(0x673B2596)
 I (..\Inc\main.h)(0x673948A0)
-I (D:\32\keil_v5\ARM\ARMCLANG\include\math.h)(0x63884908)
+I (D:\32\keil_v5\ARM\ARMCLANG\include\math.h)(0x68037BCD)
 I (..\Drivers\CMSIS\DSP\Include\arm_math.h)(0x66DADB41)
 I (..\Drivers\CMSIS\DSP\Include\arm_math_types.h)(0x66DADB41)
 I (D:\32\keil_v5\ARM\ARMCLANG\include\float.h)(0x63884908)
@@ -4553,7 +4517,7 @@ I (..\Middlewares\Third_Party\FreeRTOS\Source\CMSIS_RTOS_V2\cmsis_os2.h)(0x66DAD
 I (..\Drivers\CMSIS\DSP\Include\arm_math.h)(0x66DADB41)
 I (..\Drivers\CMSIS\DSP\Include\arm_math_types.h)(0x66DADB41)
 I (D:\32\keil_v5\ARM\ARMCLANG\include\string.h)(0x63884908)
-I (D:\32\keil_v5\ARM\ARMCLANG\include\math.h)(0x63884908)
+I (D:\32\keil_v5\ARM\ARMCLANG\include\math.h)(0x68037BCD)
 I (D:\32\keil_v5\ARM\ARMCLANG\include\float.h)(0x63884908)
 I (D:\32\keil_v5\ARM\ARMCLANG\include\limits.h)(0x63884908)
 I (..\Drivers\CMSIS\DSP\Include\arm_math_memory.h)(0x66DADB41)
@@ -4577,7 +4541,7 @@ I (..\Drivers\CMSIS\DSP\Include\dsp\quaternion_math_functions.h)(0x66DADB41)
 I (D:\32\keil_v5\ARM\ARMCLANG\include\stdlib.h)(0x63884908)
 F (..\Modules\algorithm\slope.c)(0x674AC57C)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__MICROLIB -gdwarf-4 -Ofast -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../bsp -I ../bsp/can -I ../bsp/double_dma -I ../bsp/dwt -I ../bsp/gpio -I ../bsp/iic -I ../bsp/spi -I ../bsp/supervise -I ../bsp/usart -I ../bsp/usb -I ../application -I ../application/Chassis -I ../application/cmd -I ../application/Gimbal -I ../application/Referee -I ../application/Shoot -I ../Modules -I ../Modules/algorithm -I ../Modules/BMI088 -I ../Modules/can_comm -I ../Modules/circular_queue -I ../Modules/controller -I ../Modules/imu -I ../Modules/ist8310 -I ../Modules/motor -I ../Modules/motor/DJIMotor -I ../Modules/motor/DMmotor -I ../Modules/powermodules -I ../Modules/Referee_UI -I ../Modules/remote -I ../Modules/watch_dog -I ../RM_Lib/Inc/sys -I ../RM_Lib/Inc -I ../Drivers/CMSIS/DSP/Include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I ../bsp/buzzer -I ../application/Music -I ../bsp/pwm -I ../Modules/motor/servo_motor-I./RTE/_HERO_C_Board-ID:/32/keil_v5/ARM/CMSIS/5.9.0/CMSIS/Core/Include-ID:/32/keil_v5/Keil/STM32F4xx_DFP/2.15.0/Drivers/CMSIS/Device/ST/STM32F4xx/Include-D__UVISION_VERSION="538" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__TARGET_FPU_VFP -D__CUSTOM_FILE_IO__-o hero_c_board/slope.o -MD)
 I (..\Modules\algorithm\slope.h)(0x6749B506)
-I (D:\32\keil_v5\ARM\ARMCLANG\include\math.h)(0x63884908)
+I (D:\32\keil_v5\ARM\ARMCLANG\include\math.h)(0x68037BCD)
 F (..\Modules\algorithm\Matrix.c)(0x67CA3EDB)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__MICROLIB -gdwarf-4 -Ofast -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../bsp -I ../bsp/can -I ../bsp/double_dma -I ../bsp/dwt -I ../bsp/gpio -I ../bsp/iic -I ../bsp/spi -I ../bsp/supervise -I ../bsp/usart -I ../bsp/usb -I ../application -I ../application/Chassis -I ../application/cmd -I ../application/Gimbal -I ../application/Referee -I ../application/Shoot -I ../Modules -I ../Modules/algorithm -I ../Modules/BMI088 -I ../Modules/can_comm -I ../Modules/circular_queue -I ../Modules/controller -I ../Modules/imu -I ../Modules/ist8310 -I ../Modules/motor -I ../Modules/motor/DJIMotor -I ../Modules/motor/DMmotor -I ../Modules/powermodules -I ../Modules/Referee_UI -I ../Modules/remote -I ../Modules/watch_dog -I ../RM_Lib/Inc/sys -I ../RM_Lib/Inc -I ../Drivers/CMSIS/DSP/Include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I ../bsp/buzzer -I ../application/Music -I ../bsp/pwm -I ../Modules/motor/servo_motor-I./RTE/_HERO_C_Board-ID:/32/keil_v5/ARM/CMSIS/5.9.0/CMSIS/Core/Include-ID:/32/keil_v5/Keil/STM32F4xx_DFP/2.15.0/Drivers/CMSIS/Device/ST/STM32F4xx/Include-D__UVISION_VERSION="538" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__TARGET_FPU_VFP -D__CUSTOM_FILE_IO__-o hero_c_board/matrix.o -MD)
 I (..\Modules\algorithm\Matrix.h)(0x67CA3ED2)
 I (..\RM_Lib\Inc\RMLibHead.h)(0x6745A886)
@@ -4633,7 +4597,7 @@ I (..\Middlewares\Third_Party\FreeRTOS\Source\include\mpu_wrappers.h)(0x66DADB43
 I (..\Middlewares\Third_Party\FreeRTOS\Source\CMSIS_RTOS_V2\cmsis_os2.h)(0x66DADB43)
 I (..\Middlewares\Third_Party\FreeRTOS\Source\include\task.h)(0x66DADB43)
 I (..\Middlewares\Third_Party\FreeRTOS\Source\include\list.h)(0x66DADB43)
-I (D:\32\keil_v5\ARM\ARMCLANG\include\math.h)(0x63884908)
+I (D:\32\keil_v5\ARM\ARMCLANG\include\math.h)(0x68037BCD)
 I (..\Drivers\CMSIS\DSP\Include\arm_math.h)(0x66DADB41)
 I (..\Drivers\CMSIS\DSP\Include\arm_math_types.h)(0x66DADB41)
 I (D:\32\keil_v5\ARM\ARMCLANG\include\float.h)(0x63884908)
@@ -4656,6 +4620,87 @@ I (..\Drivers\CMSIS\DSP\Include\dsp\svm_defines.h)(0x66DADB41)
 I (..\Drivers\CMSIS\DSP\Include\dsp\transform_functions.h)(0x66DADB41)
 I (..\Drivers\CMSIS\DSP\Include\dsp\filtering_functions.h)(0x66DADB41)
 I (..\Drivers\CMSIS\DSP\Include\dsp\quaternion_math_functions.h)(0x66DADB41)
+F (..\Modules\algorithm\fsm.c)(0x68077E36)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__MICROLIB -gdwarf-4 -Ofast -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../bsp -I ../bsp/can -I ../bsp/double_dma -I ../bsp/dwt -I ../bsp/gpio -I ../bsp/iic -I ../bsp/spi -I ../bsp/supervise -I ../bsp/usart -I ../bsp/usb -I ../application -I ../application/Chassis -I ../application/cmd -I ../application/Gimbal -I ../application/Referee -I ../application/Shoot -I ../Modules -I ../Modules/algorithm -I ../Modules/BMI088 -I ../Modules/can_comm -I ../Modules/circular_queue -I ../Modules/controller -I ../Modules/imu -I ../Modules/ist8310 -I ../Modules/motor -I ../Modules/motor/DJIMotor -I ../Modules/motor/DMmotor -I ../Modules/powermodules -I ../Modules/Referee_UI -I ../Modules/remote -I ../Modules/watch_dog -I ../RM_Lib/Inc/sys -I ../RM_Lib/Inc -I ../Drivers/CMSIS/DSP/Include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I ../bsp/buzzer -I ../application/Music -I ../bsp/pwm -I ../Modules/motor/servo_motor-I./RTE/_HERO_C_Board-ID:/32/keil_v5/ARM/CMSIS/5.9.0/CMSIS/Core/Include-ID:/32/keil_v5/Keil/STM32F4xx_DFP/2.15.0/Drivers/CMSIS/Device/ST/STM32F4xx/Include-D__UVISION_VERSION="538" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__TARGET_FPU_VFP -D__CUSTOM_FILE_IO__-o hero_c_board/fsm.o -MD)
+I (..\Modules\algorithm\fsm.h)(0x68077F63)
+I (..\Modules\controller\user_lib.h)(0x67A95426)
+I (D:\32\keil_v5\ARM\ARMCLANG\include\stdint.h)(0x63884908)
+I (..\Inc\main.h)(0x673948A0)
+I (..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal.h)(0x66DADB6A)
+I (..\Inc\stm32f4xx_hal_conf.h)(0x67F79F1D)
+I (..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_rcc.h)(0x66DADB6A)
+I (..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_def.h)(0x66DADB6A)
+I (..\Drivers\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h)(0x66DADB6A)
+I (..\Drivers\CMSIS\Device\ST\STM32F4xx\Include\stm32f407xx.h)(0x66DADB6A)
+I (..\Drivers\CMSIS\Include\core_cm4.h)(0x66DADB41)
+I (..\Drivers\CMSIS\Include\cmsis_version.h)(0x66DADB41)
+I (..\Drivers\CMSIS\Include\cmsis_compiler.h)(0x66DADB41)
+I (..\Drivers\CMSIS\Include\cmsis_armclang.h)(0x66DADB41)
+I (..\Drivers\CMSIS\Include\mpu_armv7.h)(0x66DADB41)
+I (..\Drivers\CMSIS\Device\ST\STM32F4xx\Include\system_stm32f4xx.h)(0x66DADB6A)
+I (..\Drivers\STM32F4xx_HAL_Driver\Inc\Legacy\stm32_hal_legacy.h)(0x66DADB6A)
+I (D:\32\keil_v5\ARM\ARMCLANG\include\stddef.h)(0x63884908)
+I (..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_rcc_ex.h)(0x66DADB6A)
+I (..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_gpio.h)(0x66DADB6A)
+I (..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_gpio_ex.h)(0x66DADB6A)
+I (..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_exti.h)(0x66DADB6A)
+I (..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_dma.h)(0x66DADB6A)
+I (..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_dma_ex.h)(0x66DADB6A)
+I (..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_cortex.h)(0x66DADB6A)
+I (..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_can.h)(0x66DADB6A)
+I (..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_flash.h)(0x66DADB6A)
+I (..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_flash_ex.h)(0x66DADB6A)
+I (..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_flash_ramfunc.h)(0x66DADB6A)
+I (..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_i2c.h)(0x66DADB6A)
+I (..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_i2c_ex.h)(0x66DADB6A)
+I (..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_pwr.h)(0x66DADB6A)
+I (..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_pwr_ex.h)(0x66DADB6A)
+I (..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_rng.h)(0x66DADB6A)
+I (..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_rtc.h)(0x66DADB6A)
+I (..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_rtc_ex.h)(0x66DADB6A)
+I (..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_spi.h)(0x66DADB6A)
+I (..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_tim.h)(0x66DADB6A)
+I (..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_tim_ex.h)(0x66DADB6A)
+I (..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_uart.h)(0x66DADB6A)
+I (..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_pcd.h)(0x66DADB6A)
+I (..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_ll_usb.h)(0x66DADB6A)
+I (..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_pcd_ex.h)(0x66DADB6A)
+I (..\Middlewares\Third_Party\FreeRTOS\Source\CMSIS_RTOS_V2\cmsis_os.h)(0x66DADB43)
+I (..\Middlewares\Third_Party\FreeRTOS\Source\include\FreeRTOS.h)(0x66DADB43)
+I (..\Inc\FreeRTOSConfig.h)(0x6745A74C)
+I (..\Middlewares\Third_Party\FreeRTOS\Source\include\projdefs.h)(0x66DADB43)
+I (..\Middlewares\Third_Party\FreeRTOS\Source\include\portable.h)(0x66DADB43)
+I (..\Middlewares\Third_Party\FreeRTOS\Source\include\deprecated_definitions.h)(0x66DADB43)
+I (..\Middlewares\Third_Party\FreeRTOS\Source\portable\RVDS\ARM_CM4F\portmacro.h)(0x66DADB43)
+I (..\Middlewares\Third_Party\FreeRTOS\Source\include\mpu_wrappers.h)(0x66DADB43)
+I (..\Middlewares\Third_Party\FreeRTOS\Source\include\task.h)(0x66DADB43)
+I (..\Middlewares\Third_Party\FreeRTOS\Source\include\list.h)(0x66DADB43)
+I (..\Middlewares\Third_Party\FreeRTOS\Source\CMSIS_RTOS_V2\cmsis_os2.h)(0x66DADB43)
+I (..\Drivers\CMSIS\DSP\Include\arm_math.h)(0x66DADB41)
+I (..\Drivers\CMSIS\DSP\Include\arm_math_types.h)(0x66DADB41)
+I (D:\32\keil_v5\ARM\ARMCLANG\include\string.h)(0x63884908)
+I (D:\32\keil_v5\ARM\ARMCLANG\include\math.h)(0x68037BCD)
+I (D:\32\keil_v5\ARM\ARMCLANG\include\float.h)(0x63884908)
+I (D:\32\keil_v5\ARM\ARMCLANG\include\limits.h)(0x63884908)
+I (..\Drivers\CMSIS\DSP\Include\arm_math_memory.h)(0x66DADB41)
+I (..\Drivers\CMSIS\DSP\Include\dsp\none.h)(0x66DADB41)
+I (..\Drivers\CMSIS\DSP\Include\dsp\utils.h)(0x66DADB41)
+I (..\Drivers\CMSIS\DSP\Include\dsp\basic_math_functions.h)(0x66DADB41)
+I (..\Drivers\CMSIS\DSP\Include\dsp\interpolation_functions.h)(0x66DADB41)
+I (..\Drivers\CMSIS\DSP\Include\dsp\bayes_functions.h)(0x66DADB41)
+I (..\Drivers\CMSIS\DSP\Include\dsp\statistics_functions.h)(0x66DADB41)
+I (..\Drivers\CMSIS\DSP\Include\dsp\fast_math_functions.h)(0x66DADB41)
+I (..\Drivers\CMSIS\DSP\Include\dsp\matrix_functions.h)(0x66DADB41)
+I (..\Drivers\CMSIS\DSP\Include\dsp\complex_math_functions.h)(0x66DADB41)
+I (..\Drivers\CMSIS\DSP\Include\dsp\controller_functions.h)(0x66DADB41)
+I (..\Drivers\CMSIS\DSP\Include\dsp\support_functions.h)(0x66DADB41)
+I (..\Drivers\CMSIS\DSP\Include\dsp\distance_functions.h)(0x66DADB41)
+I (..\Drivers\CMSIS\DSP\Include\dsp\svm_functions.h)(0x66DADB41)
+I (..\Drivers\CMSIS\DSP\Include\dsp\svm_defines.h)(0x66DADB41)
+I (..\Drivers\CMSIS\DSP\Include\dsp\transform_functions.h)(0x66DADB41)
+I (..\Drivers\CMSIS\DSP\Include\dsp\filtering_functions.h)(0x66DADB41)
+I (..\Drivers\CMSIS\DSP\Include\dsp\quaternion_math_functions.h)(0x66DADB41)
+I (D:\32\keil_v5\ARM\ARMCLANG\include\stdlib.h)(0x63884908)
+F (..\Modules\algorithm\fsm.h)(0x68077F63)()
 F (..\Modules\powermodules\RLS.c)(0x67C9AC3D)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__MICROLIB -gdwarf-4 -Ofast -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../bsp -I ../bsp/can -I ../bsp/double_dma -I ../bsp/dwt -I ../bsp/gpio -I ../bsp/iic -I ../bsp/spi -I ../bsp/supervise -I ../bsp/usart -I ../bsp/usb -I ../application -I ../application/Chassis -I ../application/cmd -I ../application/Gimbal -I ../application/Referee -I ../application/Shoot -I ../Modules -I ../Modules/algorithm -I ../Modules/BMI088 -I ../Modules/can_comm -I ../Modules/circular_queue -I ../Modules/controller -I ../Modules/imu -I ../Modules/ist8310 -I ../Modules/motor -I ../Modules/motor/DJIMotor -I ../Modules/motor/DMmotor -I ../Modules/powermodules -I ../Modules/Referee_UI -I ../Modules/remote -I ../Modules/watch_dog -I ../RM_Lib/Inc/sys -I ../RM_Lib/Inc -I ../Drivers/CMSIS/DSP/Include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I ../bsp/buzzer -I ../application/Music -I ../bsp/pwm -I ../Modules/motor/servo_motor-I./RTE/_HERO_C_Board-ID:/32/keil_v5/ARM/CMSIS/5.9.0/CMSIS/Core/Include-ID:/32/keil_v5/Keil/STM32F4xx_DFP/2.15.0/Drivers/CMSIS/Device/ST/STM32F4xx/Include-D__UVISION_VERSION="538" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__TARGET_FPU_VFP -D__CUSTOM_FILE_IO__-o hero_c_board/rls.o -MD)
 I (..\Modules\powermodules\RLS.h)(0x67C9ABF8)
 I (..\Modules\algorithm\Matrix.h)(0x67CA3ED2)
@@ -4712,7 +4757,7 @@ I (..\Middlewares\Third_Party\FreeRTOS\Source\include\mpu_wrappers.h)(0x66DADB43
 I (..\Middlewares\Third_Party\FreeRTOS\Source\CMSIS_RTOS_V2\cmsis_os2.h)(0x66DADB43)
 I (..\Middlewares\Third_Party\FreeRTOS\Source\include\task.h)(0x66DADB43)
 I (..\Middlewares\Third_Party\FreeRTOS\Source\include\list.h)(0x66DADB43)
-I (D:\32\keil_v5\ARM\ARMCLANG\include\math.h)(0x63884908)
+I (D:\32\keil_v5\ARM\ARMCLANG\include\math.h)(0x68037BCD)
 I (..\Drivers\CMSIS\DSP\Include\arm_math.h)(0x66DADB41)
 I (..\Drivers\CMSIS\DSP\Include\arm_math_types.h)(0x66DADB41)
 I (D:\32\keil_v5\ARM\ARMCLANG\include\float.h)(0x63884908)
@@ -4742,7 +4787,7 @@ I (..\Inc\main.h)(0x673948A0)
 I (..\Middlewares\Third_Party\FreeRTOS\Source\CMSIS_RTOS_V2\cmsis_os.h)(0x66DADB43)
 I (..\Modules\controller\controller.h)(0x67A889AD)
 I (..\bsp\dwt\bsp_dwt.h)(0x673B2596)
-F (..\Modules\powermodules\powercontroller.c)(0x67F7BBB1)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__MICROLIB -gdwarf-4 -Ofast -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../bsp -I ../bsp/can -I ../bsp/double_dma -I ../bsp/dwt -I ../bsp/gpio -I ../bsp/iic -I ../bsp/spi -I ../bsp/supervise -I ../bsp/usart -I ../bsp/usb -I ../application -I ../application/Chassis -I ../application/cmd -I ../application/Gimbal -I ../application/Referee -I ../application/Shoot -I ../Modules -I ../Modules/algorithm -I ../Modules/BMI088 -I ../Modules/can_comm -I ../Modules/circular_queue -I ../Modules/controller -I ../Modules/imu -I ../Modules/ist8310 -I ../Modules/motor -I ../Modules/motor/DJIMotor -I ../Modules/motor/DMmotor -I ../Modules/powermodules -I ../Modules/Referee_UI -I ../Modules/remote -I ../Modules/watch_dog -I ../RM_Lib/Inc/sys -I ../RM_Lib/Inc -I ../Drivers/CMSIS/DSP/Include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I ../bsp/buzzer -I ../application/Music -I ../bsp/pwm -I ../Modules/motor/servo_motor-I./RTE/_HERO_C_Board-ID:/32/keil_v5/ARM/CMSIS/5.9.0/CMSIS/Core/Include-ID:/32/keil_v5/Keil/STM32F4xx_DFP/2.15.0/Drivers/CMSIS/Device/ST/STM32F4xx/Include-D__UVISION_VERSION="538" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__TARGET_FPU_VFP -D__CUSTOM_FILE_IO__-o hero_c_board/powercontroller.o -MD)
+F (..\Modules\powermodules\powercontroller.c)(0x6803B5B3)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__MICROLIB -gdwarf-4 -Ofast -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../bsp -I ../bsp/can -I ../bsp/double_dma -I ../bsp/dwt -I ../bsp/gpio -I ../bsp/iic -I ../bsp/spi -I ../bsp/supervise -I ../bsp/usart -I ../bsp/usb -I ../application -I ../application/Chassis -I ../application/cmd -I ../application/Gimbal -I ../application/Referee -I ../application/Shoot -I ../Modules -I ../Modules/algorithm -I ../Modules/BMI088 -I ../Modules/can_comm -I ../Modules/circular_queue -I ../Modules/controller -I ../Modules/imu -I ../Modules/ist8310 -I ../Modules/motor -I ../Modules/motor/DJIMotor -I ../Modules/motor/DMmotor -I ../Modules/powermodules -I ../Modules/Referee_UI -I ../Modules/remote -I ../Modules/watch_dog -I ../RM_Lib/Inc/sys -I ../RM_Lib/Inc -I ../Drivers/CMSIS/DSP/Include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I ../bsp/buzzer -I ../application/Music -I ../bsp/pwm -I ../Modules/motor/servo_motor-I./RTE/_HERO_C_Board-ID:/32/keil_v5/ARM/CMSIS/5.9.0/CMSIS/Core/Include-ID:/32/keil_v5/Keil/STM32F4xx_DFP/2.15.0/Drivers/CMSIS/Device/ST/STM32F4xx/Include-D__UVISION_VERSION="538" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__TARGET_FPU_VFP -D__CUSTOM_FILE_IO__-o hero_c_board/powercontroller.o -MD)
 I (..\Modules\powermodules\powercontroller.h)(0x67EE8669)
 I (..\Modules\motor\DJIMotor\DJIMotor.h)(0x67CA4203)
 I (D:\32\keil_v5\ARM\ARMCLANG\include\stdint.h)(0x63884908)
@@ -4802,7 +4847,7 @@ I (..\Middlewares\Third_Party\FreeRTOS\Source\include\task.h)(0x66DADB43)
 I (..\Middlewares\Third_Party\FreeRTOS\Source\include\list.h)(0x66DADB43)
 I (..\bsp\dwt\bsp_dwt.h)(0x673B2596)
 I (..\Inc\main.h)(0x673948A0)
-I (D:\32\keil_v5\ARM\ARMCLANG\include\math.h)(0x63884908)
+I (D:\32\keil_v5\ARM\ARMCLANG\include\math.h)(0x68037BCD)
 I (..\Drivers\CMSIS\DSP\Include\arm_math.h)(0x66DADB41)
 I (..\Drivers\CMSIS\DSP\Include\arm_math_types.h)(0x66DADB41)
 I (D:\32\keil_v5\ARM\ARMCLANG\include\float.h)(0x63884908)
@@ -4832,7 +4877,7 @@ I (..\RM_Lib\Inc\PID.h)(0x67DC0DC7)
 I (..\RM_Lib\Inc\motor.h)(0x67CA5EDB)
 I (..\RM_Lib\Inc\CANDrive.h)(0x652921F8)
 I (..\RM_Lib\Inc\RMQueue.h)(0x6710D718)
-I (..\Modules\Referee_UI\Referee_unpack.h)(0x67F10B03)
+I (..\Modules\Referee_UI\Referee_unpack.h)(0x680780D5)
 I (..\RM_Lib\Inc\CRC.h)(0x676BD011)
 I (..\Modules\algorithm\Matrix.h)(0x67CA3ED2)
 I (..\Modules\powermodules\RLS.h)(0x67C9ABF8)
@@ -4840,7 +4885,7 @@ I (..\Modules\algorithm\QuaternionEKF.h)(0x66598D42)
 I (..\Modules\algorithm\kalman_filter.h)(0x674EF708)
 I (..\Modules\controller\user_lib.h)(0x67A95426)
 I (..\Middlewares\Third_Party\FreeRTOS\Source\CMSIS_RTOS_V2\cmsis_os.h)(0x66DADB43)
-I (..\application\cmd\robot_def.h)(0x6800EFBC)
+I (..\application\cmd\robot_def.h)(0x68078AA0)
 I (..\Modules\pub_sub.h)(0x671F549E)
 I (..\application\Task_Init.h)(0x67DBF365)
 I (..\Modules\powermodules\SuperCAP.h)(0x67EE61F9)
@@ -4891,9 +4936,9 @@ I (..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_pcd_ex.h)(0x66DADB6A)
 I (..\Inc\can.h)(0x6739489E)
 I (..\Inc\main.h)(0x673948A0)
 I (..\bsp\dwt\bsp_dwt.h)(0x673B2596)
-F (..\application\Gimbal\Gimbal.c)(0x6800EBDE)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__MICROLIB -gdwarf-4 -Ofast -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../bsp -I ../bsp/can -I ../bsp/double_dma -I ../bsp/dwt -I ../bsp/gpio -I ../bsp/iic -I ../bsp/spi -I ../bsp/supervise -I ../bsp/usart -I ../bsp/usb -I ../application -I ../application/Chassis -I ../application/cmd -I ../application/Gimbal -I ../application/Referee -I ../application/Shoot -I ../Modules -I ../Modules/algorithm -I ../Modules/BMI088 -I ../Modules/can_comm -I ../Modules/circular_queue -I ../Modules/controller -I ../Modules/imu -I ../Modules/ist8310 -I ../Modules/motor -I ../Modules/motor/DJIMotor -I ../Modules/motor/DMmotor -I ../Modules/powermodules -I ../Modules/Referee_UI -I ../Modules/remote -I ../Modules/watch_dog -I ../RM_Lib/Inc/sys -I ../RM_Lib/Inc -I ../Drivers/CMSIS/DSP/Include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I ../bsp/buzzer -I ../application/Music -I ../bsp/pwm -I ../Modules/motor/servo_motor-I./RTE/_HERO_C_Board-ID:/32/keil_v5/ARM/CMSIS/5.9.0/CMSIS/Core/Include-ID:/32/keil_v5/Keil/STM32F4xx_DFP/2.15.0/Drivers/CMSIS/Device/ST/STM32F4xx/Include-D__UVISION_VERSION="538" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__TARGET_FPU_VFP -D__CUSTOM_FILE_IO__-o hero_c_board/gimbal.o -MD)
+F (..\application\Gimbal\Gimbal.c)(0x68076FCF)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__MICROLIB -gdwarf-4 -Ofast -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../bsp -I ../bsp/can -I ../bsp/double_dma -I ../bsp/dwt -I ../bsp/gpio -I ../bsp/iic -I ../bsp/spi -I ../bsp/supervise -I ../bsp/usart -I ../bsp/usb -I ../application -I ../application/Chassis -I ../application/cmd -I ../application/Gimbal -I ../application/Referee -I ../application/Shoot -I ../Modules -I ../Modules/algorithm -I ../Modules/BMI088 -I ../Modules/can_comm -I ../Modules/circular_queue -I ../Modules/controller -I ../Modules/imu -I ../Modules/ist8310 -I ../Modules/motor -I ../Modules/motor/DJIMotor -I ../Modules/motor/DMmotor -I ../Modules/powermodules -I ../Modules/Referee_UI -I ../Modules/remote -I ../Modules/watch_dog -I ../RM_Lib/Inc/sys -I ../RM_Lib/Inc -I ../Drivers/CMSIS/DSP/Include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I ../bsp/buzzer -I ../application/Music -I ../bsp/pwm -I ../Modules/motor/servo_motor-I./RTE/_HERO_C_Board-ID:/32/keil_v5/ARM/CMSIS/5.9.0/CMSIS/Core/Include-ID:/32/keil_v5/Keil/STM32F4xx_DFP/2.15.0/Drivers/CMSIS/Device/ST/STM32F4xx/Include-D__UVISION_VERSION="538" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__TARGET_FPU_VFP -D__CUSTOM_FILE_IO__-o hero_c_board/gimbal.o -MD)
 I (..\application\Gimbal\Gimbal.h)(0x67CA5ACD)
-I (..\application\cmd\robot_def.h)(0x6800EFBC)
+I (..\application\cmd\robot_def.h)(0x68078AA0)
 I (D:\32\keil_v5\ARM\ARMCLANG\include\stdint.h)(0x63884908)
 I (D:\32\keil_v5\ARM\ARMCLANG\include\stdlib.h)(0x63884908)
 I (..\Modules\motor\DJIMotor\DJIMotor.h)(0x67CA4203)
@@ -4952,7 +4997,7 @@ I (..\Middlewares\Third_Party\FreeRTOS\Source\include\task.h)(0x66DADB43)
 I (..\Middlewares\Third_Party\FreeRTOS\Source\include\list.h)(0x66DADB43)
 I (..\bsp\dwt\bsp_dwt.h)(0x673B2596)
 I (..\Inc\main.h)(0x673948A0)
-I (D:\32\keil_v5\ARM\ARMCLANG\include\math.h)(0x63884908)
+I (D:\32\keil_v5\ARM\ARMCLANG\include\math.h)(0x68037BCD)
 I (..\Drivers\CMSIS\DSP\Include\arm_math.h)(0x66DADB41)
 I (..\Drivers\CMSIS\DSP\Include\arm_math_types.h)(0x66DADB41)
 I (D:\32\keil_v5\ARM\ARMCLANG\include\float.h)(0x63884908)
@@ -4998,7 +5043,7 @@ I (..\bsp\usb\attribute_typedef.h)(0x66CFCEB6)
 I (..\bsp\usb\struct_typedef.h)(0x67DBF28E)
 I (D:\32\keil_v5\ARM\ARMCLANG\include\stdbool.h)(0x63884908)
 F (..\application\Gimbal\Gimbal.h)(0x67CA5ACD)()
-F (..\application\Shoot\Shoot.c)(0x6800EF15)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__MICROLIB -gdwarf-4 -Ofast -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../bsp -I ../bsp/can -I ../bsp/double_dma -I ../bsp/dwt -I ../bsp/gpio -I ../bsp/iic -I ../bsp/spi -I ../bsp/supervise -I ../bsp/usart -I ../bsp/usb -I ../application -I ../application/Chassis -I ../application/cmd -I ../application/Gimbal -I ../application/Referee -I ../application/Shoot -I ../Modules -I ../Modules/algorithm -I ../Modules/BMI088 -I ../Modules/can_comm -I ../Modules/circular_queue -I ../Modules/controller -I ../Modules/imu -I ../Modules/ist8310 -I ../Modules/motor -I ../Modules/motor/DJIMotor -I ../Modules/motor/DMmotor -I ../Modules/powermodules -I ../Modules/Referee_UI -I ../Modules/remote -I ../Modules/watch_dog -I ../RM_Lib/Inc/sys -I ../RM_Lib/Inc -I ../Drivers/CMSIS/DSP/Include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I ../bsp/buzzer -I ../application/Music -I ../bsp/pwm -I ../Modules/motor/servo_motor-I./RTE/_HERO_C_Board-ID:/32/keil_v5/ARM/CMSIS/5.9.0/CMSIS/Core/Include-ID:/32/keil_v5/Keil/STM32F4xx_DFP/2.15.0/Drivers/CMSIS/Device/ST/STM32F4xx/Include-D__UVISION_VERSION="538" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__TARGET_FPU_VFP -D__CUSTOM_FILE_IO__-o hero_c_board/shoot.o -MD)
+F (..\application\Shoot\Shoot.c)(0x68078ABA)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__MICROLIB -gdwarf-4 -Ofast -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../bsp -I ../bsp/can -I ../bsp/double_dma -I ../bsp/dwt -I ../bsp/gpio -I ../bsp/iic -I ../bsp/spi -I ../bsp/supervise -I ../bsp/usart -I ../bsp/usb -I ../application -I ../application/Chassis -I ../application/cmd -I ../application/Gimbal -I ../application/Referee -I ../application/Shoot -I ../Modules -I ../Modules/algorithm -I ../Modules/BMI088 -I ../Modules/can_comm -I ../Modules/circular_queue -I ../Modules/controller -I ../Modules/imu -I ../Modules/ist8310 -I ../Modules/motor -I ../Modules/motor/DJIMotor -I ../Modules/motor/DMmotor -I ../Modules/powermodules -I ../Modules/Referee_UI -I ../Modules/remote -I ../Modules/watch_dog -I ../RM_Lib/Inc/sys -I ../RM_Lib/Inc -I ../Drivers/CMSIS/DSP/Include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I ../bsp/buzzer -I ../application/Music -I ../bsp/pwm -I ../Modules/motor/servo_motor-I./RTE/_HERO_C_Board-ID:/32/keil_v5/ARM/CMSIS/5.9.0/CMSIS/Core/Include-ID:/32/keil_v5/Keil/STM32F4xx_DFP/2.15.0/Drivers/CMSIS/Device/ST/STM32F4xx/Include-D__UVISION_VERSION="538" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__TARGET_FPU_VFP -D__CUSTOM_FILE_IO__-o hero_c_board/shoot.o -MD)
 I (..\application\Shoot\Shoot.h)(0x671DACA6)
 I (..\Modules\motor\DJIMotor\DJIMotor.h)(0x67CA4203)
 I (D:\32\keil_v5\ARM\ARMCLANG\include\stdint.h)(0x63884908)
@@ -5058,7 +5103,7 @@ I (..\Middlewares\Third_Party\FreeRTOS\Source\include\task.h)(0x66DADB43)
 I (..\Middlewares\Third_Party\FreeRTOS\Source\include\list.h)(0x66DADB43)
 I (..\bsp\dwt\bsp_dwt.h)(0x673B2596)
 I (..\Inc\main.h)(0x673948A0)
-I (D:\32\keil_v5\ARM\ARMCLANG\include\math.h)(0x63884908)
+I (D:\32\keil_v5\ARM\ARMCLANG\include\math.h)(0x68037BCD)
 I (..\Drivers\CMSIS\DSP\Include\arm_math.h)(0x66DADB41)
 I (..\Drivers\CMSIS\DSP\Include\arm_math_types.h)(0x66DADB41)
 I (D:\32\keil_v5\ARM\ARMCLANG\include\float.h)(0x63884908)
@@ -5089,7 +5134,7 @@ I (..\RM_Lib\Inc\motor.h)(0x67CA5EDB)
 I (..\RM_Lib\Inc\CANDrive.h)(0x652921F8)
 I (..\RM_Lib\Inc\RMQueue.h)(0x6710D718)
 I (..\Modules\pub_sub.h)(0x671F549E)
-I (..\application\cmd\robot_def.h)(0x6800EFBC)
+I (..\application\cmd\robot_def.h)(0x68078AA0)
 I (..\Modules\controller\user_lib.h)(0x67A95426)
 I (..\Middlewares\Third_Party\FreeRTOS\Source\CMSIS_RTOS_V2\cmsis_os.h)(0x66DADB43)
 I (..\bsp\usb\usb_typdef.h)(0x67CAF268)
@@ -5097,7 +5142,7 @@ I (..\bsp\usb\attribute_typedef.h)(0x66CFCEB6)
 I (..\bsp\usb\struct_typedef.h)(0x67DBF28E)
 I (D:\32\keil_v5\ARM\ARMCLANG\include\stdbool.h)(0x63884908)
 F (..\application\Shoot\Shoot.h)(0x671DACA6)()
-F (..\application\Referee\Referee.c)(0x67F77F49)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__MICROLIB -gdwarf-4 -Ofast -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../bsp -I ../bsp/can -I ../bsp/double_dma -I ../bsp/dwt -I ../bsp/gpio -I ../bsp/iic -I ../bsp/spi -I ../bsp/supervise -I ../bsp/usart -I ../bsp/usb -I ../application -I ../application/Chassis -I ../application/cmd -I ../application/Gimbal -I ../application/Referee -I ../application/Shoot -I ../Modules -I ../Modules/algorithm -I ../Modules/BMI088 -I ../Modules/can_comm -I ../Modules/circular_queue -I ../Modules/controller -I ../Modules/imu -I ../Modules/ist8310 -I ../Modules/motor -I ../Modules/motor/DJIMotor -I ../Modules/motor/DMmotor -I ../Modules/powermodules -I ../Modules/Referee_UI -I ../Modules/remote -I ../Modules/watch_dog -I ../RM_Lib/Inc/sys -I ../RM_Lib/Inc -I ../Drivers/CMSIS/DSP/Include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I ../bsp/buzzer -I ../application/Music -I ../bsp/pwm -I ../Modules/motor/servo_motor-I./RTE/_HERO_C_Board-ID:/32/keil_v5/ARM/CMSIS/5.9.0/CMSIS/Core/Include-ID:/32/keil_v5/Keil/STM32F4xx_DFP/2.15.0/Drivers/CMSIS/Device/ST/STM32F4xx/Include-D__UVISION_VERSION="538" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__TARGET_FPU_VFP -D__CUSTOM_FILE_IO__-o hero_c_board/referee.o -MD)
+F (..\application\Referee\Referee.c)(0x68078B21)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__MICROLIB -gdwarf-4 -Ofast -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../bsp -I ../bsp/can -I ../bsp/double_dma -I ../bsp/dwt -I ../bsp/gpio -I ../bsp/iic -I ../bsp/spi -I ../bsp/supervise -I ../bsp/usart -I ../bsp/usb -I ../application -I ../application/Chassis -I ../application/cmd -I ../application/Gimbal -I ../application/Referee -I ../application/Shoot -I ../Modules -I ../Modules/algorithm -I ../Modules/BMI088 -I ../Modules/can_comm -I ../Modules/circular_queue -I ../Modules/controller -I ../Modules/imu -I ../Modules/ist8310 -I ../Modules/motor -I ../Modules/motor/DJIMotor -I ../Modules/motor/DMmotor -I ../Modules/powermodules -I ../Modules/Referee_UI -I ../Modules/remote -I ../Modules/watch_dog -I ../RM_Lib/Inc/sys -I ../RM_Lib/Inc -I ../Drivers/CMSIS/DSP/Include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I ../bsp/buzzer -I ../application/Music -I ../bsp/pwm -I ../Modules/motor/servo_motor-I./RTE/_HERO_C_Board-ID:/32/keil_v5/ARM/CMSIS/5.9.0/CMSIS/Core/Include-ID:/32/keil_v5/Keil/STM32F4xx_DFP/2.15.0/Drivers/CMSIS/Device/ST/STM32F4xx/Include-D__UVISION_VERSION="538" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__TARGET_FPU_VFP -D__CUSTOM_FILE_IO__-o hero_c_board/referee.o -MD)
 I (..\application\Referee\Referee.h)(0x67307604)
 I (..\Inc\usart.h)(0x6748052E)
 I (..\Inc\main.h)(0x673948A0)
@@ -5141,7 +5186,7 @@ I (..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_uart.h)(0x66DADB6A)
 I (..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_pcd.h)(0x66DADB6A)
 I (..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_ll_usb.h)(0x66DADB6A)
 I (..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_pcd_ex.h)(0x66DADB6A)
-I (..\application\cmd\robot_def.h)(0x6800EFBC)
+I (..\application\cmd\robot_def.h)(0x68078AA0)
 I (D:\32\keil_v5\ARM\ARMCLANG\include\stdlib.h)(0x63884908)
 I (..\bsp\double_dma\DMA_double_buffer.h)(0x65F1A860)
 I (..\Modules\pub_sub.h)(0x671F549E)
@@ -5158,12 +5203,12 @@ I (..\Middlewares\Third_Party\FreeRTOS\Source\include\mpu_wrappers.h)(0x66DADB43
 I (..\Middlewares\Third_Party\FreeRTOS\Source\CMSIS_RTOS_V2\cmsis_os2.h)(0x66DADB43)
 I (..\Middlewares\Third_Party\FreeRTOS\Source\include\task.h)(0x66DADB43)
 I (..\Middlewares\Third_Party\FreeRTOS\Source\include\list.h)(0x66DADB43)
-I (..\Modules\Referee_UI\Referee_unpack.h)(0x67F10B03)
+I (..\Modules\Referee_UI\Referee_unpack.h)(0x680780D5)
 I (..\RM_Lib\Inc\CRC.h)(0x676BD011)
 I (..\bsp\usart\bsp_usart.h)(0x67EF2CA7)
 I (..\Modules\watch_dog\WatchDog.h)(0x6728AC8E)
 F (..\Modules\Referee_UI\Referee_unpack.c)(0x67CD03B1)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__MICROLIB -gdwarf-4 -Ofast -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../bsp -I ../bsp/can -I ../bsp/double_dma -I ../bsp/dwt -I ../bsp/gpio -I ../bsp/iic -I ../bsp/spi -I ../bsp/supervise -I ../bsp/usart -I ../bsp/usb -I ../application -I ../application/Chassis -I ../application/cmd -I ../application/Gimbal -I ../application/Referee -I ../application/Shoot -I ../Modules -I ../Modules/algorithm -I ../Modules/BMI088 -I ../Modules/can_comm -I ../Modules/circular_queue -I ../Modules/controller -I ../Modules/imu -I ../Modules/ist8310 -I ../Modules/motor -I ../Modules/motor/DJIMotor -I ../Modules/motor/DMmotor -I ../Modules/powermodules -I ../Modules/Referee_UI -I ../Modules/remote -I ../Modules/watch_dog -I ../RM_Lib/Inc/sys -I ../RM_Lib/Inc -I ../Drivers/CMSIS/DSP/Include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I ../bsp/buzzer -I ../application/Music -I ../bsp/pwm -I ../Modules/motor/servo_motor-I./RTE/_HERO_C_Board-ID:/32/keil_v5/ARM/CMSIS/5.9.0/CMSIS/Core/Include-ID:/32/keil_v5/Keil/STM32F4xx_DFP/2.15.0/Drivers/CMSIS/Device/ST/STM32F4xx/Include-D__UVISION_VERSION="538" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__TARGET_FPU_VFP -D__CUSTOM_FILE_IO__-o hero_c_board/referee_unpack.o -MD)
-I (..\Modules\Referee_UI\Referee_unpack.h)(0x67F10B03)
+I (..\Modules\Referee_UI\Referee_unpack.h)(0x680780D5)
 I (..\RM_Lib\Inc\RMQueue.h)(0x6710D718)
 I (..\RM_Lib\Inc\RMLibHead.h)(0x6745A886)
 I (D:\32\keil_v5\ARM\ARMCLANG\include\string.h)(0x63884908)
@@ -5264,7 +5309,7 @@ I (..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_pcd_ex.h)(0x66DADB6A)
 I (..\Inc\usart.h)(0x6748052E)
 I (..\Inc\main.h)(0x673948A0)
 I (D:\32\keil_v5\ARM\ARMCLANG\include\stdarg.h)(0x63884908)
-I (..\Modules\Referee_UI\Referee_unpack.h)(0x67F10B03)
+I (..\Modules\Referee_UI\Referee_unpack.h)(0x680780D5)
 I (..\RM_Lib\Inc\RMQueue.h)(0x6710D718)
 I (..\RM_Lib\Inc\RMLibHead.h)(0x6745A886)
 I (D:\32\keil_v5\ARM\ARMCLANG\include\string.h)(0x63884908)
@@ -5280,7 +5325,7 @@ I (..\Middlewares\Third_Party\FreeRTOS\Source\CMSIS_RTOS_V2\cmsis_os2.h)(0x66DAD
 I (..\Middlewares\Third_Party\FreeRTOS\Source\include\task.h)(0x66DADB43)
 I (..\Middlewares\Third_Party\FreeRTOS\Source\include\list.h)(0x66DADB43)
 I (..\RM_Lib\Inc\CRC.h)(0x676BD011)
-F (..\Modules\Referee_UI\Referee_UI.c)(0x67E7DD00)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__MICROLIB -gdwarf-4 -Ofast -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../bsp -I ../bsp/can -I ../bsp/double_dma -I ../bsp/dwt -I ../bsp/gpio -I ../bsp/iic -I ../bsp/spi -I ../bsp/supervise -I ../bsp/usart -I ../bsp/usb -I ../application -I ../application/Chassis -I ../application/cmd -I ../application/Gimbal -I ../application/Referee -I ../application/Shoot -I ../Modules -I ../Modules/algorithm -I ../Modules/BMI088 -I ../Modules/can_comm -I ../Modules/circular_queue -I ../Modules/controller -I ../Modules/imu -I ../Modules/ist8310 -I ../Modules/motor -I ../Modules/motor/DJIMotor -I ../Modules/motor/DMmotor -I ../Modules/powermodules -I ../Modules/Referee_UI -I ../Modules/remote -I ../Modules/watch_dog -I ../RM_Lib/Inc/sys -I ../RM_Lib/Inc -I ../Drivers/CMSIS/DSP/Include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I ../bsp/buzzer -I ../application/Music -I ../bsp/pwm -I ../Modules/motor/servo_motor-I./RTE/_HERO_C_Board-ID:/32/keil_v5/ARM/CMSIS/5.9.0/CMSIS/Core/Include-ID:/32/keil_v5/Keil/STM32F4xx_DFP/2.15.0/Drivers/CMSIS/Device/ST/STM32F4xx/Include-D__UVISION_VERSION="538" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__TARGET_FPU_VFP -D__CUSTOM_FILE_IO__-o hero_c_board/referee_ui.o -MD)
+F (..\Modules\Referee_UI\Referee_UI.c)(0x680788BA)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__MICROLIB -gdwarf-4 -Ofast -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../bsp -I ../bsp/can -I ../bsp/double_dma -I ../bsp/dwt -I ../bsp/gpio -I ../bsp/iic -I ../bsp/spi -I ../bsp/supervise -I ../bsp/usart -I ../bsp/usb -I ../application -I ../application/Chassis -I ../application/cmd -I ../application/Gimbal -I ../application/Referee -I ../application/Shoot -I ../Modules -I ../Modules/algorithm -I ../Modules/BMI088 -I ../Modules/can_comm -I ../Modules/circular_queue -I ../Modules/controller -I ../Modules/imu -I ../Modules/ist8310 -I ../Modules/motor -I ../Modules/motor/DJIMotor -I ../Modules/motor/DMmotor -I ../Modules/powermodules -I ../Modules/Referee_UI -I ../Modules/remote -I ../Modules/watch_dog -I ../RM_Lib/Inc/sys -I ../RM_Lib/Inc -I ../Drivers/CMSIS/DSP/Include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I ../bsp/buzzer -I ../application/Music -I ../bsp/pwm -I ../Modules/motor/servo_motor-I./RTE/_HERO_C_Board-ID:/32/keil_v5/ARM/CMSIS/5.9.0/CMSIS/Core/Include-ID:/32/keil_v5/Keil/STM32F4xx_DFP/2.15.0/Drivers/CMSIS/Device/ST/STM32F4xx/Include-D__UVISION_VERSION="538" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__TARGET_FPU_VFP -D__CUSTOM_FILE_IO__-o hero_c_board/referee_ui.o -MD)
 I (..\Modules\Referee_UI\Referee_UI.h)(0x67CD0187)
 I (..\Modules\Referee_UI\RM_Cilent_Ul.h)(0x67CC4784)
 I (..\Drivers\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h)(0x66DADB6A)
@@ -5326,7 +5371,7 @@ I (..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_pcd_ex.h)(0x66DADB6A)
 I (..\Inc\usart.h)(0x6748052E)
 I (..\Inc\main.h)(0x673948A0)
 I (D:\32\keil_v5\ARM\ARMCLANG\include\stdarg.h)(0x63884908)
-I (..\Modules\Referee_UI\Referee_unpack.h)(0x67F10B03)
+I (..\Modules\Referee_UI\Referee_unpack.h)(0x680780D5)
 I (..\RM_Lib\Inc\RMQueue.h)(0x6710D718)
 I (..\RM_Lib\Inc\RMLibHead.h)(0x6745A886)
 I (D:\32\keil_v5\ARM\ARMCLANG\include\string.h)(0x63884908)
@@ -5343,12 +5388,12 @@ I (..\Middlewares\Third_Party\FreeRTOS\Source\include\task.h)(0x66DADB43)
 I (..\Middlewares\Third_Party\FreeRTOS\Source\include\list.h)(0x66DADB43)
 I (..\RM_Lib\Inc\CRC.h)(0x676BD011)
 I (..\Modules\pub_sub.h)(0x671F549E)
-I (..\application\cmd\robot_def.h)(0x6800EFBC)
+I (..\application\cmd\robot_def.h)(0x68078AA0)
 I (..\Modules\powermodules\SuperCAP.h)(0x67EE61F9)
 I (..\Inc\can.h)(0x6739489E)
 I (..\Drivers\CMSIS\DSP\Include\arm_math.h)(0x66DADB41)
 I (..\Drivers\CMSIS\DSP\Include\arm_math_types.h)(0x66DADB41)
-I (D:\32\keil_v5\ARM\ARMCLANG\include\math.h)(0x63884908)
+I (D:\32\keil_v5\ARM\ARMCLANG\include\math.h)(0x68037BCD)
 I (D:\32\keil_v5\ARM\ARMCLANG\include\float.h)(0x63884908)
 I (D:\32\keil_v5\ARM\ARMCLANG\include\limits.h)(0x63884908)
 I (..\Drivers\CMSIS\DSP\Include\arm_math_memory.h)(0x66DADB41)
@@ -5370,8 +5415,8 @@ I (..\Drivers\CMSIS\DSP\Include\dsp\transform_functions.h)(0x66DADB41)
 I (..\Drivers\CMSIS\DSP\Include\dsp\filtering_functions.h)(0x66DADB41)
 I (..\Drivers\CMSIS\DSP\Include\dsp\quaternion_math_functions.h)(0x66DADB41)
 F (..\Modules\Referee_UI\Referee_UI.h)(0x67CD0187)()
-F (..\application\Chassis\Chassis.c)(0x67FFAE2F)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__MICROLIB -gdwarf-4 -Ofast -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../bsp -I ../bsp/can -I ../bsp/double_dma -I ../bsp/dwt -I ../bsp/gpio -I ../bsp/iic -I ../bsp/spi -I ../bsp/supervise -I ../bsp/usart -I ../bsp/usb -I ../application -I ../application/Chassis -I ../application/cmd -I ../application/Gimbal -I ../application/Referee -I ../application/Shoot -I ../Modules -I ../Modules/algorithm -I ../Modules/BMI088 -I ../Modules/can_comm -I ../Modules/circular_queue -I ../Modules/controller -I ../Modules/imu -I ../Modules/ist8310 -I ../Modules/motor -I ../Modules/motor/DJIMotor -I ../Modules/motor/DMmotor -I ../Modules/powermodules -I ../Modules/Referee_UI -I ../Modules/remote -I ../Modules/watch_dog -I ../RM_Lib/Inc/sys -I ../RM_Lib/Inc -I ../Drivers/CMSIS/DSP/Include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I ../bsp/buzzer -I ../application/Music -I ../bsp/pwm -I ../Modules/motor/servo_motor-I./RTE/_HERO_C_Board-ID:/32/keil_v5/ARM/CMSIS/5.9.0/CMSIS/Core/Include-ID:/32/keil_v5/Keil/STM32F4xx_DFP/2.15.0/Drivers/CMSIS/Device/ST/STM32F4xx/Include-D__UVISION_VERSION="538" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__TARGET_FPU_VFP -D__CUSTOM_FILE_IO__-o hero_c_board/chassis.o -MD)
-I (..\application\Chassis\Chassis.h)(0x67C3E8B9)
+F (..\application\Chassis\Chassis.c)(0x6803B49D)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__MICROLIB -gdwarf-4 -Ofast -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../bsp -I ../bsp/can -I ../bsp/double_dma -I ../bsp/dwt -I ../bsp/gpio -I ../bsp/iic -I ../bsp/spi -I ../bsp/supervise -I ../bsp/usart -I ../bsp/usb -I ../application -I ../application/Chassis -I ../application/cmd -I ../application/Gimbal -I ../application/Referee -I ../application/Shoot -I ../Modules -I ../Modules/algorithm -I ../Modules/BMI088 -I ../Modules/can_comm -I ../Modules/circular_queue -I ../Modules/controller -I ../Modules/imu -I ../Modules/ist8310 -I ../Modules/motor -I ../Modules/motor/DJIMotor -I ../Modules/motor/DMmotor -I ../Modules/powermodules -I ../Modules/Referee_UI -I ../Modules/remote -I ../Modules/watch_dog -I ../RM_Lib/Inc/sys -I ../RM_Lib/Inc -I ../Drivers/CMSIS/DSP/Include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I ../bsp/buzzer -I ../application/Music -I ../bsp/pwm -I ../Modules/motor/servo_motor-I./RTE/_HERO_C_Board-ID:/32/keil_v5/ARM/CMSIS/5.9.0/CMSIS/Core/Include-ID:/32/keil_v5/Keil/STM32F4xx_DFP/2.15.0/Drivers/CMSIS/Device/ST/STM32F4xx/Include-D__UVISION_VERSION="538" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__TARGET_FPU_VFP -D__CUSTOM_FILE_IO__-o hero_c_board/chassis.o -MD)
+I (..\application\Chassis\Chassis.h)(0x6802E614)
 I (..\Modules\pub_sub.h)(0x671F549E)
 I (D:\32\keil_v5\ARM\ARMCLANG\include\stdint.h)(0x63884908)
 I (..\RM_Lib\Inc\RMQueue.h)(0x6710D718)
@@ -5427,9 +5472,9 @@ I (..\Middlewares\Third_Party\FreeRTOS\Source\include\mpu_wrappers.h)(0x66DADB43
 I (..\Middlewares\Third_Party\FreeRTOS\Source\CMSIS_RTOS_V2\cmsis_os2.h)(0x66DADB43)
 I (..\Middlewares\Third_Party\FreeRTOS\Source\include\task.h)(0x66DADB43)
 I (..\Middlewares\Third_Party\FreeRTOS\Source\include\list.h)(0x66DADB43)
-I (..\application\cmd\robot_def.h)(0x6800EFBC)
+I (..\application\cmd\robot_def.h)(0x68078AA0)
 I (..\RM_Lib\Inc\PID.h)(0x67DC0DC7)
-I (D:\32\keil_v5\ARM\ARMCLANG\include\math.h)(0x63884908)
+I (D:\32\keil_v5\ARM\ARMCLANG\include\math.h)(0x68037BCD)
 I (..\Modules\powermodules\powercontroller.h)(0x67EE8669)
 I (..\Modules\motor\DJIMotor\DJIMotor.h)(0x67CA4203)
 I (..\Modules\motor\motor_def.h)(0x67A88FB4)
@@ -5463,7 +5508,7 @@ I (..\Inc\can.h)(0x6739489E)
 I (..\Modules\watch_dog\WatchDog.h)(0x6728AC8E)
 I (..\RM_Lib\Inc\motor.h)(0x67CA5EDB)
 I (..\RM_Lib\Inc\CANDrive.h)(0x652921F8)
-I (..\Modules\Referee_UI\Referee_unpack.h)(0x67F10B03)
+I (..\Modules\Referee_UI\Referee_unpack.h)(0x680780D5)
 I (..\RM_Lib\Inc\CRC.h)(0x676BD011)
 I (..\Modules\algorithm\Matrix.h)(0x67CA3ED2)
 I (..\Modules\powermodules\RLS.h)(0x67C9ABF8)
@@ -5474,7 +5519,7 @@ I (..\Middlewares\Third_Party\FreeRTOS\Source\CMSIS_RTOS_V2\cmsis_os.h)(0x66DADB
 I (..\Modules\algorithm\slope.h)(0x6749B506)
 I (..\Modules\imu\ins_task.h)(0x676559F6)
 I (..\Modules\imu\BMI088driver.h)(0x673B2AC4)
-F (..\application\Chassis\Chassis.h)(0x67C3E8B9)()
+F (..\application\Chassis\Chassis.h)(0x6802E614)()
 F (..\RM_Lib\Src\VCOMCOMM.c)(0x65DF3B00)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__MICROLIB -gdwarf-4 -Ofast -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../bsp -I ../bsp/can -I ../bsp/double_dma -I ../bsp/dwt -I ../bsp/gpio -I ../bsp/iic -I ../bsp/spi -I ../bsp/supervise -I ../bsp/usart -I ../bsp/usb -I ../application -I ../application/Chassis -I ../application/cmd -I ../application/Gimbal -I ../application/Referee -I ../application/Shoot -I ../Modules -I ../Modules/algorithm -I ../Modules/BMI088 -I ../Modules/can_comm -I ../Modules/circular_queue -I ../Modules/controller -I ../Modules/imu -I ../Modules/ist8310 -I ../Modules/motor -I ../Modules/motor/DJIMotor -I ../Modules/motor/DMmotor -I ../Modules/powermodules -I ../Modules/Referee_UI -I ../Modules/remote -I ../Modules/watch_dog -I ../RM_Lib/Inc/sys -I ../RM_Lib/Inc -I ../Drivers/CMSIS/DSP/Include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I ../bsp/buzzer -I ../application/Music -I ../bsp/pwm -I ../Modules/motor/servo_motor-I./RTE/_HERO_C_Board-ID:/32/keil_v5/ARM/CMSIS/5.9.0/CMSIS/Core/Include-ID:/32/keil_v5/Keil/STM32F4xx_DFP/2.15.0/Drivers/CMSIS/Device/ST/STM32F4xx/Include-D__UVISION_VERSION="538" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__TARGET_FPU_VFP -D__CUSTOM_FILE_IO__-o hero_c_board/vcomcomm.o -MD)
 I (..\RM_Lib\Inc\VCOMCOMM.h)(0x652921F8)
 I (..\RM_Lib\Inc\RMLibHead.h)(0x6745A886)
@@ -5650,7 +5695,7 @@ I (..\Middlewares\Third_Party\FreeRTOS\Source\include\mpu_wrappers.h)(0x66DADB43
 I (..\Middlewares\Third_Party\FreeRTOS\Source\CMSIS_RTOS_V2\cmsis_os2.h)(0x66DADB43)
 I (..\Middlewares\Third_Party\FreeRTOS\Source\include\task.h)(0x66DADB43)
 I (..\Middlewares\Third_Party\FreeRTOS\Source\include\list.h)(0x66DADB43)
-F (..\RM_Lib\Src\PID.c)(0x67E7A431)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__MICROLIB -gdwarf-4 -Ofast -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../bsp -I ../bsp/can -I ../bsp/double_dma -I ../bsp/dwt -I ../bsp/gpio -I ../bsp/iic -I ../bsp/spi -I ../bsp/supervise -I ../bsp/usart -I ../bsp/usb -I ../application -I ../application/Chassis -I ../application/cmd -I ../application/Gimbal -I ../application/Referee -I ../application/Shoot -I ../Modules -I ../Modules/algorithm -I ../Modules/BMI088 -I ../Modules/can_comm -I ../Modules/circular_queue -I ../Modules/controller -I ../Modules/imu -I ../Modules/ist8310 -I ../Modules/motor -I ../Modules/motor/DJIMotor -I ../Modules/motor/DMmotor -I ../Modules/powermodules -I ../Modules/Referee_UI -I ../Modules/remote -I ../Modules/watch_dog -I ../RM_Lib/Inc/sys -I ../RM_Lib/Inc -I ../Drivers/CMSIS/DSP/Include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I ../bsp/buzzer -I ../application/Music -I ../bsp/pwm -I ../Modules/motor/servo_motor-I./RTE/_HERO_C_Board-ID:/32/keil_v5/ARM/CMSIS/5.9.0/CMSIS/Core/Include-ID:/32/keil_v5/Keil/STM32F4xx_DFP/2.15.0/Drivers/CMSIS/Device/ST/STM32F4xx/Include-D__UVISION_VERSION="538" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__TARGET_FPU_VFP -D__CUSTOM_FILE_IO__-o hero_c_board/pid.o -MD)
+F (..\RM_Lib\Src\PID.c)(0x680377F2)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__MICROLIB -gdwarf-4 -Ofast -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../bsp -I ../bsp/can -I ../bsp/double_dma -I ../bsp/dwt -I ../bsp/gpio -I ../bsp/iic -I ../bsp/spi -I ../bsp/supervise -I ../bsp/usart -I ../bsp/usb -I ../application -I ../application/Chassis -I ../application/cmd -I ../application/Gimbal -I ../application/Referee -I ../application/Shoot -I ../Modules -I ../Modules/algorithm -I ../Modules/BMI088 -I ../Modules/can_comm -I ../Modules/circular_queue -I ../Modules/controller -I ../Modules/imu -I ../Modules/ist8310 -I ../Modules/motor -I ../Modules/motor/DJIMotor -I ../Modules/motor/DMmotor -I ../Modules/powermodules -I ../Modules/Referee_UI -I ../Modules/remote -I ../Modules/watch_dog -I ../RM_Lib/Inc/sys -I ../RM_Lib/Inc -I ../Drivers/CMSIS/DSP/Include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I ../bsp/buzzer -I ../application/Music -I ../bsp/pwm -I ../Modules/motor/servo_motor-I./RTE/_HERO_C_Board-ID:/32/keil_v5/ARM/CMSIS/5.9.0/CMSIS/Core/Include-ID:/32/keil_v5/Keil/STM32F4xx_DFP/2.15.0/Drivers/CMSIS/Device/ST/STM32F4xx/Include-D__UVISION_VERSION="538" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__TARGET_FPU_VFP -D__CUSTOM_FILE_IO__-o hero_c_board/pid.o -MD)
 I (..\RM_Lib\Inc\PID.h)(0x67DC0DC7)
 I (..\RM_Lib\Inc\RMLibHead.h)(0x6745A886)
 I (D:\32\keil_v5\ARM\ARMCLANG\include\string.h)(0x63884908)
@@ -5705,7 +5750,7 @@ I (..\Middlewares\Third_Party\FreeRTOS\Source\include\mpu_wrappers.h)(0x66DADB43
 I (..\Middlewares\Third_Party\FreeRTOS\Source\CMSIS_RTOS_V2\cmsis_os2.h)(0x66DADB43)
 I (..\Middlewares\Third_Party\FreeRTOS\Source\include\task.h)(0x66DADB43)
 I (..\Middlewares\Third_Party\FreeRTOS\Source\include\list.h)(0x66DADB43)
-I (D:\32\keil_v5\ARM\ARMCLANG\include\math.h)(0x63884908)
+I (D:\32\keil_v5\ARM\ARMCLANG\include\math.h)(0x68037BCD)
 I (..\bsp\dwt\bsp_dwt.h)(0x673B2596)
 I (..\Inc\main.h)(0x673948A0)
 F (..\RM_Lib\Src\motor.c)(0x673DEC88)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__MICROLIB -gdwarf-4 -Ofast -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../bsp -I ../bsp/can -I ../bsp/double_dma -I ../bsp/dwt -I ../bsp/gpio -I ../bsp/iic -I ../bsp/spi -I ../bsp/supervise -I ../bsp/usart -I ../bsp/usb -I ../application -I ../application/Chassis -I ../application/cmd -I ../application/Gimbal -I ../application/Referee -I ../application/Shoot -I ../Modules -I ../Modules/algorithm -I ../Modules/BMI088 -I ../Modules/can_comm -I ../Modules/circular_queue -I ../Modules/controller -I ../Modules/imu -I ../Modules/ist8310 -I ../Modules/motor -I ../Modules/motor/DJIMotor -I ../Modules/motor/DMmotor -I ../Modules/powermodules -I ../Modules/Referee_UI -I ../Modules/remote -I ../Modules/watch_dog -I ../RM_Lib/Inc/sys -I ../RM_Lib/Inc -I ../Drivers/CMSIS/DSP/Include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I ../bsp/buzzer -I ../application/Music -I ../bsp/pwm -I ../Modules/motor/servo_motor-I./RTE/_HERO_C_Board-ID:/32/keil_v5/ARM/CMSIS/5.9.0/CMSIS/Core/Include-ID:/32/keil_v5/Keil/STM32F4xx_DFP/2.15.0/Drivers/CMSIS/Device/ST/STM32F4xx/Include-D__UVISION_VERSION="538" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__TARGET_FPU_VFP -D__CUSTOM_FILE_IO__-o hero_c_board/motor.o -MD)
@@ -5887,7 +5932,7 @@ I (..\Middlewares\Third_Party\FreeRTOS\Source\include\task.h)(0x66DADB43)
 I (..\Middlewares\Third_Party\FreeRTOS\Source\include\list.h)(0x66DADB43)
 I (..\bsp\dwt\bsp_dwt.h)(0x673B2596)
 I (..\Inc\main.h)(0x673948A0)
-I (D:\32\keil_v5\ARM\ARMCLANG\include\math.h)(0x63884908)
+I (D:\32\keil_v5\ARM\ARMCLANG\include\math.h)(0x68037BCD)
 I (..\Drivers\CMSIS\DSP\Include\arm_math.h)(0x66DADB41)
 I (..\Drivers\CMSIS\DSP\Include\arm_math_types.h)(0x66DADB41)
 I (D:\32\keil_v5\ARM\ARMCLANG\include\float.h)(0x63884908)
@@ -5976,7 +6021,7 @@ I (..\Middlewares\Third_Party\FreeRTOS\Source\include\task.h)(0x66DADB43)
 I (..\Middlewares\Third_Party\FreeRTOS\Source\include\list.h)(0x66DADB43)
 I (..\bsp\dwt\bsp_dwt.h)(0x673B2596)
 I (..\Inc\main.h)(0x673948A0)
-I (D:\32\keil_v5\ARM\ARMCLANG\include\math.h)(0x63884908)
+I (D:\32\keil_v5\ARM\ARMCLANG\include\math.h)(0x68037BCD)
 I (..\Drivers\CMSIS\DSP\Include\arm_math.h)(0x66DADB41)
 I (..\Drivers\CMSIS\DSP\Include\arm_math_types.h)(0x66DADB41)
 I (D:\32\keil_v5\ARM\ARMCLANG\include\float.h)(0x63884908)
@@ -6065,7 +6110,7 @@ I (..\Middlewares\Third_Party\FreeRTOS\Source\include\task.h)(0x66DADB43)
 I (..\Middlewares\Third_Party\FreeRTOS\Source\include\list.h)(0x66DADB43)
 I (..\bsp\dwt\bsp_dwt.h)(0x673B2596)
 I (..\Inc\main.h)(0x673948A0)
-I (D:\32\keil_v5\ARM\ARMCLANG\include\math.h)(0x63884908)
+I (D:\32\keil_v5\ARM\ARMCLANG\include\math.h)(0x68037BCD)
 I (..\Drivers\CMSIS\DSP\Include\arm_math.h)(0x66DADB41)
 I (..\Drivers\CMSIS\DSP\Include\arm_math_types.h)(0x66DADB41)
 I (D:\32\keil_v5\ARM\ARMCLANG\include\float.h)(0x63884908)
@@ -6168,7 +6213,7 @@ I (..\bsp\usb\attribute_typedef.h)(0x66CFCEB6)
 I (..\bsp\usb\struct_typedef.h)(0x67DBF28E)
 I (D:\32\keil_v5\ARM\ARMCLANG\include\stdint.h)(0x63884908)
 I (D:\32\keil_v5\ARM\ARMCLANG\include\stdlib.h)(0x63884908)
-I (..\application\cmd\robot_def.h)(0x6800EFBC)
+I (..\application\cmd\robot_def.h)(0x68078AA0)
 I (D:\32\keil_v5\ARM\ARMCLANG\include\string.h)(0x63884908)
 I (..\RM_Lib\Inc\CRC.h)(0x676BD011)
 I (..\Middlewares\Third_Party\FreeRTOS\Source\CMSIS_RTOS_V2\cmsis_os.h)(0x66DADB43)
@@ -6229,7 +6274,7 @@ I (..\Modules\algorithm\kalman_filter.h)(0x674EF708)
 I (..\Modules\controller\user_lib.h)(0x67A95426)
 I (..\Drivers\CMSIS\DSP\Include\arm_math.h)(0x66DADB41)
 I (..\Drivers\CMSIS\DSP\Include\arm_math_types.h)(0x66DADB41)
-I (D:\32\keil_v5\ARM\ARMCLANG\include\math.h)(0x63884908)
+I (D:\32\keil_v5\ARM\ARMCLANG\include\math.h)(0x68037BCD)
 I (D:\32\keil_v5\ARM\ARMCLANG\include\float.h)(0x63884908)
 I (D:\32\keil_v5\ARM\ARMCLANG\include\limits.h)(0x63884908)
 I (..\Drivers\CMSIS\DSP\Include\arm_math_memory.h)(0x66DADB41)

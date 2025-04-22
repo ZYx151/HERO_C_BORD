@@ -43,7 +43,7 @@ static PID Shoot_Speed_PID[3] = {{.Kp = 15, .Ki = 0.0f, .Kd = 0.0f, .interlimit 
 
 							  
 static PID_Smis Pluck_Place_PIDS = {.Kp = 6.0f, .Ki = 0, .Kd = 0.4f, .interlimit = 3000, .outlimit = 16000, .DeadBand = 0.0f, .inter_threLow = 500, .inter_threUp = 1000};         //拨弹盘单发位置环
-static PID Pluck_Speed_PID = {.Kp = 8.0f, .Ki = 0.0f, .Kd = 0.0f, .interlimit = 4000, .outlimit = 15000, .DeadBand = 0.0f, .inter_threLow = 20, .inter_threUp = 5000};                   //拨弹盘单发速度环
+static PID Pluck_Speed_PID = {.Kp = 12.0f, .Ki = 0.0f, .Kd = 0.0f, .interlimit = 4000, .outlimit = 15000, .DeadBand = 0.0f, .inter_threLow = 20, .inter_threUp = 5000};                   //拨弹盘单发速度环
 static PID Pluck_Continue_PID = {.Kp = 10, .Ki = 0, .Kd = 0, .interlimit = 3000, .outlimit = 15000, .DeadBand = 5.0f, .inter_threLow = 500, .inter_threUp = 1000};               //拨弹盘连发模式
 
 void Shoot_Init()
@@ -180,11 +180,10 @@ static void Shoot_load_Update()
     static uint16_t  Stuck_time   = 0, continur_tims = 0;//!< @brief 检测卡弹的时间 连发计时
 	static uint8_t Add_Angle_Flag = 0;               	 //!< @brief 拨弹盘角度+1标志位
     static float Stuck_Angle_Target = 0;                 //!< @brief 拨弹盘卡弹退弹期望角度
-    static const uint16_t Stuck_thre = 1000;              //!< @brief 卡弹阈值，卡弹超过此时间便认为卡弹
+    static const uint16_t Stuck_thre = 800;              //!< @brief 卡弹阈值，卡弹超过此时间便认为卡弹
 	static float Target_Continue_Speed = -360.0f * REDUCTION_RATIO_WHEEL / SHOOT_NUM_PER_CIRCLE * 1.0f;  // 播弹盘连发速度
 	// 设定拨弹盘转动角度
-//	static int16_t load_delta_pos = -360.0f * 19.203f / SHOOT_NUM_PER_CIRCLE * 0.98f;
-	static int16_t load_delta_pos = -1385;
+	static int16_t load_delta_pos = -1370;
 	
     /* 暂停模式 */	
 	if(shoot_ctrl_cmd->mode == SHOOT_STOP) 
@@ -193,13 +192,12 @@ static void Shoot_load_Update()
 		/** 卡弹时间清零  **/
 		Stuck_time = 0;
 		Off_Angle = 0;
-//        ABS(Last_Target_Pluck) <= 200 ? Off_Angle = 0 
-//		    : ( Off_Angle = (int16_t )(loader->measure.Angle_DEG - Last_Target_Pluck) % (int16_t)load_delta_pos);
 		DJIMotorOuterLoop(loader, ANGLE_LOOP);   // 修改为角度控制
 		DJIMotorSetRef(loader, Angle_Target);
 	}
 	else 
 	{
+	 /**  手动退弹模式 **/
 		if(shoot_ctrl_cmd->mode == SHOOT_STUCKING) 
 		{
 		    if(Stuck_time < 800) {
@@ -209,6 +207,7 @@ static void Shoot_load_Update()
 			}
 		}
 		
+		/** 自瞄模式 **/
 //		if(shoot_ctrl_cmd->mode == SHOOT_AIM) {
 //			if(Aim_Ref.fire_on ) 
 //			{
@@ -232,17 +231,18 @@ static void Shoot_load_Update()
 		if(shoot_ctrl_cmd->mode == SHOOT_NOMAL) 
 		{
 			continur_tims ++;
-			if(continur_tims >= 1000) 
+			if(continur_tims >= 500) 
 			{
 			   shoot_ctrl_cmd->bullet_mode = BULLET_CONTINUE;
 			   Stuck_time = 0;
 			}
 		} else	continur_tims  = 0; 
+		
 		/** 判断卡弹时间 **/ 
 		if(Stuck_time >= Stuck_thre)
 		 	 shoot_ctrl_cmd->mode = SHOOT_STUCKING;
 		
-		 /** 计算角度补偿 **/
+		/** 计算拨弹盘角度补偿 **/
 		Shoot_Get_OffsetAngle(load_delta_pos);
 		
 		/** 卡弹检测 **/
@@ -250,11 +250,10 @@ static void Shoot_load_Update()
 	    {
 		     abs_deltaSpeed = fabs(loader->measure.SpeedFilter);
 		     abs_deltePlack = fabs(Angle_Target - loader->measure.Angle_DEG);
-		     if(abs_deltePlack > fabs(load_delta_pos * 0.6f) && abs_deltaSpeed <= 25.0f )
+		     if(abs_deltePlack > fabs(load_delta_pos * 0.4f) && abs_deltaSpeed <= 25.0f )
 			     Stuck_time ++;
-			 if(abs_deltaSpeed >= 50 && Stuck_time > 50)
+			 if(abs_deltaSpeed >= 25 && Stuck_time > 50)
 			     Stuck_time = 0;
-			 
 			/* 卡弹时可能卡在摩擦轮中 */
 		    if(shoot_ctrl_cmd->mode == SHOOT_READY) 
 		     {
@@ -278,7 +277,7 @@ static void Shoot_load_Update()
 		   DJIMotorSetRef(loader, Stuck_Angle_Target);
 	       Stuck_time ++;
 			
-		   if(Stuck_time >= Stuck_thre * 1.15f)
+		   if(Stuck_time >= Stuck_thre * 1.2f)
 		       Stuck_time = 0;
 	     }
 	     else /* 未卡弹 */
@@ -286,6 +285,8 @@ static void Shoot_load_Update()
 		   /* 增加打弹标志位 */ 
 		   if (shoot_ctrl_cmd->mode == SHOOT_READY)
 			    Add_Angle_Flag = 1;
+		   if(shoot_ctrl_cmd->heat_limit_remain < SHOOT_UNIT_HEAT_42MM*0.6f)
+			    Add_Angle_Flag = 0;
 		   /* 开始打弹 */
 		   if (Add_Angle_Flag == 1 && shoot_ctrl_cmd->mode == SHOOT_NOMAL && shoot_ctrl_cmd->bullet_mode != BULLET_CONTINUE) 
 			  {
@@ -306,13 +307,13 @@ static void Shoot_load_Update()
 					
 					case BULLET_DOUBLE: // 双发
 						DJIMotorOuterLoop(loader, ANGLE_LOOP);
-						Angle_Target = loader->measure.Angle_DEG + load_delta_pos * 2 - Off_Angle;
+						Angle_Target = Angle_Target + load_delta_pos * 2 - Off_Angle;
 						cooldown_tim = 200;
 					break;
 					
 					case BULLET_TRIBLE:  // 三连发
 						DJIMotorOuterLoop(loader, ANGLE_LOOP);
-						Angle_Target = loader->measure.Angle_DEG + load_delta_pos * 3 - Off_Angle;
+						Angle_Target = Angle_Target + load_delta_pos * 3 - Off_Angle;
 						cooldown_tim = 300;
 					break;
 					
@@ -325,6 +326,7 @@ static void Shoot_load_Update()
 				  Add_Angle_Flag = 0;
 				  Off_Angle = 0;
 		      }
+			  
 		      /** 设置拨弹盘期望 **/
 		      if (shoot_ctrl_cmd->bullet_mode == BULLET_CONTINUE) 
 			  {
@@ -336,7 +338,7 @@ static void Shoot_load_Update()
 			  else if ( shoot_ctrl_cmd->bullet_mode != BULLET_CONTINUE) 
 			  {
 				 DJIMotorOuterLoop(loader, ANGLE_LOOP);
-				 RAMP_Angle_Target = RAMP_float(Angle_Target, RAMP_Angle_Target, 15);
+				 RAMP_Angle_Target = RAMP_float(Angle_Target, RAMP_Angle_Target, 4);
 				 DJIMotorSetRef(loader, RAMP_Angle_Target);
     		  }
 	      }
@@ -362,31 +364,28 @@ void Shoot_friction_Update()
 			    DJIMotorSetRef(friction_l,  SHOOT_SPEED+500);
 			    DJIMotorSetRef(friction_r, -SHOOT_SPEED-500);
 			    DJIMotorSetRef(friction_u, -SHOOT_SPEED-500);
-                shoot_feedback_data.real_bullet_speed = 18.2f;  // 此处填写该case下调得实际弹速的典型值
 			    break;
 			case 15:
 			    DJIMotorSetRef(friction_l,  SHOOT_SPEED + SHOOT_OFFSET);
 			    DJIMotorSetRef(friction_r, -SHOOT_SPEED - SHOOT_OFFSET);
 			    DJIMotorSetRef(friction_u, -SHOOT_SPEED - SHOOT_OFFSET);
-                shoot_feedback_data.real_bullet_speed = 15.2f;  // 此处填写该case下调得实际弹速的典型值
 			    break;
 			case 0:
 			    DJIMotorSetRef(friction_l, 0);
 			    DJIMotorSetRef(friction_r, 0);
 			    DJIMotorSetRef(friction_u, 0);
-                shoot_feedback_data.real_bullet_speed = 0.0f;
 			    break;
 			default :  // 使用最低弹速保持一致
 			    DJIMotorSetRef(friction_l, -SHOOT_SPEED);
 			    DJIMotorSetRef(friction_r, SHOOT_SPEED);
 			    DJIMotorSetRef(friction_u, -SHOOT_SPEED);
-                shoot_feedback_data.real_bullet_speed = 14.2f;  // 此处填写该case下调得实际弹速的典型值
 				break;
 		}
 	}
 }
 
 int32_t test_pluck_target, test_pluck_now;
+float speed_current= 0.0f;
 void Shoot_Upeadt() 
 {
 	// 发弹计数及弹速显示
@@ -415,7 +414,7 @@ void Shoot_Upeadt()
 //		shoot_time = HAL_GetTick();
 ////		RMQueuePush(bullet_speed_queue, &shoot_ctrl_cmd->bullet_speed_fdb);
 //		last_bullet_speed_fdb = shoot_ctrl_cmd->bullet_speed_fdb;
-//	} 
+//	}
 	
 	// 电机控制
 	if (shoot_ctrl_cmd->mode == SHOOT_ZERO_FORCE)
@@ -438,7 +437,9 @@ void Shoot_Upeadt()
 	fire_speed_nofil[0] =  friction_l->measure.SpeedFilter;
 	fire_speed_nofil[1] = -friction_r->measure.SpeedFilter;
 	fire_speed_nofil[2] = -friction_u->measure.SpeedFilter;
+	speed_current = fabs(friction_u->measure.CurrentFilter);
 	// 推送消息
+	shoot_feedback_data.fire_speed = (int16_t)((fire_speed_nofil[0] + fire_speed_nofil[1] + fire_speed_nofil[2]) / 3.0f);
    	shoot_feedback_data.mode = shoot_ctrl_cmd->mode;
    	shoot_feedback_data.bullet_mode = shoot_ctrl_cmd->bullet_mode;
    	PubPushMessage( shoot_pub, (void *)&shoot_feedback_data);

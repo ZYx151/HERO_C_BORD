@@ -85,10 +85,19 @@ void Referee_Update()
 		Referee_SendData.chassis_power_limit         = Robot_state.chassis_power_limit;    // 功率上限
         Referee_SendData.robot_HP                    = Robot_state.current_HP;             // 机器人当前血量
         Referee_SendData.chassis_output              = Robot_state.power_management.chassis_output; //chassis 口输出：0 为无输出，1 为 24V 输出
-        if (Referee_SendData.Ammo_remain  < Ammo_amount.projectile_allowance_17mm)
-        Referee_SendData.Ammo_remain                 = Ammo_amount.projectile_allowance_17mm;
+        if (Referee_SendData.Ammo_remain  < Ammo_amount.projectile_allowance_42mm)
+		{	
+			Referee_SendData.Ammo_add                = Ammo_amount.projectile_allowance_42mm - Referee_SendData.Ammo_remain;
+			Referee_SendData.Ammo_remain             = Ammo_amount.projectile_allowance_42mm;
+		}
         Referee_SendData.Max_HP                      = Robot_state.maximum_HP;
-        Referee_SendData.Ammo_consume                =  Referee_SendData.Ammo_remain - Ammo_amount.projectile_allowance_17mm;
+        Referee_SendData.Ammo_consume                = Referee_SendData.Ammo_add + Referee_SendData.Ammo_remain - Ammo_amount.projectile_allowance_17mm;
+		if (Match_status.game_progress != 4)
+		{
+			Referee_SendData.Ammo_remain             = 0;
+			Referee_SendData.Ammo_add                = 0;
+			Referee_SendData.Ammo_consume            = 0;
+		}
 	} else Referee_SendData.refree_status = Device_Offline;
 	 //  消息发布
     PubPushMessage(Referee_Feedback_Pub, (void *)&Referee_SendData);

@@ -995,6 +995,16 @@
               <FileType>1</FileType>
               <FilePath>..\Modules\algorithm\Matrix.c</FilePath>
             </File>
+            <File>
+              <FileName>fsm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Modules\algorithm\fsm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Modules\algorithm\fsm.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

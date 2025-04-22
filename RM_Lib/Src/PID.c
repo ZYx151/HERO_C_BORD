@@ -20,7 +20,7 @@ float PID_Control(float current, float expected, PID *parameter) {
         parameter->error_last = parameter->error_now;
 	    parameter->last_measure = parameter->measure; 
         parameter->ITerm = 0;
-		parameter->Iout *= 0.8f;
+//		parameter->Iout *= 0.8f;
 		return parameter->pid_out;
 	}
 
@@ -44,8 +44,8 @@ float PID_Control(float current, float expected, PID *parameter) {
 		 parameter->ITerm = 0;
 	// 比例计算
 	parameter->Pout = parameter->Kp * parameter->error_now;
-	//  微分计算
-	parameter->Dout = parameter->Kd * (parameter->last_measure = parameter->measure);
+	//  微分计算 微分先行
+	parameter->Dout = parameter->Kd * (parameter->last_measure - parameter->measure);
 	// 积分限幅
 	parameter->Iout += parameter->ITerm * parameter->Ki * parameter->dt;
 	limit(parameter->Iout, parameter->interlimit, -parameter->interlimit);

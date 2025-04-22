@@ -96,6 +96,7 @@
 "hero_c_board\user_lib.o"
 "hero_c_board\slope.o"
 "hero_c_board\matrix.o"
+"hero_c_board\fsm.o"
 "hero_c_board\rls.o"
 "hero_c_board\powercontroller.o"
 "hero_c_board\supercap.o"
