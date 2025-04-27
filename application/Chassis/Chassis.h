@@ -1,5 +1,6 @@
 #ifndef __CHASSIS_H
 #define __CHASSIS_H
+#include "robot_def.h"
 
 /**
  * @brief 底盘各个轮子电机位置

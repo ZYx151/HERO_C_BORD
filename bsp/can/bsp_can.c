@@ -53,7 +53,6 @@ static void CANServiceInit()
     HAL_CAN_ActivateNotification(&hcan2, CAN_IT_RX_FIFO1_MSG_PENDING);
 }
 /* ----------------------- two extern callable function -----------------------*/
-
 CANInstance *CANRegister(CAN_Init_Config_s config)
 {
     // 检测重复ID
@@ -75,7 +74,7 @@ CANInstance *CANRegister(CAN_Init_Config_s config)
     instance->id = config.id;
 	if( instance->rx_len == 0 ) instance->rx_len = 8;
 	config.can_handle == &hcan1 ? can1_idx : can2_idx++; // 将实例保存到can_instance中
-	
+																												  
 	can_instance[idx] = instance;
     if( idx++ == 0)
         CANServiceInit(); // 第一次注册,先进行硬件初始化

@@ -52,12 +52,10 @@ void Task_Robot(void *pvParameters)
 void Task_Shoot(void *pvParameters)
 {
     static portTickType currentTime_robot;
-	
-    
+
    	for(;;)
 	{
 	    currentTime_robot= xTaskGetTickCount();
-		
 	    Shoot_Upeadt();
 		vTaskDelayUntil(&currentTime_robot, 1);
 	}

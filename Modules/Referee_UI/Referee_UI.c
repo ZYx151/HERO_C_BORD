@@ -263,7 +263,7 @@ void UI_Init()
         #define UI_Color_Black 7
         #define UI_Color_White 8
 **********************************************************************************************************/
-    Float_Draw(&Fric_NUM,"FUM",UI_Graph_ADD, 2, UI_Color_Cyan, 19, 2, 1,  X_CENTRE + 205, Y_CENTRE + 160, Fric_Speed);
+    Float_Draw(&Fric_NUM,"FUM",UI_Graph_ADD, 2, UI_Color_Cyan, 19, 2, 2,  X_CENTRE + 205, Y_CENTRE + 160, Fric_Speed);
     Float_Draw(&Ammo_NUM,"AUM",UI_Graph_ADD, 2, UI_Color_Cyan, 19, 2, 2, X_CENTRE + 500, Y_CENTRE + 300, Referee_SendData.Ammo_consume * 1000);
 //    Float_Draw(&Vision_DIS, "VDS", UI_Graph_ADD, 2, UI_Color_Yellow, 20, 2, 2, X_CENTRE + 205, Y_CENTRE + 160, receive_vision.vision_distance * 1000);
 //    Float_Draw(&Vision_NUM, "VNM", UI_Graph_ADD, 2, UI_Color_Yellow, 20, 2, 2, X_CENTRE - 200, Y_CENTRE + 330, receive_action.vision_number * 1000);
@@ -344,9 +344,9 @@ void UI_Move()
         Ammo_remain =  Ammo_total - Referee_SendData.Ammo_consume;  
     }
     else if(Ammo_amount.projectile_allowance_42mm >= 10)
-        Ammo_lose = 157;
+        Ammo_lose = 0;
 	else 
-		Ammo_lose = 0;
+		Ammo_lose = 157;
     if(Robot_state.robot_id < 100)
     {
         switch(receive_action.vision_number)
@@ -616,8 +616,8 @@ void UI_Move()
 //            }
 //            if(receive_action.vision_number != 0 )
 //            {
-                Float_Draw(&Gimabal_ANG_P, "ANP", UI_Graph_Change, 2, UI_Color_Cyan, 20, 2, 2, X_CENTRE + 800, Y_CENTRE + 190, receive_vision.Pitch_angle / 100.0f);
-                Float_Draw(&Gimabal_ANG_Y, "ANY", UI_Graph_Change, 2, UI_Color_Cyan, 20, 2, 2, X_CENTRE + 800, Y_CENTRE + 145, receive_vision.Yaw_angle / 100.0f);
+                Float_Draw(&Gimabal_ANG_P, "ANP", UI_Graph_Change, 2, UI_Color_Cyan, 20, 2, 2, X_CENTRE + 750, Y_CENTRE + 200, receive_vision.Pitch_angle);
+                Float_Draw(&Gimabal_ANG_Y, "ANY", UI_Graph_Change, 2, UI_Color_Cyan, 20, 2, 2, X_CENTRE + 750, Y_CENTRE + 155, receive_vision.Yaw_angle);
 //                Float_Draw(&Vision_DIS,  "VDS", UI_Graph_Change, 2, UI_Color_Cyan, 20, 2, 2, X_CENTRE + 205, Y_CENTRE + 150, receive_vision.vision_distance * 1000);
                 Float_Draw(&Vision_NUM,  "VNM", UI_Graph_Change, 2, UI_Color_Cyan, 20, 2, 2, X_CENTRE - 200, Y_CENTRE + 330, receive_action.vision_number * 1000);
                 Line_Draw(&enemy_HP_line, "EHI", UI_Graph_Change,  4, UI_Color_Yellow, 10, X_CENTRE - 160, Y_CENTRE + 320, X_CENTRE + enemy_HP - 0, Y_CENTRE + 320);       
@@ -732,13 +732,13 @@ void UI_Refresh()
             case 22: Graph_ReFresh(1, Acr_life); break;
             case 23: Graph_ReFresh(1, Gimabal_ANG_P); break;
             case 24: Graph_ReFresh(1, Gimabal_ANG_Y); break;
-//            case 25: Graph_ReFresh(1, Vision_DIS); break;
+            case 25: Graph_ReFresh(1, Fric_NUM); break;
 //            case 26: Graph_ReFresh(1, Vision_NUM); break;
-            case 25: Graph_ReFresh(1, Ammo_NUM); break;
+            case 26: Graph_ReFresh(1, Ammo_NUM); break;
 //            case 27: Graph_ReFresh(1, enemy_HP_line); break;
 //            case 28: Graph_ReFresh(1, Acr_life); break;
-            case 26: Graph_ReFresh(5, Shoot_Line[0], Shoot_Line[1], Shoot_Line[2], Shoot_Line[3], Shoot_Line[4]); break;
-            case 27: UI_STATE = MOVEING; cnt=0; break;
+            case 27: Graph_ReFresh(5, Shoot_Line[0], Shoot_Line[1], Shoot_Line[2], Shoot_Line[3], Shoot_Line[4]); break;
+            case 28: UI_STATE = MOVEING; cnt=0; break;
 #endif
             default: break;
         }

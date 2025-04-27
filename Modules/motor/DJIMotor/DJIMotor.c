@@ -140,7 +140,7 @@ static void DecodeDJIMotor(CANInstance *_instance)
 
 /* 电流只能通过电机自带传感器监测*/
 void DJIMotorChangeFeed(DJIMotor_Instance *motor, Feedback_Source_e type)
-{
+ {
 	motor->motor_controller.motor_setting.angle_feedback_source  = type;
 	motor->motor_controller.motor_setting.speed_feedback_source  = type;
 }

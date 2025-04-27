@@ -1,7 +1,6 @@
 #include "Chassis.h"
 
 #include "pub_sub.h"
-#include "robot_def.h"
 #include "PID.h"
 #include "powercontroller.h"
 #include "bsp_dwt.h"
@@ -16,24 +15,24 @@ extern Gimbal_action_t  receive_action;
 // 轮向电机摩擦阻力连续化的角速度阈值
 static float Wheel_Resistance_Omega_Threshold = 0.5f;
 // 轮向电机动摩擦阻力电流值
-static float Dynamic_Resistance_Wheel_Current[4] = {0.2f,
-											 0.2f,
-											 0.2f,
-											 0.2f};
-static float Dynamic_Resistance_Wheel_Current_Rpm[4] = {1.0f,
-											 1.0f,
-											 1.0f,
-											 1.0f};
+static float Dynamic_Resistance_Wheel_Current[4] = {0.15f,
+											 0.15f,
+											 0.15f,
+											 0.15f};
+static float Dynamic_Resistance_Wheel_Current_Rpm[4] = {0.80f,
+											 0.80f,
+											 0.80f,
+											 0.80f};
 
 static float Dynamic_Resistance_Wheel_Current_Rpm_Final[4];
 
 /* 斜坡函数（int16_t） */
 static Slope_s slope_X ,slope_Y ,slope_Omega;
 
-static PID Chassis_Speed_PID[4] = {{.Kp = 30.0f, .Ki = 0.00, .Kd = 0, .interlimit = 3000, .outlimit = 6000, .DeadBand = 0.0f, .inter_threLow = 500, .inter_threUp = 1000},  /* 左前轮 */
-								{.Kp = 30.0f, .Ki = 0.00, .Kd = 0, .interlimit = 3000, .outlimit = 6000, .DeadBand = 0.0f, .inter_threLow = 500, .inter_threUp = 1000},  /* 右前轮 */
-								{.Kp = 30.0f, .Ki = 0.00, .Kd = 0, .interlimit = 3000, .outlimit = 6000, .DeadBand = 0.0f, .inter_threLow = 500, .inter_threUp = 1000},  /* 右后轮 */
-								{.Kp = 30.0f, .Ki = 2.00, .Kd = 0, .interlimit = 3000, .outlimit = 6000, .DeadBand = 0.0f, .inter_threLow = 500, .inter_threUp = 1000}}; /* 左后轮 */
+static PID Chassis_Speed_PID[4] = {{.Kp = 30.0f, .Ki = 0.00, .Kd = 0, .interlimit = 3000, .outlimit = 12000, .DeadBand = 0.0f, .inter_threLow = 500, .inter_threUp = 1000},  /* 左前轮 */
+								{.Kp = 30.0f, .Ki = 0.00, .Kd = 0, .interlimit = 3000, .outlimit = 12000, .DeadBand = 0.0f, .inter_threLow = 500, .inter_threUp = 1000},  /* 右前轮 */
+								{.Kp = 30.0f, .Ki = 0.00, .Kd = 0, .interlimit = 3000, .outlimit = 12000, .DeadBand = 0.0f, .inter_threLow = 500, .inter_threUp = 1000},  /* 右后轮 */
+								{.Kp = 30.0f, .Ki = 0.00, .Kd = 0, .interlimit = 3000, .outlimit = 12000, .DeadBand = 0.0f, .inter_threLow = 500, .inter_threUp = 1000}}; /* 左后轮 */
 
 static PID TargetVelocity_PID[3] = {{.Kp = 50.0f, .Ki = 0.00, .Kd = 0, .interlimit = 3000, .outlimit = 16000, .DeadBand = 0.0f, .inter_threLow = 500, .inter_threUp = 1000},
 	                                {.Kp = 50.0f, .Ki = 0.00, .Kd = 0, .interlimit = 3000, .outlimit = 16000, .DeadBand = 0.0f, .inter_threLow = 500, .inter_threUp = 1000},
@@ -61,6 +60,7 @@ static float speed_target[4];  // 底盘速度解算后的临时输出,待进行
 
 static float GetChassisMotorPower(float speed, float current); /* 用发送电流值计算功率 */
 static void Get_Chassis_Inter(void);  /* 斜坡相对于底盘的角度矢量 */
+static void Chassis_Flay();           /* 根据斜坡角度解算出电机扭矩补偿 */
   // 斜坡法向量在底盘方向向量
 static float  Slope_Direction_X, Slope_Direction_Y, Slope_Direction_Z;
 static float  Slope_theta, Slope_beta;
@@ -191,8 +191,6 @@ Motor_Init_config_s RF_config = {
     // clang-format on
 #endif
     ins = INS_Init();
-    /* 超级电容初始化 */
-	
 }
 
 
@@ -214,6 +212,8 @@ void Self_Resolution(void)
     measuredVelocity.Omega = (currentAv[0] + currentAv[1] + currentAv[2] + currentAv[3]) * omega_Factor / MOTOR_DECELE_RATIO;
 	 /* 获取当前底盘与斜坡的矢量关系 */
 	Get_Chassis_Inter();
+    /* 同过斜坡角度解算电机扭矩补偿 */
+	Chassis_Flay();
 }
 
 /**
@@ -325,10 +325,14 @@ void Chassis_Flay()
 		{
 			wheel_pose[i][0] = chassis_matr[i][0] * cos_beta - sin_beta * chassis_matr[i][1]; 
 		    wheel_pose[i][1] = chassis_matr[i][0] * cos_beta + sin_beta * chassis_matr[i][1]; 
-		    if(wheel_pose[i][1] >= wheel_pose[4][0])
+		    if(wheel_pose[i][1] >= wheel_pose[4][0]) 
+			{
 		       wheel_pose[4][0] = wheel_pose[i][1];
+			}
 			else if (wheel_pose[i][1] < wheel_pose[4][1])
+			{
 				wheel_pose[4][1] = wheel_pose[i][1];
+			}
 		}
 		/* 电流增益 */
 		wheel_pose[4][2] = sin_theat/0.8f;
@@ -356,8 +360,8 @@ void chassis_powerlimit()
 	static PowerObj_s *pobjs[4] = {&chassis_power[0], &chassis_power[1], &chassis_power[2], &chassis_power[3]};
 	// 设定期望值
 	for (int8_t i = 0; i < 4; i ++) {
-		Rampspeed[i] = RAMP_int16( speed_target[i] * MOTOR_DECELE_RATIO, Rampspeed[i], 100.0f);
-		if( fabs(speed_target[i]) <= 3.0f && fabs(chassis_motor[i]->measure.SpeedFilter) < 100.0f)
+		Rampspeed[i] = RAMP_int16( speed_target[i] * MOTOR_DECELE_RATIO, Rampspeed[i], 50.0f);
+		if( fabs(speed_target[i]) <= 0.5f && fabs(chassis_motor[i]->measure.SpeedFilter) < 50.0f)
 			Can2Send_Chassis[i] = Chassis_Speed_PID[i].pid_out = 0;
 		else
 			Can2Send_Chassis[i] = PID_Control(currentAv[i], Rampspeed[i] , &Chassis_Speed_PID[i]);
@@ -389,7 +393,7 @@ void chassis_powerlimit()
 		chassis_power[j].setAv = Rampspeed[j];
 		chassis_power[j].pidOutput = Can2Send_Chassis[j];
 		chassis_power[j].errorAv = fabs(chassis_power[j].setAv - chassis_power[j].curAv)/19.203f;
-		chassis_power[j].pidMaxOutput = 15500;
+		chassis_power[j].pidMaxOutput = 12000;
 	}
 	    
 	// 底盘功率限制
@@ -454,7 +458,6 @@ void Chassis_Upeadt()
 //        Kinematics_Inverse_Resolution();
 //        Dynamics_Inverse_Resolution();
 		
-		Chassis_Flay();
         mecanum_calculate();           // 麦轮解算
         chassis_powerlimit();          // 底盘功率限制
 	}
@@ -500,7 +503,10 @@ void Pose_Resolution(float v[5][3])
 {
     float len = sqrt((v[4][0]-v[4][1]) * (v[4][0]-v[4][1]));
 	for(uint8_t i = 0; i < 4; i++) {
-		v[i][2] = (v[4][0] - v[i][1]) / len * Dynamic_Resistance_Wheel_Current_Rpm[i] * v[4][2];
+		if(sign(v[i][1]) == 1)
+		    v[i][2] = (v[4][1] - v[i][1]) / len * Dynamic_Resistance_Wheel_Current_Rpm[i] * v[4][2];
+		else
+		    v[i][2] = (v[4][0] - v[i][1]) / len * Dynamic_Resistance_Wheel_Current_Rpm[i] * v[4][2];
 	}
 }
 

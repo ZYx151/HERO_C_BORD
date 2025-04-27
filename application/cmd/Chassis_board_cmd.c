@@ -123,48 +123,47 @@ void Chassis_board_CMD_Update()
 		chassis_state = ROBOT_STOP;
         receive_UI.chassis_mode = CHASSIS_ZERO_FORCE;
 		chassis_cmd_ctrl.Close_flag = 1;
-//		chassis_cmd_ctrl.soft_reset_flag = 0;
+		chassis_cmd_ctrl.Shift_flag= 0;
 		receive_data.vx = 0;
 		receive_data.vy = 0;
 		receive_data.rotate = 0;
 	 } else {
-	    if (chassis_cmd_ctrl.soft_reset_flag == 0 )
-				chassis_cmd_ctrl.soft_reset_flag = receive_data.soft_reset_flag;
 		chassis_state = Robot_RUNNING;
 		chassis_cmd_ctrl.mode = receive_UI.chassis_mode;
 		chassis_cmd_ctrl.vy = receive_data.vy;
 		chassis_cmd_ctrl.vx = receive_data.vx;
 		chassis_cmd_ctrl.rotate = receive_data.rotate;
 		chassis_cmd_ctrl.Close_flag = receive_data.Close_flag;
+		chassis_cmd_ctrl.Shift_flag = receive_data.Shift_flag;
 		chassis_cmd_ctrl.dispatch_mode  = receive_UI.chassis_dispatch_mode;
     }
 	 
-    if(chassis_cmd_ctrl.soft_reset_flag > 0)
-		chassis_state = ROBOT_STOP;
-	  if (chassis_cmd_ctrl.soft_reset_flag == 1) {
-		   static int16_t robot_stop_cnt = 0;
-           robot_stop_cnt ++;
-		  // 等待20ms使得电机全部下线
-		   if(robot_stop_cnt >= 20) {
-               chassis_cmd_ctrl.soft_reset_flag = 2;
-		   }
-	  } else if (chassis_cmd_ctrl.soft_reset_flag == 2) {
-        //等待10ms使得can通信完成
-        static int16_t can_wait_cnt = 0;
-        can_wait_cnt++;
-        if (can_wait_cnt == 10) 
-             soft_rest();
-	  }
+//    if(chassis_cmd_ctrl.soft_reset_flag > 0)
+//		chassis_state = ROBOT_STOP;
+//	  if (chassis_cmd_ctrl.soft_reset_flag == 1) {
+//		   static int16_t robot_stop_cnt = 0;
+//           robot_stop_cnt ++;
+//		  // 等待20ms使得电机全部下线
+//		   if(robot_stop_cnt >= 20) {
+//               chassis_cmd_ctrl.soft_reset_flag = 2;
+//		   }
+//	  } else if (chassis_cmd_ctrl.soft_reset_flag == 2) {
+//        //等待10ms使得can通信完成
+//        static int16_t can_wait_cnt = 0;
+//        can_wait_cnt++;
+//        if (can_wait_cnt == 10) 
+//             soft_rest();
+//	  }
 	  
-	//   接收底盘模块模块  todo : 与超电通信 以及消息内容的判断
+	 //   接收底盘模块模块  todo : 与超电通信 以及消息内容的判断
 	SubGetMessage(chassis_feed_sub, (void *)&chassis_feedback_data);
-     if (chassis_feedback_data.chassis_status != Device_Online ) {
+    if (chassis_feedback_data.chassis_status != Device_Online ) {
 		chassis_state = ROBOT_STOP;
         chassis_cmd_ctrl.mode = CHASSIS_ZERO_FORCE;
-	 } else {
-		 chassis_cmd_ctrl.mode = CHASSIS_NORMAL;
-		 chassis_cmd_ctrl.dispatch_mode = chassis_dispatch_fly;
-	 }
+	} else {
+	 chassis_cmd_ctrl.mode = CHASSIS_NORMAL;
+	 chassis_cmd_ctrl.dispatch_mode = chassis_dispatch_fly;
+	}
 	 
 	 /* 裁判系统的在线判断 UI的初始化 动态UI 上下板通信 */
 	 Referee_Update(); // 裁判系统数据处理
@@ -178,31 +177,28 @@ void Chassis_board_CMD_Update()
 		  chassis_power_send.send_power.power_now    = Referee_SendData.chassis_power;                // 当前底盘功率
 		  chassis_power_send.send_power.power_limit  = Referee_SendData.chassis_power_limit;          // 底盘功率限制
 		  chassis_power_send.refree_status = Referee_SendData.refree_status;
-		 
-//		  send_data.shoot_referee_data.robot_color  = Referee_SendData.robot_color;            // 机器人颜色
-//		  send_data.shoot_referee_data.robot_level  = Referee_SendData.robot_level;            // 机器人等级
-//		  send_data.shoot_referee_data.bullet_speed_now  = Referee_SendData.bullet_speed_now;  // 实时弹速
+		  
 		  send_data.shoot_referee_data.heat_limit_remain = Referee_SendData.shooter_barrel_heat_limit - Referee_SendData.heat_now_remain; // 剩余热量
 		  send_data.shoot_referee_data.ammo_num          = Referee_SendData.Ammo_consume;
-		  
 	 }
 	 
+	 /* 向功率控制发送数据 */ 
+	 chassis_power_send.shitf_flag = chassis_cmd_ctrl.Shift_flag;
 	 chassis_power_send.robot_level = Referee_SendData.robot_level;
-//	 chassis_power_send.superCAP_Enable = 1;
 	 PubPushMessage(rls_power_pub, (void *)&chassis_power_send);
 	 chassis_cmd_ctrl.robot_levels = Referee_SendData.robot_level;
 	 switch(Referee_SendData.robot_level)
      {
          case 1:   Referee_SendData.level_gain = 1;     break;
-         case 2:   Referee_SendData.level_gain = 1.07f;     break;
-         case 3:   Referee_SendData.level_gain = 1.14f;    break;
-         case 4:   Referee_SendData.level_gain = 1.21f;  break;
-         case 5:   Referee_SendData.level_gain = 1.28f;   break;
-         case 6:   Referee_SendData.level_gain = 1.33f;    break;
-         case 7:   Referee_SendData.level_gain = 1.38f;     break;
-         case 8:   Referee_SendData.level_gain = 1.43f;    break;
-         case 9:   Referee_SendData.level_gain = 1.48f;  break;
-         case 10:  Referee_SendData.level_gain = 1.54f;    break;
+         case 2:   Referee_SendData.level_gain = 1.09f;     break;
+         case 3:   Referee_SendData.level_gain = 1.16f;    break;
+         case 4:   Referee_SendData.level_gain = 1.24f;  break;
+         case 5:   Referee_SendData.level_gain = 1.30f;   break;
+         case 6:   Referee_SendData.level_gain = 1.35f;    break;
+         case 7:   Referee_SendData.level_gain = 1.41f;     break;
+         case 8:   Referee_SendData.level_gain = 1.45f;    break;
+         case 9:   Referee_SendData.level_gain = 1.50f;  break;
+         case 10:  Referee_SendData.level_gain = 1.56f;    break;
          default:  Referee_SendData.level_gain = 1;     break;
 	 }
 	 

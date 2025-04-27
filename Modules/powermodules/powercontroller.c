@@ -408,8 +408,9 @@ void Task_PowerController(void *pvParameters)
 			  LATEST_FEEDBACK_JUDGE_ROBOT_LEVEL = fmax(1u, chassis_power_get.robot_level);
 			 /**  设置最大限制功率  **/
 #if USE_SUPER_CAPACITOR == 1 // 使用超电
-		  if ( !isFlagged(&Chassis_Manager.error, CAPDisConnect) && SuperCap_Rx.cap_power >= 60.0f)  // 超电在线使用缓冲能量
-  			  Chassis_Manager.powerUpperLimit = Chassis_Manager.refereeMaxPower + MAX_CAP_POWER_OUT - 0.6f * PID_Control(sqrtf(chassis_power_get.send_power.power_buffer), sqrtf(REFEREE_BASE_BUFFSET), &powerPD_buff);
+		  if ( !isFlagged(&Chassis_Manager.error, CAPDisConnect) && SuperCap_Rx.cap_power >= 65.0f)  // 超电在线使用缓冲能量
+			  chassis_power_get.shitf_flag == 1 ? ( Chassis_Manager.powerUpperLimit = Chassis_Manager.refereeMaxPower + MAX_CAP_POWER_OUT - 0.6f * PID_Control(sqrtf(chassis_power_get.send_power.power_buffer), sqrtf(REFEREE_BASE_BUFFSET), &powerPD_buff))
+		  : ( Chassis_Manager.powerUpperLimit = Chassis_Manager.refereeMaxPower + MAX_CAP_POWER_OUT - 0.6f * PID_Control(sqrtf(chassis_power_get.send_power.power_buffer), sqrtf(REFEREE_BASE_BUFFSET), &powerPD_buff));
 		  else // 超电离线保守控制
 			  Chassis_Manager.powerUpperLimit = Chassis_Manager.refereeMaxPower - PID_Control(sqrtf(chassis_power_get.send_power.power_buffer), sqrtf(REFEREE_BASE_BUFFSET), &powerPD_buff);
 #else
@@ -459,13 +460,15 @@ void Task_PowerController(void *pvParameters)
 		   	      fmax(Chassis_Manager.refereeMaxPower - PID_Control(sqrtf(Chassis_Manager.powerBuff), sqrtf(Chassis_Manager.baseBuffSet), &powerPD_base), MIN_MAXPOWER_CONFIGURED);
 		       Chassis_Manager.fullMaxPower =
 		          fmax(Chassis_Manager.refereeMaxPower - PID_Control(sqrtf(Chassis_Manager.powerBuff) ,sqrtf(Chassis_Manager.fullBuffSet), &powerPD_full), MIN_MAXPOWER_CONFIGURED);
-	    }
+	           if(chassis_power_get.shitf_flag)
+				   Chassis_Manager.baseMaxPower += 40;
+		}
 
 		//  自定义功率曲线（ 暂未使用 ）
 		if (Chassis_Manager.callback != NULL)
 			setMaxPowerConfigured(&Chassis_Manager, Chassis_Manager.callback());
 		else
-           setMaxPowerConfigured(&Chassis_Manager, 240);
+           setMaxPowerConfigured(&Chassis_Manager, 300);
 		
 		// 计算预估功率
 		// Estimate the power based on the current model

@@ -43,9 +43,9 @@ void Task_Init()
 #ifdef GIMBAL_BOARD
 	/* 串口1初始化 DT7遥控器 */
 	Remote_Init();
-	xTaskCreate((TaskFunction_t)Task_Robot,             "Task_Robot",             128*8, NULL, 7, &Task_Robot_Handle);
-	xTaskCreate((TaskFunction_t)Task_Gimbal,            "Task_Gimbal",            128*8, NULL, 5, &Task_Gimbal_Handle);
-	xTaskCreate((TaskFunction_t)Task_Shoot,             "Task_Shoot",             128*4, NULL, 5, &Task_Shoot_Handle);
+	xTaskCreate((TaskFunction_t)Task_Robot,             "Task_Robot",             128*4, NULL, 7, &Task_Robot_Handle);
+	xTaskCreate((TaskFunction_t)Task_Gimbal,            "Task_Gimbal",            128*8, NULL, 6, &Task_Gimbal_Handle);
+	xTaskCreate((TaskFunction_t)Task_Shoot,             "Task_Shoot",             128*8, NULL, 5, &Task_Shoot_Handle);
 //	xTaskCreate((TaskFunction_t)Task_Vision,            "Task_Vision",            128*8, NULL, 6, &Task_Vision_Handle);
 //	xTaskCreate((TaskFunction_t)Task_Usb,               "Task_Usb",               128*2, NULL, 7, &Task_Usb_Handle);
 #endif
@@ -60,9 +60,9 @@ void Task_Init()
     HAL_TIM_Base_Start(&htim5);
     HAL_TIM_Base_Start(&htim1);
     HAL_TIM_PWM_Start(&htim1,TIM_CHANNEL_1);
-    __HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_1, 2300);  //400  关    600开
+    __HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_1, 2280);  //400  关    600开
     HAL_TIM_PWM_Start(&htim1,TIM_CHANNEL_2);
-    __HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_2, 1000);  //400  关    600开
+    __HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_2, 1400);  //400  关    600开
 
 //    HAL_TIM_PWM_Start(&htim8,TIM_CHANNEL_1);
 //    __HAL_TIM_SET_COMPARE(&htim8,TIM_CHANNEL_1, 5000);  //400  关    600开

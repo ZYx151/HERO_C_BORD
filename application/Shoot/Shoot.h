@@ -17,7 +17,4 @@ void Shoot_Init(void);
  */
 void Shoot_Upeadt(void);
 
-
-
-
 #endif

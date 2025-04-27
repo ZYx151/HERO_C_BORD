@@ -6,8 +6,8 @@
 
 /* 开发板类型定义 */
 //#define ONE_BOARD     // 单片机控整车
-#define CHASSIS_BOARD // 底盘板
-//#define GIMBAL_BOARD  // 云台板
+//#define CHASSIS_BOARD // 底盘板
+#define GIMBAL_BOARD  // 云台板
 
 #define VISION_USE_VCP  // 使用虚拟串口发送视觉数据
 // #define VISION_USE_UART // 使用串口发送视觉数据
@@ -44,7 +44,7 @@
 #define Yaw_Mid_Right Yaw_Mid_Back + 2048
 #endif
 //!< @brief Pitch轴电机归中机械角度
-#define Pitch_Mid        2301
+#define Pitch_Mid        150
 //!< @brief Pitch轴电机上限位与水平位差值
 #define P_ADD_limit      0
 //!< @brief Pitch轴电机下限位与水平位差值
@@ -54,13 +54,13 @@
 //!< @brief IMU下限位（Pitch轴）
 #define IMU_DOWN_limit   -38.0f
 //!< @brief IMU上限位（Pitch轴）
-#define MCH_UP_limit     31.0f
+#define MCH_UP_limit     36.0f
 //!< @brief IMU下限位（Pitch轴）
-#define MCH_DOWN_limit   -31.0f
+#define MCH_DOWN_limit   -28.0f
 
 // 发射参数
 //!< @brief 摩擦轮电机速度环PID的期望值  /5800 3508电机Speed_Max: 
-#define SHOOT_SPEED            5800
+#define SHOOT_SPEED            5400
 //!< @brief 拨盘一圈的装载量
 #define SHOOT_NUM_PER_CIRCLE   5
 //!< @brief 拨弹盘电机连发时速度环PID的期望值 /19.0 (RPM) SHOOT_LOADER_MOTOR_ONE * 弹频
@@ -75,6 +75,8 @@
 #define SHOOT_UNIT_HEAT_17MM   5
 //!< @brief 每发射一颗大弹丸增加的热量
 #define SHOOT_UNIT_HEAT_42MM   100
+//!< @brief 发射一发大弹丸摩擦轮电流超限时间(单位: ms)
+#define SHOOT_UNIT_HEAT_TIME 150
 
 /** @brief 机器人底盘修改的参数,单位位 m  **/
 #define WHEEL_BASE  0.360           // 纵向轴距(前后方向)
@@ -199,7 +201,7 @@ typedef enum{
 // 发射类型运行模式
 typedef enum  {
     BULLET_HOLDON   = 0, //!< @brief 拨弹盘停止
-//    BULLET_REVERSE,    //!< @brief 反转，卡弹处理
+    BULLET_REVERSE,    //!< @brief 反转，卡弹处理
     BULLET_SINGLE,     //!< @brief 单发
     BULLET_DOUBLE,     //!< @brief 双发
     BULLET_TRIBLE,     //!< @brief 三发
@@ -254,7 +256,7 @@ typedef struct  {
     float vy;            			  // 单位 m/s
     float rotate;                     // 单位 旋转速度度每秒
 	uint8_t Close_flag;				  // 底盘关闭标志位
-    uint8_t soft_reset_flag;               // Shift跑路
+    uint8_t Shift_flag;               // Shift跑路
     Chassis_dispatch_mode dispatch_mode;  // 底盘运行模式
 	uint8_t robot_levels;                // 机器人等级
 } Chassis_ctrl_cmd_t;
@@ -263,12 +265,11 @@ typedef struct  {
 typedef struct  {
     Shoot_mode_e mode;
     Bullet_mode_e bullet_mode;    // 发射模式
-    Lid_mode_e mag_mode;         // 弹仓盖
     uint16_t bullet_speed;      // 弹速
     float fire_rate;            // 射频（发/秒）
     int16_t heat_limit_remain;  // 剩余热量，cooling_limit-cooling_heat
-    float bullet_speed_fdb;     // 实时弹速
 	int16_t ammo_num;          // 发射的弹丸数目
+	uint8_t game_start;        // 检测比赛是否开始
 } Shoot_ctrl_cmd_t;
 
 // 对云台的控制量
@@ -370,6 +371,7 @@ typedef struct {
 	DeviceState_e superCAP_status;
 	Cmd_chassis_power_t send_power;
     uint8_t robot_level;
+    uint8_t shitf_flag;
 } RLS_update_t;
 
 /***  板间通信定义  ***/
@@ -378,8 +380,8 @@ typedef struct  {
     int16_t vx;            // 单位 基准速度的倍率（基准速度由底盘模块根据功率自动计算）
     int16_t vy;            // 单位 基准速度的倍率
     int16_t rotate;        // 单位 旋转速度度每秒
-	uint8_t Close_flag;		//!< @brief 底盘关闭标志位
-    uint8_t soft_reset_flag;	//!< @brief 软件重启标志
+	uint8_t Close_flag;	   //!< @brief 底盘关闭标志位
+    uint8_t Shift_flag;	   //!< @brief 底盘突破功率限制加速
 } Gimbal_board_send_t;
 // 云台->底盘功能包
 typedef struct  {
@@ -392,7 +394,7 @@ typedef struct  {
     uint8_t shoot_mode;                // UI所需摩擦轮数据
     uint8_t bullet_mode;               // UI所需拨弹盘数据
     uint8_t vision_has_target;         // 自瞄是否检测到目标
-    uint8_t soft_reset_flag;           // 软重启标志位
+    uint8_t Shitf_flag;           // 软重启标志位
 } Gimbal_board_send_UI_t;
 // PC->云台接收数据包
 typedef struct {
@@ -401,15 +403,14 @@ typedef struct {
 
 // 云台<-底盘数据包
 typedef struct  {
-    int16_t chassis_gyro;         // 将底盘主控的imu数据发到云台
-//    uint8_t chassis_board_status;  // 同步底盘是否有重要模块掉线
-//    uint8_t robot_id;
+    int16_t chassis_gyro;          // 将底盘主控的imu数据发到云台
     struct {
 //		uint8_t  robot_color;       // 机器人颜色
-		uint8_t  ammo_num;         // 机器人发射弹丸数目
+		uint8_t  ammo_num;          // 机器人发射弹丸数目
+		uint8_t  game_start;        // 机器人发射弹丸数目
 //		uint8_t  robot_level;       // 机器人等级
         uint16_t heat_limit_remain; // 剩余热量
-        uint16_t robot_levels;  // 实时弹速
+        uint16_t robot_levels;      // 实时弹速
     } shoot_referee_data;
 } Chassis_board_send_t;
 
@@ -418,7 +419,7 @@ typedef struct{
 	DeviceState_e refree_status;
     uint8_t  robot_color;                      //!< @brief 机器人颜色
     uint8_t  robot_level;                      //!< @brief 等级
-    uint16_t heat_now_remain;                //!< @brief 实时枪口热量
+    uint16_t heat_now_remain;                  //!< @brief 实时枪口热量
     uint16_t shooter_barrel_heat_limit;        //!< @brief 枪口热量上限
     uint16_t bullet_speed_now;                 //!< @brief 弹速
 	uint16_t buffer_energy;                    //!< @brief 缓冲能量（单位：J）

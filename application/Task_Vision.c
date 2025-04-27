@@ -82,7 +82,7 @@ void Task_Vision()
 		currentTime = xTaskGetTickCount();
 	    // 自瞄数据解算
 //		Aim_Control();
-		vTaskDelayUntil(&currentTime, 2);
+		vTaskDelayUntil(&currentTime, 1);
 	}
 }
 
@@ -95,7 +95,7 @@ void Aim_Init()
 	Aim_Rx.Rx_State          = 0; 
 	Aim_Rx.Fixed_Center_time = 10;               //静态预测时间(拨弹盘转动，通信延迟等)
 	Aim_Rx.Fixed_Armor_time  = 100;
-	Aim_Rx.K                 = 0.022928514188f;          //空气阻力系数	
+	Aim_Rx.K                 = 0.47f * 1.169f * (2.0f * M_PI * 0.02125f * 0.02125f) / 2.0f / 0.041f;          //空气阻力系数	
 }
 
 
@@ -379,13 +379,14 @@ float monoAirResistance_Model(float horizontal, float bullet_speed, float angle_
 //    return (pitch_new - pitch) * 180 / PI;
 //}
 
-static float k1_u, k1_p, k1_u_sum, k1_p_sum;
-static float k2_u, k2_p, k2_u_sum, k2_p_sum;
-static float k3_u, k3_p, k3_u_sum, k3_p_sum;
-static float k4_u, k4_p;
 
 float Bullet_Offset(float horizontal, float vertical, float bullet_speed, float k)
 {
+	static float k1_u, k1_p, k1_u_sum, k1_p_sum;
+	static float k2_u, k2_p, k2_u_sum, k2_p_sum;
+	static float k3_u, k3_p, k3_u_sum, k3_p_sum;
+	static float k4_u, k4_p;
+	
     float pitch_new = atan2(vertical, horizontal);
 	float error, temp_vertical;
 
@@ -498,6 +499,29 @@ float monoDirectionalAirResistanceModel(float s, float v, float angle)
     //z为给定v与angle时的高度
     z = (float)(v * arm_sin_f32(angle) * t - GRAVITY * t * t / 2);
     return z;
+}
+
+/**  (参考狼牙战队24英雄自瞄代码重力补偿)基于发射时间的重力补偿  K = 0.022928514188 // 0.097 bullet_speed = 15**/
+float Pitch_Offset(float horizontal, float vertical, float bullet_speed)
+{
+	static float flyTime = 0.0, angle_pitch = 0.0;
+    float k1 = 0.47f * 1.169f * (2.0f * M_PI * 0.02125f * 0.02125f) / 2.0f / 0.041f;
+
+	angle_pitch = atan2(horizontal, vertical);	
+	float delta_z = 0.0;
+
+	for (int i = 0; i < 100; i++) 
+	{
+		// 计算炮弹的飞行时间
+		flyTime = (pow(2.718281828, k1 * horizontal) - 1) / (k1 * bullet_speed * arm_cos_f32(angle_pitch));
+		delta_z = vertical - bullet_speed * arm_sin_f32(angle_pitch) * flyTime / arm_cos_f32(angle_pitch) +
+				    0.5 * GRAVITY * flyTime * flyTime / arm_cos_f32(angle_pitch) / arm_cos_f32(angle_pitch);
+		if (fabs(delta_z) < 0.0001)
+			break;
+		angle_pitch -= delta_z / (-(bullet_speed * flyTime) / pow(arm_cos_f32(angle_pitch), 2) +
+							GRAVITY * flyTime * flyTime / (bullet_speed * bullet_speed) * arm_sin_f32(angle_pitch) / pow(arm_cos_f32(angle_pitch), 3));
+	}
+	return angle_pitch / M_PI *180.0f;
 }
 
 /*旋转矩阵*/

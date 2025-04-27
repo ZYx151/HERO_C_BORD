@@ -55,6 +55,6 @@ void Task_Protect(void *pvParameters)
         vTaskGetRunTimeStats((char *)&taskStateBuffer);
 #endif
 		
-       vTaskDelayUntil(&currentTime, 20);
+       vTaskDelayUntil(&currentTime, 10);
 	}
 }
