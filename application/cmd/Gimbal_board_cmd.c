@@ -1,20 +1,16 @@
 #include "Gimbal_board_cmd.h"
 #include "Task_Init.h"
- // module
-#include "DJIMotor.h"
-#include "IMU.h"
+#include "tim.h"
+// module
 #include "remote.h"
 #include "pub_sub.h"
-#include "controller.h"
-#include "servo_motor.h"
  // bsp
-#include "bsp_can.h"
 #include "bsp_dwt.h"
 #include "can_comm.h"
 #include "CANDrive.h"
 #include "ins_task.h"
 
-extern Gimbal_upload_t gimbal_feedback_data;
+//extern Gimbal_upload_t gimbal_feedback_data;
 static CANCommInstance *can_cmd_comm;
 static uint16_t cnt = 0;
 float Mouse_Sensitivity = 0.25f;
@@ -38,7 +34,7 @@ static attitude_t *ins;
    /* 云台部分 */
 static Publisher_t *gimbal_cmd_pub;            // 云台控制消息发布者
 static Subscriber_t *gimbal_upload_sub;        // 云台反馈信息订阅者
- Gimbal_ctrl_cmd_t gimbal_control;             // 传递给云台的控制信息
+static Gimbal_ctrl_cmd_t gimbal_control;             // 传递给云台的控制信息
 static Gimbal_upload_t   gimbal_upload_data;   // 从云台获取的反馈信息
     
    /* 发射部分 */
@@ -47,8 +43,6 @@ static Subscriber_t *shoot_upload_sub; 	     // 发射反馈信息订阅者
 static Shoot_ctrl_cmd_t shoot_control;       // 传递给发射的控制信息
 static Shoot_upload_t   shoot_upload_data;   // 从发射获取的反馈信息
   /* PC接收部分 */
-uint8_t Soft_Reset_Flag = 0; //软重启状态量
-int16_t soft_reset_cnt = 0;
     
 	/* 双板通信 */
 static	Gimbal_board_send_t    send_data;
@@ -89,7 +83,6 @@ void Gimbal_Cmd_Init()
     
 	robot_state = ROBOT_READY; //     //初始化为ready
     last_robot_state = ROBOT_STOP;
-	Soft_Reset_Flag = 0;
 		
 	receive_data = RMLIB_MALLOC(sizeof(Chassis_board_send_t));
     rc_data = get_remote_control_point();
@@ -119,19 +112,19 @@ void Gimbal_Cmd_Init()
 }
 
 /**    **/
+float slope_thete = 0.0;
 void Gimbal_board_CMD_Update()
-{
+{    
 	static uint16_t tim; // 用于云台归中	
     if (can_cmd_comm->Dog->state != Dog_Online) {
 		 gimbal_control.rotate_feedforward = 0;  // 底盘小陀螺前馈
-		 // shoot_control.game_start = 0;           // 比赛还未开始
+		  receive_data->chassis_slop = 0;
 	} else {
 		 gimbal_control.rotate_feedforward = (float )receive_data->chassis_gyro/200.0f;
 		 deadline_limit(gimbal_control.rotate_feedforward, 0.05f);
-		 shoot_control.game_start = receive_data->shoot_referee_data.game_start;
 		 shoot_control.heat_limit_remain = receive_data->shoot_referee_data.heat_limit_remain;
-		 shoot_control.ammo_num = receive_data->shoot_referee_data.ammo_num;
 	}
+	slope_thete = receive_data->chassis_slop/200.0f;
 	// 判断云台模块  todo : 与PC通信
 	SubGetMessage(gimbal_upload_sub, (void *)&gimbal_upload_data);
 	  /* 发射部分 */
@@ -143,34 +136,14 @@ void Gimbal_board_CMD_Update()
     if (gimbal_upload_data.gimbal_status != Device_Online)
 		gimbal_control.mode = GIMBAL_ZERO_FORCE;
 	  
-	  // 软件重启
-	  if (Soft_Reset_Flag > 0)
-	       robot_state = ROBOT_STOP;
-	  if (Soft_Reset_Flag == 1) {
-		   static int16_t robot_stop_cnt = 0;
-           robot_stop_cnt ++;
-		  // 等待20ms使得电机全部下线
-		   if(robot_stop_cnt >= 20) {
-               Soft_Reset_Flag = 2;
-               send_data.Close_flag = 1;
-			   send_data.Shift_flag = 1;
-		   }
-	  } else if (Soft_Reset_Flag == 2) {
-        //等待10ms使得can通信完成
-        static int16_t can_wait_cnt = 0;
-        can_wait_cnt++;
-        if (can_wait_cnt == 10) 
-             soft_rest();
-	  }
-	  
 	// 遥控器判断
 	if ( rc_data->Remote_dog->state != Dog_Online)
 	    robot_state = ROBOT_STOP;
-	if ( rc_data->Remote_dog->state == Dog_Online && robot_state == ROBOT_STOP && Soft_Reset_Flag == 0)  // 恢复任务
+	if ( rc_data->Remote_dog->state == Dog_Online && robot_state == ROBOT_STOP)  // 恢复任务
 		    robot_state = ROBOT_READY;
 	// 遥控器离线模式
-	 if (robot_state == ROBOT_STOP)
-		stop_mode_update();
+	 if(robot_state == ROBOT_STOP)
+		 stop_mode_update();
      else if(robot_state == ROBOT_READY) {
 		 if(gimbal_upload_data.gimbal_status == Device_Online) 
 		  {
@@ -198,8 +171,8 @@ void Gimbal_board_CMD_Update()
 				gimbal_control.Mech_Ref.Yaw = gimbal_upload_data.yaw_encorder + gimbal_upload_data.yaw_round * 8192;
 		    }
 	     }   
-	 } else if(robot_state == Robot_RUNNING) {		 
-		 /* 向底盘发送角度差 */
+	 } else if(robot_state == Robot_RUNNING) {
+		/* 向底盘发送角度差 */
 		switch (rc_data->RemoteMode) {
 			case REMOTE_INPUT:        	// 遥控器控制模式
 				remote_mode_update(); send_data.Close_flag = 0; send_data.Shift_flag = 0; 
@@ -244,7 +217,7 @@ send_data.rotate = 0;
 	CAN_Send_StdDataFrame(&hcan2, 0x110, (uint8_t *)&send_data);
     // 向底盘发送UI信息
 	Gimbal_data_send.Offset_Angle = (int16_t)((gimbal_upload_data.yaw_encorder - Yaw_Mid_Front) / 1303.80f * 100);
-	Gimbal_data_send.Pitch_angle = (int16_t)(ins->Pitch * 100);
+	Gimbal_data_send.Pitch_angle = (int16_t)(-ins->Pitch * 100);
 	Gimbal_data_send.Yaw_angle = (int16_t)(ins->ContinuousYaw * 100);
 	Gimbal_data_send.Fric_Speed = (int16_t)(shoot_upload_data.fire_speed);
 					
@@ -355,12 +328,12 @@ void remote_mode_update()
 	if(gimbal_control.mode == GIMBAL_GYRO_MODE && Aim_Ref.auto_mode == auto_aim_off ) {
         gimbal_control.Gyro_Ref.Yaw -= rc_data->Key_CH[2] * DR16_Rocker_Yaw_Resolution * 180.0f / PI * Mouse_Sensitivity * 3;
         gimbal_control.Feedback_Speed.Yaw -= rc_data->Key_CH[2] * DR16_Rocker_Yaw_Resolution * 1000.0f * Mouse_Sensitivity * 1.5;
-        gimbal_control.Gyro_Ref.Pitch -= rc_data->Key_CH[3] * DR16_Rocker_Pitch_Resolution * 180.0f / PI * Mouse_Sensitivity * 8.0f;
-        gimbal_control.Feedback_Speed.Pitch =0; //-= rc_data->Key_CH[3] * DR16_Rocker_Pitch_Resolution * 1000.0f * Mouse_Sensitivity * 5.0f;
-		
-        if(gimbal_feedback_data.pitch_encorder > MCH_UP_limit || gimbal_feedback_data.pitch_encorder < MCH_DOWN_limit)
-			gimbal_control.Gyro_Ref.Pitch = ins->Pitch;
-	    limit(gimbal_control.Gyro_Ref.Pitch, IMU_UP_limit, IMU_DOWN_limit);
+        gimbal_control.Gyro_Ref.Pitch -= rc_data->Key_CH[3] * DR16_Rocker_Pitch_Resolution * 180.0f / PI * Mouse_Sensitivity * 4.0f;
+        gimbal_control.Feedback_Speed.Pitch = 0; //-= rc_data->Key_CH[3] * DR16_Rocker_Pitch_Resolution * 1000.0f * Mouse_Sensitivity * 5.0f;
+//		if(gimbal_upload_data.yaw_encorder >= MCH_UP_limit || gimbal_upload_data.yaw_encorder <= MCH_DOWN_limit)
+	        limit(gimbal_control.Gyro_Ref.Pitch, IMU_UP_limit+slope_thete, IMU_DOWN_limit+slope_thete);
+//		else
+//			limit(gimbal_control.Gyro_Ref.Pitch, IMU_UP_limit, IMU_DOWN_limit);
 		 /* 如果底盘跟随很慢 及时切换零点 */
 #if     Yaw_Mid_Right < Yaw_Mid_Left
         if ( (gimbal_upload_data.yaw_encorder <= Yaw_Mid_Left) && (gimbal_upload_data.yaw_encorder >= Yaw_Mid_Right)){
@@ -408,9 +381,9 @@ void remote_mode_update()
 		 Level_Gain = 2.0f;
 	    /* 获取底盘旋转速度 */
 		if(send_UI.chassis_mode == CHASSIS_FOLLOW)
-		    send_data.rotate = gimbal_feedback_data.rotate_speed * 1;
+		    send_data.rotate = gimbal_upload_data.rotate_speed * 1;
 		else
-		    send_data.rotate = gimbal_feedback_data.rotate_speed;
+		    send_data.rotate = gimbal_upload_data.rotate_speed;
 		if(send_UI.chassis_mode == CHASSIS_NORMAL && gimbal_control.mode == GIMBAL_GYRO_MODE) {
 		     send_data.rotate  = (float )rc_data->Key_CH[0] * Level_Gain * 5500;
 			 left_right_ref   = 0;
@@ -443,7 +416,8 @@ void remote_mode_update()
 
 /**  键鼠控制  **/
 static float mouse_key_shift = 1.0f, chassis_speed_K = 0.0f;
-int16_t SHOOT_OFFSET = 0, CHASSIS_SPEED_CNT = 0;
+static int16_t CHASSIS_SPEED_CNT = 0;
+int16_t gimbal_gyro_H, gimbal_gyro_L = 0;
 void mouse_key_mode_update()
 {
 	static Chassis_mode_e last_chassis;
@@ -504,7 +478,6 @@ void mouse_key_mode_update()
 			}
 			break;
 		case 1:
-//			if(shoot->mode == SHOOT_STOP) {
 				if(ins->ins_dog->state == Dog_Online) {
 					gimbal_control.mode  = GIMBAL_GYRO_MODE;
 					send_UI.chassis_mode = CHASSIS_FOLLOW;
@@ -513,16 +486,7 @@ void mouse_key_mode_update()
 				   gimbal_control.mode  = GIMBAL_MECH_MODE;
 				   send_UI.chassis_mode = CHASSIS_NORMAL;
 				}
-//			} else {
-//			   gimbal_upload_data.rotate_speed = 0;
-//			   gimbal_control.mode  = GIMBAL_MECH_MODE;
-//			   send_UI.chassis_mode = CHASSIS_NORMAL;
-//			}
 			break;
-//		case 3:
-//			gimbal_control.mode  = GIMBAL_MECH_MODE; // 机械模式 吊射用
-//			send_UI.chassis_mode = CHASSIS_NORMAL;
-//			break;
 		default :
 			mousekey_GimbalChassis_default();
 			break;
@@ -533,19 +497,19 @@ void mouse_key_mode_update()
 	 // C V：修改倍镜和图传位置
 	switch (rc_data->key_count[KEY_PRESS][Key_V] % 2) {
 	  case 0 :
-		  __HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_1, 2260);  //400  关    600开
+		  __HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_1, 2290);  //400  关    600开
 		  break;
 	  case 1:
-		  __HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_1, 2200);  //400  关    600开
+		  __HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_1, 2180);  //400  关    600开
 
 		  break;
 	  default:
-		  __HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_1, 2260);  //400  关    600开
+		  __HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_1, 2290);  //400  关    600开
 		  break;
      }
 	switch (rc_data->key_count[KEY_PRESS][Key_C] % 2) {
 	  case 0 :
-		  __HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_2, 1600);  //400  关    600开
+		  __HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_2, 1800);  //400  关    600开
 		  break;
 	  case 1:
 		  __HAL_TIM_SET_COMPARE(&htim1,TIM_CHANNEL_2, 595);  //400  关    600开
@@ -555,15 +519,13 @@ void mouse_key_mode_update()
 		  break;
      }
 
-	 shoot->bullet_mode = BULLET_SINGLE; // 单发
-
 	   // E Q与CTRL 连携键控制发射速度
 	 if(rc_data->key_count[KEY_PRESS_WITH_CTRL][Key_E] != last_key_e&& rc_data->key_count[KEY_PRESS_WITH_CTRL][Key_E] != 0) {
-		 SHOOT_OFFSET += 50;
+		 shoot->speed_offset += 25;
 		 last_key_e = rc_data->key_count[KEY_PRESS_WITH_CTRL][Key_E];
 	 }
 	 if(rc_data->key_count[KEY_PRESS_WITH_CTRL][Key_Q] != last_key_q&& rc_data->key_count[KEY_PRESS_WITH_CTRL][Key_Q] != 0) {
-		 SHOOT_OFFSET -= 50;
+		 shoot->speed_offset -= 25;
 		 last_key_q = rc_data->key_count[KEY_PRESS_WITH_CTRL][Key_Q];
 	 }
 	  
@@ -601,7 +563,7 @@ void mouse_key_mode_update()
 		if(rc_data->key[KEY_PRESS].W || rc_data->key[KEY_PRESS].S) {
 			CHASSIS_SPEED_CNT++;
 			if(CHASSIS_SPEED_CNT >= 200) {
-			    chassis_speed_K += 0.075f;
+			    chassis_speed_K += 0.1f;
 				CHASSIS_SPEED_CNT = 0;
 			}
 	    } else {
@@ -613,7 +575,7 @@ void mouse_key_mode_update()
 	    forward_back_ref = (float )( rc_data->key[KEY_PRESS].W - rc_data->key[KEY_PRESS].S ) * (Level_Gain+chassis_speed_K) * 2500.0f * mouse_key_shift;
 		/** 小陀螺时平移速度削减 **/
 	    if(send_UI.chassis_mode == CHASSIS_SPIN && abs(left_right_ref) + abs(forward_back_ref) > 600) {
-			forward_back_ref *= 1.2f;
+			forward_back_ref *= 1.3f;
 			left_right_ref *= 1.2f;
 			send_data.rotate *= 0.5f;
 		}
@@ -631,16 +593,18 @@ void mouse_key_mode_update()
 	if(gimbal_control.mode == GIMBAL_GYRO_MODE && Aim_Ref.aim_action == auto_aim_off) {
         gimbal_control.Gyro_Ref.Yaw -= rc_data->Mouse_Ch[0] * Mouse_Sensitivity * 2.5;
         gimbal_control.Feedback_Speed.Yaw = -rc_data->Mouse_Ch[0] * Mouse_Sensitivity*2.5f;
-        gimbal_control.Gyro_Ref.Pitch -= rc_data->Mouse_Ch[1] * Mouse_Sensitivity * 1.0f;
-        gimbal_control.Feedback_Speed.Pitch = 0;//-rc_data->Mouse_Ch[0] * Mouse_Sensitivity*1.0f;
-		
-	    limit(gimbal_control.Gyro_Ref.Pitch, IMU_UP_limit, IMU_DOWN_limit);
+		gimbal_control.Gyro_Ref.Pitch -= rc_data->Mouse_Ch[1] * Mouse_Sensitivity * 1.0f;
+        gimbal_control.Feedback_Speed.Pitch = -rc_data->Mouse_Ch[0] * Mouse_Sensitivity*1.0f;
+		if(gimbal_upload_data.pitch_encorder >= MCH_UP_limit || gimbal_upload_data.pitch_encorder <= MCH_DOWN_limit)
+	        limit(gimbal_control.Gyro_Ref.Pitch, IMU_UP_limit+slope_thete, IMU_DOWN_limit+slope_thete);
+		else
+	        limit(gimbal_control.Gyro_Ref.Pitch, IMU_UP_limit, IMU_DOWN_limit);
 		
 		 /* 如果底盘跟随很慢 及时切换零点 */
 #if     Yaw_Mid_Right < Yaw_Mid_Left
-        if ( (gimbal_upload_data.yaw_encorder <= Yaw_Mid_Left) && (gimbal_upload_data.yaw_encorder >= Yaw_Mid_Right)){
+        if((gimbal_upload_data.yaw_encorder <= Yaw_Mid_Left) && (gimbal_upload_data.yaw_encorder >= Yaw_Mid_Right)){
 #elif   Yaw_Mid_Right > Yaw_Mid_Left
-        if ( (gimbal_upload_data.yaw_encorder <= Yaw_Mid_Left) || (gimbal_upload_data.yaw_encorder >= Yaw_Mid_Right)){
+        if((gimbal_upload_data.yaw_encorder <= Yaw_Mid_Left) || (gimbal_upload_data.yaw_encorder >= Yaw_Mid_Right)){
 #endif
 			gimbal_control.Mid_mode = FRONT;
 		} else
@@ -669,17 +633,22 @@ void mouse_key_mode_update()
 	}
 	// shift加速 长按
 	if (rc_data->key[KEY_PRESS].Shift) {
-		chassis->Shift_flag = 1;
+		send_data.Shift_flag = 1;
 		if(send_UI.chassis_mode == CHASSIS_SPIN) {
 		    chassis->vx *= 1.2f;
 		    chassis->vy *= 1.2f;
 		    chassis->rotate *= 1.6f;
 		} else {
-		    chassis->vx *= 1.8f;
+		    chassis->vx *= 2.0f;
 		    chassis->vy *= 1.4f;
-		    chassis->rotate *= 1.3f;
 		}
-	}else chassis->Shift_flag = 0;
+	}
+	else 
+		send_data.Shift_flag = 0;
+	// Ctrl 解限功率控制
+	if (rc_data->key[KEY_PRESS].Ctrl == 1 && Communication_Action_Tx.Key != 1) {
+		Communication_Action_Tx.Key = 2;
+	}
 	
 	// F: 快速转头 点按
 	if (rc_data->key[KEY_PRESS].F == 1 && key_f_flag == 0) {

@@ -3,7 +3,7 @@
 <title>Static Call Graph - [HERO_C_Board\HERO_C_Board.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image HERO_C_Board\HERO_C_Board.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6190004: Last Updated: Sun Apr 27 10:20:21 2025
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6190004: Last Updated: Fri May  2 14:11:44 2025
 <BR><P>
 <H3>Maximum Stack Usage =        560 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -384,13 +384,13 @@ Global Symbols
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f407xx.o(RESET)
 </UL>
 <P><STRONG><a name="[213]"></a>arm_cos_f32</STRONG> (Thumb, 108 bytes, Stack size 0 bytes, arm_cos_f32.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[eb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;mouse_key_mode_update
-<LI><a href="#[ea]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;remote_mode_update
+<BR><BR>[Called By]<UL><LI><a href="#[ec]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;mouse_key_mode_update
+<LI><a href="#[eb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;remote_mode_update
 </UL>
 
 <P><STRONG><a name="[212]"></a>arm_sin_f32</STRONG> (Thumb, 130 bytes, Stack size 0 bytes, arm_sin_f32.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[eb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;mouse_key_mode_update
-<LI><a href="#[ea]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;remote_mode_update
+<BR><BR>[Called By]<UL><LI><a href="#[ec]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;mouse_key_mode_update
+<LI><a href="#[eb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;remote_mode_update
 </UL>
 
 <P><STRONG><a name="[198]"></a>arm_mat_add_f32</STRONG> (Thumb, 264 bytes, Stack size 12 bytes, arm_mat_add_f32.o(.text))
@@ -557,7 +557,7 @@ Global Symbols
 </UL>
 <BR>[Called By]<UL><LI><a href="#[1d2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Shoot_Upeadt
 <LI><a href="#[a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dsub
-<LI><a href="#[eb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;mouse_key_mode_update
+<LI><a href="#[ec]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;mouse_key_mode_update
 <LI><a href="#[a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_drsub
 </UL>
 
@@ -575,7 +575,7 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_double_epilogue
 </UL>
 <BR>[Called By]<UL><LI><a href="#[1d2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Shoot_Upeadt
-<LI><a href="#[eb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;mouse_key_mode_update
+<LI><a href="#[ec]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;mouse_key_mode_update
 </UL>
 
 <P><STRONG><a name="[1d6]"></a>__aeabi_dcmpge</STRONG> (Thumb, 54 bytes, Stack size 12 bytes, dcmpge.o(.text))
@@ -594,7 +594,7 @@ Global Symbols
 
 <P><STRONG><a name="[1d3]"></a>__aeabi_f2d</STRONG> (Thumb, 38 bytes, Stack size 0 bytes, f2d.o(.text))
 <BR><BR>[Called By]<UL><LI><a href="#[1d2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Shoot_Upeadt
-<LI><a href="#[eb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;mouse_key_mode_update
+<LI><a href="#[ec]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;mouse_key_mode_update
 </UL>
 
 <P><STRONG><a name="[a5]"></a>__aeabi_d2f</STRONG> (Thumb, 56 bytes, Stack size 8 bytes, d2f.o(.text))
@@ -603,7 +603,7 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[a6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_float_round
 </UL>
 <BR>[Called By]<UL><LI><a href="#[1d2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Shoot_Upeadt
-<LI><a href="#[eb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;mouse_key_mode_update
+<LI><a href="#[ec]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;mouse_key_mode_update
 </UL>
 
 <P><STRONG><a name="[97]"></a>__aeabi_llsl</STRONG> (Thumb, 30 bytes, Stack size 0 bytes, llshl.o(.text))
@@ -829,7 +829,7 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_CAN_AddTxMessage
 </UL>
-<BR>[Called By]<UL><LI><a href="#[e9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Gimbal_board_CMD_Update
+<BR>[Called By]<UL><LI><a href="#[ea]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Gimbal_board_CMD_Update
 <LI><a href="#[e7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MotorSend
 <LI><a href="#[ca]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DJIMotor_Transmit
 </UL>
@@ -1087,7 +1087,7 @@ Global Symbols
 <LI><a href="#[76]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DecodeDJIMotor
 </UL>
 
-<P><STRONG><a name="[d4]"></a>Gimbal_Cmd_Init</STRONG> (Thumb, 188 bytes, Stack size 72 bytes, gimbal_board_cmd.o(.text.Gimbal_Cmd_Init))
+<P><STRONG><a name="[d4]"></a>Gimbal_Cmd_Init</STRONG> (Thumb, 180 bytes, Stack size 72 bytes, gimbal_board_cmd.o(.text.Gimbal_Cmd_Init))
 <BR><BR>[Stack]<UL><LI>Max Depth = 464<LI>Call Chain = Gimbal_Cmd_Init &rArr; INS_Init &rArr; BMI088Init &rArr; bmi088_gyro_init &rArr; BMI088_read_write_byte &rArr; HAL_SPI_TransmitReceive &rArr; SPI_WaitFlagStateUntilTimeout
 </UL>
 <BR>[Calls]<UL><LI><a href="#[bd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;pvPortMalloc
@@ -1115,13 +1115,14 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[8c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Task_Robot
 </UL>
 
-<P><STRONG><a name="[da]"></a>Gimbal_Task</STRONG> (Thumb, 1888 bytes, Stack size 32 bytes, gimbal.o(.text.Gimbal_Task))
+<P><STRONG><a name="[da]"></a>Gimbal_Task</STRONG> (Thumb, 1780 bytes, Stack size 32 bytes, gimbal.o(.text.Gimbal_Task))
 <BR><BR>[Stack]<UL><LI>Max Depth = 120<LI>Call Chain = Gimbal_Task &rArr; auto_rotate_param &rArr; PID_Control_Smis &rArr; DWT_GetDeltaT
 </UL>
 <BR>[Calls]<UL><LI><a href="#[e1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;auto_rotate_param
 <LI><a href="#[e2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PID_IoutReset
 <LI><a href="#[e6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PID_Control
-<LI><a href="#[e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PubPushMessage
+<LI><a href="#[e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sign
+<LI><a href="#[e9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PubPushMessage
 <LI><a href="#[db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SubGetMessage
 <LI><a href="#[e7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MotorSend
 <LI><a href="#[e5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PID_Control_Smis
@@ -1137,15 +1138,14 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[8d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Task_Gimbal
 </UL>
 
-<P><STRONG><a name="[e9]"></a>Gimbal_board_CMD_Update</STRONG> (Thumb, 892 bytes, Stack size 24 bytes, gimbal_board_cmd.o(.text.Gimbal_board_CMD_Update))
+<P><STRONG><a name="[ea]"></a>Gimbal_board_CMD_Update</STRONG> (Thumb, 836 bytes, Stack size 24 bytes, gimbal_board_cmd.o(.text.Gimbal_board_CMD_Update))
 <BR><BR>[Stack]<UL><LI>Max Depth = 176<LI>Call Chain = Gimbal_board_CMD_Update &rArr; mouse_key_mode_update &rArr; __aeabi_dadd &rArr; _double_epilogue &rArr; _double_round
 </UL>
 <BR>[Calls]<UL><LI><a href="#[c5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CAN_Send_StdDataFrame
-<LI><a href="#[e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PubPushMessage
-<LI><a href="#[eb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;mouse_key_mode_update
-<LI><a href="#[ea]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;remote_mode_update
+<LI><a href="#[e9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PubPushMessage
+<LI><a href="#[ec]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;mouse_key_mode_update
+<LI><a href="#[eb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;remote_mode_update
 <LI><a href="#[db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SubGetMessage
-<LI><a href="#[ec]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__NVIC_SystemReset
 </UL>
 <BR>[Called By]<UL><LI><a href="#[8c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Task_Robot
 </UL>
@@ -2605,14 +2605,14 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f407xx.o(RESET)
 </UL>
-<P><STRONG><a name="[e8]"></a>PubPushMessage</STRONG> (Thumb, 40 bytes, Stack size 16 bytes, pub_sub.o(.text.PubPushMessage))
+<P><STRONG><a name="[e9]"></a>PubPushMessage</STRONG> (Thumb, 40 bytes, Stack size 16 bytes, pub_sub.o(.text.PubPushMessage))
 <BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = PubPushMessage &rArr; RMQueuePush &rArr; __aeabi_memcpy
 </UL>
 <BR>[Calls]<UL><LI><a href="#[1c7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RMQueuePush
 </UL>
 <BR>[Called By]<UL><LI><a href="#[da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Gimbal_Task
 <LI><a href="#[1d2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Shoot_Upeadt
-<LI><a href="#[e9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Gimbal_board_CMD_Update
+<LI><a href="#[ea]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Gimbal_board_CMD_Update
 </UL>
 
 <P><STRONG><a name="[d5]"></a>PubRegister</STRONG> (Thumb, 86 bytes, Stack size 24 bytes, pub_sub.o(.text.PubRegister))
@@ -2670,7 +2670,7 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
 </UL>
-<BR>[Called By]<UL><LI><a href="#[e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PubPushMessage
+<BR>[Called By]<UL><LI><a href="#[e9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PubPushMessage
 </UL>
 
 <P><STRONG><a name="[89]"></a>ReachingLaw_sqrt</STRONG> (Thumb, 56 bytes, Stack size 0 bytes, controller.o(.text.ReachingLaw_sqrt))
@@ -2735,7 +2735,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[8c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Task_Robot
 </UL>
 
-<P><STRONG><a name="[1d2]"></a>Shoot_Upeadt</STRONG> (Thumb, 2232 bytes, Stack size 32 bytes, shoot.o(.text.Shoot_Upeadt))
+<P><STRONG><a name="[1d2]"></a>Shoot_Upeadt</STRONG> (Thumb, 2168 bytes, Stack size 32 bytes, shoot.o(.text.Shoot_Upeadt))
 <BR><BR>[Stack]<UL><LI>Max Depth = 120<LI>Call Chain = Shoot_Upeadt &rArr; __aeabi_dadd &rArr; _double_epilogue &rArr; _double_round
 </UL>
 <BR>[Calls]<UL><LI><a href="#[a4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_ui2d
@@ -2748,7 +2748,7 @@ Global Symbols
 <LI><a href="#[9d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dadd
 <LI><a href="#[a3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dmul
 <LI><a href="#[1d3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_f2d
-<LI><a href="#[e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PubPushMessage
+<LI><a href="#[e9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PubPushMessage
 <LI><a href="#[db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SubGetMessage
 <LI><a href="#[1d7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RAMP_float
 <LI><a href="#[1d4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DJIMotorOuterLoop
@@ -2760,7 +2760,7 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[85]"></a>StartDefaultTask</STRONG> (Thumb, 16 bytes, Stack size 0 bytes, freertos.o(.text.StartDefaultTask))
-<BR><BR>[Stack]<UL><LI>Max Depth = 424<LI>Call Chain = StartDefaultTask &rArr; Task_Init &rArr; INS_Init &rArr; BMI088Init &rArr; bmi088_gyro_init &rArr; BMI088_read_write_byte &rArr; HAL_SPI_TransmitReceive &rArr; SPI_WaitFlagStateUntilTimeout
+<BR><BR>[Stack]<UL><LI>Max Depth = 416<LI>Call Chain = StartDefaultTask &rArr; Task_Init &rArr; INS_Init &rArr; BMI088Init &rArr; bmi088_gyro_init &rArr; BMI088_read_write_byte &rArr; HAL_SPI_TransmitReceive &rArr; SPI_WaitFlagStateUntilTimeout
 </UL>
 <BR>[Calls]<UL><LI><a href="#[1da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osDelay
 <LI><a href="#[1d9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Task_Init
@@ -2775,7 +2775,7 @@ Global Symbols
 </UL>
 <BR>[Called By]<UL><LI><a href="#[da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Gimbal_Task
 <LI><a href="#[1d2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Shoot_Upeadt
-<LI><a href="#[e9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Gimbal_board_CMD_Update
+<LI><a href="#[ea]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Gimbal_board_CMD_Update
 </UL>
 
 <P><STRONG><a name="[d6]"></a>SubRegister</STRONG> (Thumb, 142 bytes, Stack size 24 bytes, pub_sub.o(.text.SubRegister))
@@ -2850,8 +2850,8 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> task_init.o(.text.Task_Init)
 </UL>
-<P><STRONG><a name="[1d9]"></a>Task_Init</STRONG> (Thumb, 272 bytes, Stack size 32 bytes, task_init.o(.text.Task_Init))
-<BR><BR>[Stack]<UL><LI>Max Depth = 424<LI>Call Chain = Task_Init &rArr; INS_Init &rArr; BMI088Init &rArr; bmi088_gyro_init &rArr; BMI088_read_write_byte &rArr; HAL_SPI_TransmitReceive &rArr; SPI_WaitFlagStateUntilTimeout
+<P><STRONG><a name="[1d9]"></a>Task_Init</STRONG> (Thumb, 272 bytes, Stack size 24 bytes, task_init.o(.text.Task_Init))
+<BR><BR>[Stack]<UL><LI>Max Depth = 416<LI>Call Chain = Task_Init &rArr; INS_Init &rArr; BMI088Init &rArr; bmi088_gyro_init &rArr; BMI088_read_write_byte &rArr; HAL_SPI_TransmitReceive &rArr; SPI_WaitFlagStateUntilTimeout
 </UL>
 <BR>[Calls]<UL><LI><a href="#[1a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_TIM_PWM_Start
 <LI><a href="#[1e3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_TIM_Base_Start
@@ -2896,7 +2896,7 @@ Global Symbols
 <LI><a href="#[1df]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vTaskDelayUntil
 <LI><a href="#[1d0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Shoot_Init
 <LI><a href="#[d9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Gimbal_Init
-<LI><a href="#[e9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Gimbal_board_CMD_Update
+<LI><a href="#[ea]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Gimbal_board_CMD_Update
 <LI><a href="#[d4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Gimbal_Cmd_Init
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> task_init.o(.text.Task_Init)
@@ -3595,7 +3595,7 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> entry9a.o(.ARM.Collect$$$$0000000B)
 </UL>
-<P><STRONG><a name="[eb]"></a>mouse_key_mode_update</STRONG> (Thumb, 1724 bytes, Stack size 64 bytes, gimbal_board_cmd.o(.text.mouse_key_mode_update))
+<P><STRONG><a name="[ec]"></a>mouse_key_mode_update</STRONG> (Thumb, 1844 bytes, Stack size 64 bytes, gimbal_board_cmd.o(.text.mouse_key_mode_update))
 <BR><BR>[Stack]<UL><LI>Max Depth = 152<LI>Call Chain = mouse_key_mode_update &rArr; __aeabi_dadd &rArr; _double_epilogue &rArr; _double_round
 </UL>
 <BR>[Calls]<UL><LI><a href="#[a5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_d2f
@@ -3605,7 +3605,7 @@ Global Symbols
 <LI><a href="#[213]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;arm_cos_f32
 <LI><a href="#[212]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;arm_sin_f32
 </UL>
-<BR>[Called By]<UL><LI><a href="#[e9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Gimbal_board_CMD_Update
+<BR>[Called By]<UL><LI><a href="#[ea]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Gimbal_board_CMD_Update
 </UL>
 
 <P><STRONG><a name="[1da]"></a>osDelay</STRONG> (Thumb, 32 bytes, Stack size 8 bytes, cmsis_os2.o(.text.osDelay))
@@ -3666,13 +3666,17 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[21b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;prvInitialiseNewTask
 </UL>
 
-<P><STRONG><a name="[ea]"></a>remote_mode_update</STRONG> (Thumb, 1144 bytes, Stack size 24 bytes, gimbal_board_cmd.o(.text.remote_mode_update))
+<P><STRONG><a name="[eb]"></a>remote_mode_update</STRONG> (Thumb, 1112 bytes, Stack size 24 bytes, gimbal_board_cmd.o(.text.remote_mode_update))
 <BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = remote_mode_update
 </UL>
 <BR>[Calls]<UL><LI><a href="#[213]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;arm_cos_f32
 <LI><a href="#[212]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;arm_sin_f32
 </UL>
-<BR>[Called By]<UL><LI><a href="#[e9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Gimbal_board_CMD_Update
+<BR>[Called By]<UL><LI><a href="#[ea]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Gimbal_board_CMD_Update
+</UL>
+
+<P><STRONG><a name="[e8]"></a>sign</STRONG> (Thumb, 28 bytes, Stack size 0 bytes, user_lib.o(.text.sign))
+<BR><BR>[Called By]<UL><LI><a href="#[da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Gimbal_Task
 </UL>
 
 <P><STRONG><a name="[21a]"></a>uxListRemove</STRONG> (Thumb, 36 bytes, Stack size 0 bytes, list.o(.text.uxListRemove))
@@ -4516,10 +4520,6 @@ Local Symbols
 <BR>[Address Reference Count : 2]<UL><LI> gimbal_board_cmd.o(.rodata..L__const.Gimbal_Cmd_Init.comm_conf)
 <LI> gimbal_board_cmd.o(.text.Gimbal_Cmd_Init)
 </UL>
-<P><STRONG><a name="[ec]"></a>__NVIC_SystemReset</STRONG> (Thumb, 42 bytes, Stack size 0 bytes, gimbal_board_cmd.o(.text.__NVIC_SystemReset))
-<BR><BR>[Called By]<UL><LI><a href="#[e9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Gimbal_board_CMD_Update
-</UL>
-
 <P><STRONG><a name="[74]"></a>CANCommRxCallback</STRONG> (Thumb, 146 bytes, Stack size 24 bytes, can_comm.o(.text.CANCommRxCallback))
 <BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = CANCommRxCallback &rArr; Feed_Dog
 </UL>
@@ -4566,7 +4566,7 @@ Local Symbols
 <P><STRONG><a name="[84]"></a>IMU_QuaternionEKF_F_Linearization_P_Fading</STRONG> (Thumb, 344 bytes, Stack size 0 bytes, quaternionekf.o(.text.IMU_QuaternionEKF_F_Linearization_P_Fading))
 <BR>[Address Reference Count : 1]<UL><LI> quaternionekf.o(.text.IMU_QuaternionEKF_Init)
 </UL>
-<P><STRONG><a name="[e1]"></a>auto_rotate_param</STRONG> (Thumb, 520 bytes, Stack size 40 bytes, gimbal.o(.text.auto_rotate_param))
+<P><STRONG><a name="[e1]"></a>auto_rotate_param</STRONG> (Thumb, 508 bytes, Stack size 40 bytes, gimbal.o(.text.auto_rotate_param))
 <BR><BR>[Stack]<UL><LI>Max Depth = 88<LI>Call Chain = auto_rotate_param &rArr; PID_Control_Smis &rArr; DWT_GetDeltaT
 </UL>
 <BR>[Calls]<UL><LI><a href="#[e6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PID_Control

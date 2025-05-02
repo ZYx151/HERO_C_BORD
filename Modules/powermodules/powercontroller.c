@@ -11,12 +11,15 @@
 #include "can_comm.h"
 #include "user_lib.h"
 #include "PID.h"
-							 
-							 
+
+extern Gimbal_data_t    receive_vision;
+extern Gimbal_action_t  receive_action; 
+
+extern TaskHandle_t Task_PowerController_Handle;
 #define USE_SUPER_CAPACITOR 1
 // 缓冲功率置信度
-#define POWER_PD_KP 20.0f
-#define POWER_PD_KD 0.55f
+#define POWER_PD_KP 25.0f
+#define POWER_PD_KD 0.60f
 #define clamp(x, min, max) ((x < min) ? min : (x > max) ? max : x)
 
 static RM_Status  isInitialized; // 初始化标志位 检测初始化成功
@@ -45,7 +48,7 @@ const static float CAP_BASE_BUFFSET     = 40.0f;
 const float REFEREE_FULL_BUFFSET        = 60.0f;  // 裁判系统最大缓冲能量
 const float REFEREE_BASE_BUFFSET        = 35.0f;  // 功率限制使用的基础缓冲能量  作为PID的期望使用缓冲功率
 /* 功率重分配阈值(期望速度误差) */
-const float error_powerDistribution_set = 25.0f;  // 功率分配在限制功率基础上增加
+const float error_powerDistribution_set = 40.0f;  // 功率分配在限制功率基础上增加
 const float prop_powerDistribution_set  = 5.0f;  // 功率分配在限制功率基础上增加
 
 /* 尝试超级电容动态功率参数 */
@@ -60,7 +63,8 @@ float CAP_REFEREE_BOTH_GG_COE                   = 0.85f;
 /* 最大限制功率计算 */
 static PID powerPD_base = {.Kp = POWER_PD_KP, .Ki = 0.0f, .Kd = POWER_PD_KD,      .interlimit = 100, .outlimit = 120, .DeadBand = 0.1f, .inter_threLow = 5, .inter_threUp = 20},
            powerPD_full = {.Kp = POWER_PD_KP, .Ki = 0.0f, .Kd = POWER_PD_KD,      .interlimit = 100, .outlimit = 120, .DeadBand = 0.1f, .inter_threLow = 5, .inter_threUp = 20},
-		   powerPD_buff = {.Kp = 15,          .Ki = 0.0f, .Kd = POWER_PD_KD+0.2f, .interlimit = 100, .outlimit = 40,  .DeadBand = 0.1f, .inter_threLow = 5, .inter_threUp = 20};
+		   powerPD_buff = {.Kp = 15,          .Ki = 0.0f, .Kd = POWER_PD_KD+0.2f, .interlimit = 100, .outlimit = 40,  .DeadBand = 0.1f, .inter_threLow = 5, .inter_threUp = 20},
+	 powerPD_base_shift = {.Kp = 40,          .Ki = 0.0f, .Kd = POWER_PD_KD+0.1f, .interlimit = 100, .outlimit = 240,  .DeadBand = 0.1f, .inter_threLow = 5, .inter_threUp = 20};
 
 /**
  * @brief 按兵种类型和级别划分的功率限制和最大HP枚举 
@@ -178,7 +182,7 @@ float *getControlledOutput(PowerObj_s *objs[4])
     float sumError = 0.0f;
 	// 设置最大限制功率
 	maxPower = (int16_t)Chassis_Manager.userConfiguredMaxPower;
-  
+
 	float allocatablePower = maxPower;   // 最终分配功率
     float sumPowerRequired = 0.0f;  
 
@@ -408,9 +412,9 @@ void Task_PowerController(void *pvParameters)
 			  LATEST_FEEDBACK_JUDGE_ROBOT_LEVEL = fmax(1u, chassis_power_get.robot_level);
 			 /**  设置最大限制功率  **/
 #if USE_SUPER_CAPACITOR == 1 // 使用超电
-		  if ( !isFlagged(&Chassis_Manager.error, CAPDisConnect) && SuperCap_Rx.cap_power >= 65.0f)  // 超电在线使用缓冲能量
-			  chassis_power_get.shitf_flag == 1 ? ( Chassis_Manager.powerUpperLimit = Chassis_Manager.refereeMaxPower + MAX_CAP_POWER_OUT - 0.6f * PID_Control(sqrtf(chassis_power_get.send_power.power_buffer), sqrtf(REFEREE_BASE_BUFFSET), &powerPD_buff))
-		  : ( Chassis_Manager.powerUpperLimit = Chassis_Manager.refereeMaxPower + MAX_CAP_POWER_OUT - 0.6f * PID_Control(sqrtf(chassis_power_get.send_power.power_buffer), sqrtf(REFEREE_BASE_BUFFSET), &powerPD_buff));
+		  if ( !isFlagged(&Chassis_Manager.error, CAPDisConnect) && SuperCap_Rx.cap_power >= 70.0f)  // 超电在线使用缓冲能量
+			  receive_action.Key == 2 ? ( Chassis_Manager.powerUpperLimit = Chassis_Manager.refereeMaxPower + 210)//+ MAX_CAP_POWER_OUT*1.2f - 0.8f*PID_Control(sqrtf(chassis_power_get.send_power.power_buffer), sqrtf(REFEREE_BASE_BUFFSET), &powerPD_buff))
+		                 : ( Chassis_Manager.powerUpperLimit = Chassis_Manager.refereeMaxPower + MAX_CAP_POWER_OUT - 0.8f * PID_Control(sqrtf(chassis_power_get.send_power.power_buffer), sqrtf(REFEREE_BASE_BUFFSET), &powerPD_buff));
 		  else // 超电离线保守控制
 			  Chassis_Manager.powerUpperLimit = Chassis_Manager.refereeMaxPower - PID_Control(sqrtf(chassis_power_get.send_power.power_buffer), sqrtf(REFEREE_BASE_BUFFSET), &powerPD_buff);
 #else
@@ -456,18 +460,20 @@ void Task_PowerController(void *pvParameters)
 		   PID_IoutReset(&powerPD_base);
 		   PID_IoutReset(&powerPD_full);
 		} else{ //  裁判系统和超级电容同时在线 使用PID计算充分使用缓冲功率
-		       Chassis_Manager.baseMaxPower =
-		   	      fmax(Chassis_Manager.refereeMaxPower - PID_Control(sqrtf(Chassis_Manager.powerBuff), sqrtf(Chassis_Manager.baseBuffSet), &powerPD_base), MIN_MAXPOWER_CONFIGURED);
-		       Chassis_Manager.fullMaxPower =
-		          fmax(Chassis_Manager.refereeMaxPower - PID_Control(sqrtf(Chassis_Manager.powerBuff) ,sqrtf(Chassis_Manager.fullBuffSet), &powerPD_full), MIN_MAXPOWER_CONFIGURED);
-	           if(chassis_power_get.shitf_flag)
-				   Chassis_Manager.baseMaxPower += 40;
+			if(receive_action.Key == 2)
+		        Chassis_Manager.baseMaxPower =
+		   	       Chassis_Manager.refereeMaxPower + 240;//- PID_Control(sqrtf(Chassis_Manager.powerBuff), sqrtf(Chassis_Manager.baseBuffSet), &powerPD_base_shift), MIN_MAXPOWER_CONFIGURED); // 
+ 		    else
+			    Chassis_Manager.baseMaxPower =
+		   	       fmax(Chassis_Manager.refereeMaxPower - PID_Control(sqrtf(Chassis_Manager.powerBuff), sqrtf(Chassis_Manager.baseBuffSet), &powerPD_base), MIN_MAXPOWER_CONFIGURED);
+		        Chassis_Manager.fullMaxPower =
+		           fmax(Chassis_Manager.refereeMaxPower - PID_Control(sqrtf(Chassis_Manager.powerBuff), sqrtf(Chassis_Manager.fullBuffSet), &powerPD_full), MIN_MAXPOWER_CONFIGURED);
 		}
 
 		//  自定义功率曲线（ 暂未使用 ）
-		if (Chassis_Manager.callback != NULL)
-			setMaxPowerConfigured(&Chassis_Manager, Chassis_Manager.callback());
-		else
+//		if (Chassis_Manager.callback != NULL)
+//			setMaxPowerConfigured(&Chassis_Manager, Chassis_Manager.callback());
+//		else
            setMaxPowerConfigured(&Chassis_Manager, 300);
 		
 		// 计算预估功率
@@ -510,10 +516,11 @@ void Task_PowerController(void *pvParameters)
 //		}
 		
 	   /** 向超级电容更新功率和缓冲能量 **/
-		if(SuperCap_Rx.cap_percent == 0 && SuperCap_Rx.cap_v != 0)
-		{    // 超电离线重启
-			 if(SUPERCAP_CNT++ == 0)
+		if(SuperCap_Rx.cap_percent == 0 && SuperCap_Rx.cap_v != 0 && isCapEnergyOut == TRUE && receive_action.Key)
+		{    // 超电离线重启 发送两次
+			 if(SUPERCAP_CNT == 0  || SUPERCAP_CNT == 50)
 				 SuperCAP_Force2Restart(&hcan2, 0x210);
+			 SUPERCAP_CNT++;
 			 if(SUPERCAP_CNT >= 2000)
 				 SUPERCAP_CNT = 0;
 		}

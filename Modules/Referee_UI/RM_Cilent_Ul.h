@@ -19,6 +19,7 @@
 #define UI_Data_ID_Draw5 0x103
 #define UI_Data_ID_Draw7 0x104
 #define UI_Data_ID_DrawChar 0x110
+#define UI_Data_ID_RADA 0x305
 /***************************删除操作***************************/
 #define UI_Data_Del_NoOperate 0 
 #define UI_Data_Del_Layer 1
@@ -49,6 +50,21 @@
 /***************************屏幕中心点（1920*1080）********************/
 #define X_CENTRE 960
 #define Y_CENTRE 540
+/***************************雷达发送数据********************/
+#define R1 1
+#define R2 2
+#define R3 3
+#define R4 4
+#define R5 5
+#define R6 6
+#define R7 7
+#define B1 101
+#define B2 102
+#define B3 103
+#define B4 104
+#define B5 105
+#define B6 106
+#define B7 107
 
 #pragma pack(1)//1字节对齐
 typedef struct{
@@ -104,6 +120,7 @@ typedef struct{
    Graph_Data Graph_Control;
    uint8_t show_Data[30];
 } String_Data;                  //字符串数据
+
 
 #pragma pack()
 void UI_Delete(uint8_t Del_Operate,uint8_t Del_Layer);

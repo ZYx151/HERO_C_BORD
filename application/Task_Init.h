@@ -5,16 +5,16 @@
 #include "task.h"
 #include "RMLibHead.h"
 
-extern TaskHandle_t Task_Robot_Handle;
-extern TaskHandle_t Task_Protect_Handle;
-extern TaskHandle_t Task_Shoot_Handle;
-extern TaskHandle_t Task_Gimbal_Handle;
-extern TaskHandle_t Task_INS_Handle;
-extern TaskHandle_t Task_Remote_Handle;
-extern TaskHandle_t Task_PowerController_Handle;
-extern TaskHandle_t Task_Vision_Handle;
-extern TaskHandle_t Task_Usb_Handle;
-extern TaskHandle_t Task_Music_Handle;
+//extern TaskHandle_t Task_Robot_Handle;
+//extern TaskHandle_t Task_Protect_Handle;
+//extern TaskHandle_t Task_Shoot_Handle;
+//extern TaskHandle_t Task_Gimbal_Handle;
+//extern TaskHandle_t Task_INS_Handle;
+//extern TaskHandle_t Task_Remote_Handle;
+//extern TaskHandle_t Task_PowerController_Handle;
+//extern TaskHandle_t Task_Vision_Handle;
+//extern TaskHandle_t Task_Usb_Handle;
+//extern TaskHandle_t Task_Music_Handle;
 /**
  * @brief 看门狗保护任务
  */

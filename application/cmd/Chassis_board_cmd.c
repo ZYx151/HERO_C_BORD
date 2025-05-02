@@ -179,7 +179,7 @@ void Chassis_board_CMD_Update()
 		  chassis_power_send.refree_status = Referee_SendData.refree_status;
 		  
 		  send_data.shoot_referee_data.heat_limit_remain = Referee_SendData.shooter_barrel_heat_limit - Referee_SendData.heat_now_remain; // 剩余热量
-		  send_data.shoot_referee_data.ammo_num          = Referee_SendData.Ammo_consume;
+	      send_data.chassis_slop = chassis_feedback_data.chassis_slop;
 	 }
 	 
 	 /* 向功率控制发送数据 */ 
@@ -189,16 +189,16 @@ void Chassis_board_CMD_Update()
 	 chassis_cmd_ctrl.robot_levels = Referee_SendData.robot_level;
 	 switch(Referee_SendData.robot_level)
      {
-         case 1:   Referee_SendData.level_gain = 1;     break;
-         case 2:   Referee_SendData.level_gain = 1.09f;     break;
-         case 3:   Referee_SendData.level_gain = 1.16f;    break;
-         case 4:   Referee_SendData.level_gain = 1.24f;  break;
-         case 5:   Referee_SendData.level_gain = 1.30f;   break;
-         case 6:   Referee_SendData.level_gain = 1.35f;    break;
-         case 7:   Referee_SendData.level_gain = 1.41f;     break;
-         case 8:   Referee_SendData.level_gain = 1.45f;    break;
-         case 9:   Referee_SendData.level_gain = 1.50f;  break;
-         case 10:  Referee_SendData.level_gain = 1.56f;    break;
+         case 1:   Referee_SendData.level_gain = 1.05;     break;
+         case 2:   Referee_SendData.level_gain = 1.15f;     break;
+         case 3:   Referee_SendData.level_gain = 1.20f;    break;
+         case 4:   Referee_SendData.level_gain = 1.25f;  break;
+         case 5:   Referee_SendData.level_gain = 1.35f;   break;
+         case 6:   Referee_SendData.level_gain = 1.40f;    break;
+         case 7:   Referee_SendData.level_gain = 1.45f;     break;
+         case 8:   Referee_SendData.level_gain = 1.50f;    break;
+         case 9:   Referee_SendData.level_gain = 1.60f;  break;
+         case 10:  Referee_SendData.level_gain = 1.70f;    break;
          default:  Referee_SendData.level_gain = 1;     break;
 	 }
 	 

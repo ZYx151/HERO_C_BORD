@@ -37,6 +37,7 @@ typedef struct
 {
     FrameHeader_t frame_header;  // 数据段id = 0x02
     uint32_t time_stamp;
+		uint8_t self_color; // robot_color
     struct
     {
         float yaw;    // rad
@@ -48,6 +49,7 @@ typedef struct
         float roll_vel;   // rad/s
 
     } __packed__ data;
+
     uint16_t crc;
 } __packed__ SendDataImu_s;
 
@@ -78,10 +80,13 @@ typedef struct{
     
     Pose_t Predicted_Armor_Pose[4];   //!< @brief 目标装甲板位姿（最多四块）
     float Predicted_Armor_time;
-    uint16_t  Fixed_Armor_time;
     float Predicted_Armor_Yaw[4];
     float Predicted_Armor_Pitch; 
-    
+	
+	float yaw_v;
+	float temp_pitch;
+	float armor_x,armor_y,armor_z, center_x, center_y, center_z, armor_yaw;
+
     float P_thre;                      //!< @brief 自动打弹角度阈值
     float Y_thre; 
     float K;                           //!< @brief 空气阻力系数

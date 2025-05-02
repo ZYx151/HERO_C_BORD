@@ -111,7 +111,7 @@ void Task_Referee_UI(void *pvParameters)
     {
         currentTime = xTaskGetTickCount();      // ????????
         if(Referee_SendData.refree_status == Device_Online || UI_sign == 6){
-            if(receive_action.Key && 0x01)
+            if(receive_action.Key == 1 && 0x01)
                   UI_STATE = INIT;
               if(UI_STATE == INIT || UI_sign <= 5){
                   UI_Init();
@@ -616,7 +616,7 @@ void UI_Move()
 //            }
 //            if(receive_action.vision_number != 0 )
 //            {
-                Float_Draw(&Gimabal_ANG_P, "ANP", UI_Graph_Change, 2, UI_Color_Cyan, 20, 2, 2, X_CENTRE + 750, Y_CENTRE + 200, receive_vision.Pitch_angle);
+                Float_Draw(&Gimabal_ANG_P, "ANP", UI_Graph_Change, 2, UI_Color_Cyan, 20, 2, 2, X_CENTRE + 750, Y_CENTRE + 200, receive_vision.Pitch_angle*10.0f);
                 Float_Draw(&Gimabal_ANG_Y, "ANY", UI_Graph_Change, 2, UI_Color_Cyan, 20, 2, 2, X_CENTRE + 750, Y_CENTRE + 155, receive_vision.Yaw_angle);
 //                Float_Draw(&Vision_DIS,  "VDS", UI_Graph_Change, 2, UI_Color_Cyan, 20, 2, 2, X_CENTRE + 205, Y_CENTRE + 150, receive_vision.vision_distance * 1000);
                 Float_Draw(&Vision_NUM,  "VNM", UI_Graph_Change, 2, UI_Color_Cyan, 20, 2, 2, X_CENTRE - 200, Y_CENTRE + 330, receive_action.vision_number * 1000);

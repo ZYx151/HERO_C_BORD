@@ -134,7 +134,7 @@ void VisionDataReceive(uint8_t *data);
 /******************************************************************/
 
 
-
+float send_tims, send_tim, last_tim;
 /**
  * @brief      USB任务主函数
  * @param[in]  argument: 任务参数
@@ -144,25 +144,31 @@ void Task_Usb(void *pvParameters)
 {
     vTaskDelay(10);  //等待USB设备初始化完成
     UsbInit();
-
+    static uint8_t cnt;
     while (1) {
-        UsbSendData();
+//		if(cnt++ >= 2) {
+//            cnt = 0;
+			last_tim = DWT_GetTimeline_ms() - send_tim;
+			send_tim = DWT_GetTimeline_ms();//DWT_GetDeltaT((void *)&USB_DWT_CNT) * 1000.0f;
+			UsbSendData();
+			send_tims = DWT_GetTimeline_ms() - send_tim;
+//		}
+		
         UsbReceiveData();
-
-        if (HAL_GetTick() - RECEIVE_TIME > USB_OFFLINE_THRESHOLD) {
-            USB_OFFLINE = true;
-            CONTINUE_RECEIVE_CNT = 0;
-        } else if (CONTINUE_RECEIVE_CNT > USB_CONNECT_CNT) {
-            USB_OFFLINE = false;
-        } else {
-            CONTINUE_RECEIVE_CNT++;
-        }
+//        if (HAL_GetTick() - RECEIVE_TIME > USB_OFFLINE_THRESHOLD) {
+//            USB_OFFLINE = true;
+//            CONTINUE_RECEIVE_CNT = 0;
+//        } else if (CONTINUE_RECEIVE_CNT > USB_CONNECT_CNT) {
+//            USB_OFFLINE = false;
+//        } else {
+//            CONTINUE_RECEIVE_CNT++;
+//        }
         
         vTaskDelay(USB_TASK_CONTROL_TIME);
 
-#if INCLUDE_uxTaskGetStackHighWaterMark
-        usb_high_water = uxTaskGetStackHighWaterMark(NULL);
-#endif
+//#if INCLUDE_uxTaskGetStackHighWaterMark
+//        usb_high_water = uxTaskGetStackHighWaterMark(NULL);
+//#endif
     }
 }
 
@@ -306,7 +312,8 @@ static void UsbSendImuData(void)
 	SEND_DATA_IMU.data.yaw_vel = ins->gyro[2];
 	SEND_DATA_IMU.data.pitch_vel = ins->gyro[0];
 	SEND_DATA_IMU.data.roll_vel = ins->gyro[1];
-	
+    SEND_DATA_IMU.self_color = 1;
+
 	append_CRC16_check_sum((uint8_t *)&SEND_DATA_IMU, sizeof(SendDataImu_s));
 	USB_Transmit((uint8_t *)&SEND_DATA_IMU, sizeof(SendDataImu_s));
 }

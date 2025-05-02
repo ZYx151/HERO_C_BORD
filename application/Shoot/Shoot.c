@@ -1,17 +1,12 @@
 #include "Shoot.h"
-#include "RMQueue.h"
 #include "motor.h"
 #include "PID.h"
 #include "user_lib.h"
-#include "fsm.h"
 #include "bsp_dwt.h"
 
 #include "usb_typdef.h"
 
 /*  发射部分 */
-extern int16_t SHOOT_OFFSET;
-float fire_speed_nofil[3] = {0};
-
 static DJIMotor_Instance *friction_r, *friction_l, *friction_u, *loader;
 static Publisher_t      *shoot_pub;          // 云台控制消息发布者
 static Subscriber_t     *shoot_sub;          // 云台反馈信息订阅者
@@ -45,16 +40,16 @@ static PID Shoot_Speed_PID[3] = {{.Kp = 5, .Ki = 0.0f, .Kd = 0.0f, .interlimit =
 						  {.Kp = 5, .Ki = 0.0f, .Kd = 0.0f, .interlimit = 3000, .outlimit = 16000, .DeadBand = 0.50f, .inter_threLow = 500, .inter_threUp = 1000}};                 // 摩擦轮上
 							  
 static PID_Smis Pluck_Place_PIDS = {.Kp = 5.0f, .Ki = 0, .Kd = 0.4f, .interlimit = 3000, .outlimit = 16000, .DeadBand = 0.0f, .inter_threLow = 500, .inter_threUp = 1000};         //拨弹盘单发位置环
-static PID Pluck_Speed_PID = {.Kp = 18.0f, .Ki = 0.0f, .Kd = 0.0f, .interlimit = 5000, .outlimit = 15000, .DeadBand = 20.0f, .inter_threLow = 20, .inter_threUp = 5000};                   //拨弹盘单发速度环
+static PID Pluck_Speed_PID = {.Kp = 5.0f, .Ki = 0.0f, .Kd = 0.0f, .interlimit = 5000, .outlimit = 15000, .DeadBand = 0.0f, .inter_threLow = 20, .inter_threUp = 5000};                   //拨弹盘单发速度环
 static PID Pluck_Continue_PID = {.Kp = 40, .Ki = 10.0, .Kd = 0, .interlimit = 5000, .outlimit = 15000, .DeadBand = 0.0f, .inter_threLow = 500, .inter_threUp = 1000};               //拨弹盘连发模式
 
 void Shoot_Init()
 {
-    SMC_SetConfig(&shoot_smc[0].config, 3.0f, 20, 100, ReachingLaw_sqrt, 15000);
-    SMC_SetConfig(&shoot_smc[1].config, 3.0f, 20, 100, ReachingLaw_sqrt, 15000);
-    SMC_SetConfig(&shoot_smc[2].config, 3.0f, 20, 100, ReachingLaw_sqrt, 15000);
+    SMC_SetConfig(&shoot_smc[0].config, 4.0f, 25, 200, ReachingLaw_sqrt, 15000);
+    SMC_SetConfig(&shoot_smc[1].config, 4.0f, 25, 200, ReachingLaw_sqrt, 15000);
+    SMC_SetConfig(&shoot_smc[2].config, 4.0f, 25, 200, ReachingLaw_sqrt, 15000);
     
-    SMC_SetConfig(&shoot_smc[3].config, 5.0f, 50, 250, ReachingLaw_sqrt, 14000);
+    SMC_SetConfig(&shoot_smc[3].config, 6.0f, 50, 100, ReachingLaw_sqrt, 15000);
 	
 	shoot_pub = PubRegister("shoot_upload", sizeof(Shoot_upload_t));
 	shoot_sub = SubRegister("shoot_cmd", sizeof(Shoot_ctrl_cmd_t));
@@ -180,7 +175,6 @@ Motor_Init_config_s friction_r_config = {
 	PubPushMessage(gimbal_pub, (void *)&gimbal_feed);
 	SubGetMessage(gimbal_sub, gimbal_get_control);
 */
-static float abs_deltePlack, abs_deltaSpeed, loader_angle_deg;
 static void Shoot_load_Update()
 {
     static uint16_t  Stuck_time   = 0, continur_tims = 0;//!< @brief 检测卡弹的时间 连发计时
@@ -188,6 +182,7 @@ static void Shoot_load_Update()
     static float Stuck_Angle_Target = 0;                 //!< @brief 拨弹盘卡弹退弹期望角度
     static const uint16_t Stuck_thre = 800;              //!< @brief 卡弹阈值，卡弹超过此时间便认为卡弹
 	static float Target_Continue_Speed = -360.0f * REDUCTION_RATIO_WHEEL / SHOOT_NUM_PER_CIRCLE * 1.0f;  // 播弹盘连发速度
+    static float abs_deltePlack, abs_deltaSpeed, loader_angle_deg;
 	// 设定拨弹盘转动角度
 	static int16_t load_delta_pos = -1385;
 	
@@ -291,9 +286,10 @@ static void Shoot_load_Update()
 		   /* 增加打弹标志位 */ 
 		   if (shoot_ctrl_cmd->mode == SHOOT_READY )
 			    Add_Angle_Flag = 1;
+		   // 单发限制
 		   if(fabs( DWT_GetTimeline_ms() - cooldown_start) < cooldown_tim)
 			   Add_Angle_Flag = 0;
-		       
+		   // 双发检测
 		   if(DWT_GetTimeline_ms() - cooldown_start < 600)
 			   double_heat_flag = 1;
 		   else 
@@ -319,7 +315,7 @@ static void Shoot_load_Update()
 				case BULLET_SINGLE : // 单发
 					DJIMotorOuterLoop(loader, ANGLE_LOOP);
 					Angle_Target = Angle_Target + load_delta_pos - Off_Angle;
-					cooldown_tim   = 150; // 时间间隔
+					cooldown_tim   = 200; // 时间间隔
 					cooldown_start = DWT_GetTimeline_ms();
 				break;
 				
@@ -350,15 +346,16 @@ static void Shoot_load_Update()
 		  /** 设置拨弹盘期望 **/
 		  if (shoot_ctrl_cmd->bullet_mode == BULLET_CONTINUE) 
 		  {
+			  
 			 DJIMotorOuterLoop(loader, SPEED_LOOP);
-			 DJIMotorSetRef(loader, Target_Continue_Speed);
+			 DJIMotorSetRef(loader, Target_Continue_Speed*0.4f);
 			 Angle_Target      = loader->measure.Angle_DEG;
 			 RAMP_Angle_Target = loader->measure.Angle_DEG;
 		  }
 		  else if(shoot_ctrl_cmd->bullet_mode != BULLET_CONTINUE) 
 		  {
 			 DJIMotorOuterLoop(loader, ANGLE_LOOP);
-			 RAMP_Angle_Target = RAMP_float(Angle_Target, RAMP_Angle_Target, 40);
+			 RAMP_Angle_Target = RAMP_float(Angle_Target, RAMP_Angle_Target, 16);
 			 DJIMotorSetRef(loader, RAMP_Angle_Target);
 		  }
 	    }
@@ -370,7 +367,7 @@ static void Shoot_load_Update()
 void Shoot_friction_Update()
 {
 	shoot_ctrl_cmd->bullet_speed = 15; // 测试不同弹速时使用
-	if (shoot_ctrl_cmd->mode == SHOOT_STOP) {
+	if(shoot_ctrl_cmd->mode == SHOOT_STOP) {
 		DJIMotorSetRef(friction_l, 0);
 		DJIMotorSetRef(friction_r, 0);
 		DJIMotorSetRef(friction_u, 0);
@@ -380,27 +377,17 @@ void Shoot_friction_Update()
 		DJIMotorSetRef(friction_r,  SHOOT_SPEED*0.8f);
 		DJIMotorSetRef(friction_u,  SHOOT_SPEED*0.8f);
 	} else {
-		switch (shoot_ctrl_cmd->bullet_speed) {
-			case 20:
-			    DJIMotorSetRef(friction_l,  SHOOT_SPEED+500);
-			    DJIMotorSetRef(friction_r, -SHOOT_SPEED-500);
-			    DJIMotorSetRef(friction_u, -SHOOT_SPEED-500);
-			    break;
+		switch(shoot_ctrl_cmd->bullet_speed) {
 			case 15:
-			    DJIMotorSetRef(friction_l,  SHOOT_SPEED + SHOOT_OFFSET);
-			    DJIMotorSetRef(friction_r, -SHOOT_SPEED - SHOOT_OFFSET);
-			    DJIMotorSetRef(friction_u, -SHOOT_SPEED - SHOOT_OFFSET);
+			    DJIMotorSetRef(friction_l,  SHOOT_SPEED + shoot_ctrl_cmd->speed_offset);
+			    DJIMotorSetRef(friction_r, -SHOOT_SPEED - shoot_ctrl_cmd->speed_offset);
+			    DJIMotorSetRef(friction_u, -SHOOT_SPEED - shoot_ctrl_cmd->speed_offset);
 			    break;
-			case 0:
+			default :
 			    DJIMotorSetRef(friction_l, 0);
 			    DJIMotorSetRef(friction_r, 0);
 			    DJIMotorSetRef(friction_u, 0);
-			    break;
-			default :  // 使用最低弹速保持一致
-			    DJIMotorSetRef(friction_l, -SHOOT_SPEED);
-			    DJIMotorSetRef(friction_r, SHOOT_SPEED);
-			    DJIMotorSetRef(friction_u, -SHOOT_SPEED);
-				break;
+			break;
 		}
 	}
 }
@@ -409,13 +396,13 @@ void Shoot_friction_Update()
 void Shoot_Upeadt() 
 {
 	/* 接收消息 */
-	if (SubGetMessage( shoot_sub, (void *)shoot_ctrl_cmd) != 1)
+	if(SubGetMessage( shoot_sub, (void *)shoot_ctrl_cmd) != 1)
 	{
    	    shoot_feedback_data.shoot_status = Device_Offline;
   	    shoot_ctrl_cmd->mode = SHOOT_ZERO_FORCE;
     }
 	/* 电机在线检测 */
-	if (loader->watchdog->state != Dog_Online)
+	if(loader->watchdog->state != Dog_Online)
 	{
    	    shoot_feedback_data.shoot_status = Device_Offline;
 	    shoot_ctrl_cmd->mode = SHOOT_ZERO_FORCE;
@@ -425,10 +412,7 @@ void Shoot_Upeadt()
 	   shoot_feedback_data.shoot_status = Device_Online;
 	}
     /* 记录摩擦轮速度 */
-	fire_speed_nofil[0] =  friction_l->measure.SpeedFilter;
-	fire_speed_nofil[1] = -friction_r->measure.SpeedFilter;
-	fire_speed_nofil[2] = -friction_u->measure.SpeedFilter;
-    shoot_feedback_data.fire_speed = (int16_t)((fire_speed_nofil[0] + fire_speed_nofil[1] + fire_speed_nofil[2]) / 3.0f);
+    shoot_feedback_data.fire_speed = (int16_t)((friction_l->measure.SpeedFilter - friction_r->measure.SpeedFilter - friction_u->measure.SpeedFilter) / 3.0f);
 
 	// 电机控制
 	if (shoot_ctrl_cmd->mode == SHOOT_ZERO_FORCE)
@@ -482,13 +466,18 @@ static void Shoot_Calc()
     limit(can1_send[3] , RM3508_LIMIT, -RM3508_LIMIT);
     
 	/**  拨弹盘控制  **/
-	if( loader->motor_controller.motor_setting.close_loop_type >= ANGLE_LOOP) {
+	if(loader->motor_controller.motor_setting.close_loop_type >= ANGLE_LOOP) {
 		PID_Control_Smis(loader->measure.Angle_DEG, loader->motor_controller.ref_position, &Pluck_Place_PIDS, loader->measure.SpeedFilter);
-		if(loader->measure.Speed <= -2400)
-		limit(Pluck_Place_PIDS.pid_out, 3000, -2500);
-		SMC_Calc(&shoot_smc[3], Pluck_Place_PIDS.pid_out, loader->measure.Speed);
-		PID_Control( loader->measure.Speed, Pluck_Place_PIDS.pid_out, &Pluck_Speed_PID);
-  	    can1_send[0] = (int16_t )shoot_smc[3].output;
+//		if(fabs(Pluck_Place_PIDS.pid_out) >= 150) {
+//			SMC_Calc(&shoot_smc[3], Pluck_Place_PIDS.pid_out, loader->measure.SpeedFilter);
+//		    can1_send[0] = (int16_t )shoot_smc[3].output;
+//		} 
+//		else {
+			if(loader->measure.Speed <= -3750)
+				limit(Pluck_Place_PIDS.pid_out, 5000, -3600);
+		    PID_Control( loader->measure.Speed, Pluck_Place_PIDS.pid_out, &Pluck_Speed_PID);
+			can1_send[0] = (int16_t )Pluck_Speed_PID.pid_out;
+//		}
         limit(can1_send[0], RM3508_LIMIT, -RM3508_LIMIT);
 	} else {
 	    PID_Control(loader->measure.SpeedFilter, loader->motor_controller.ref_speed, &Pluck_Continue_PID);
@@ -534,7 +523,7 @@ void DOUBLE_HEAL_Detect()
    	   	   detect_first_tims ++;	
 		   SHOOT_UNIT_HEAT_START = DWT_GetTimeline_ms();
 	   }
-	   DOUBLE_HEAT_DETECT  = DWT_GetTimeline_ms() - SHOOT_UNIT_HEAT_START;
+	   DOUBLE_HEAT_DETECT = DWT_GetTimeline_ms() - SHOOT_UNIT_HEAT_START;
 	   if(detect_first_tims == 5 && fir_current < 5000 && DOUBLE_HEAT_DETECT  > 20) {
 		   // 第一发检测完成 记录并更新时间戳
 		   detect_first_tims ++;
@@ -548,7 +537,7 @@ void DOUBLE_HEAL_Detect()
 		}
 		// 检测到第二发进行反转
 		if(detect_first_tims >= 11) {
-			shoot_ctrl_cmd->mode = SHOOT_STUCKING;            
+//			shoot_ctrl_cmd->mode = SHOOT_STUCKING;            
 			if(DWT_GetTimeline_ms() - SHOOT_DOUBLE_HEAT_START > 100)
 				detect_first_tims = 0;
 		}

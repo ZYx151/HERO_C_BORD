@@ -44,7 +44,6 @@
 #define SS  1.453e-07          //!< @brief功率环参数(转速RPM*转速RPM)
 #define Constant 0.85          //!< @brief功率环参数(空载时功率)
 
-#define ANGLE2RADIAN (2.0f*PI/360.0f)
 typedef struct {
 	float X;
 	float Y;

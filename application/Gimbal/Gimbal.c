@@ -7,7 +7,7 @@
 #include "remote.h"
 #include "PID.h"
 
-#include "controller.h"
+//#include "controller.h"
 #include "usb_typdef.h"
 
 #define YAW 0
@@ -20,13 +20,13 @@
 static Publisher_t    *gimbal_pub;            // 云台控制消息发布者
 static Subscriber_t   *gimbal_sub;          // 云台反馈信息订阅者
 
-Gimbal_upload_t gimbal_feedback_data;  // 云台发布的反馈信息
+static Gimbal_upload_t gimbal_feedback_data;  // 云台发布的反馈信息
 
 extern  Gimbal_ctrl_cmd_t gimbal_control;
-Gimbal_ctrl_cmd_t *gimbal_get_ctrl;// 云台接收CMD的控制信息
+static Gimbal_ctrl_cmd_t *gimbal_get_ctrl;// 云台接收CMD的控制信息
 
-DMMotor_Instance_1_4 *pitch_motor;
-DJIMotor_Instance *yaw_motor;     
+static DMMotor_Instance_1_4 *pitch_motor;
+static DJIMotor_Instance *yaw_motor;     
 //  功能函数
 static attitude_t *ins;
 static RC_Ctl_t *rc_data;
@@ -37,30 +37,30 @@ static void Gimbal_SystemCalc(float Gimbal_pitch, float Gimbal_yaw); /** 云台�
 static float auto_rotate_param(void);
 
 static PID_Smis Gimbal_Pos_PID[2][4] = {{{.Kp = 3.0f, .Ki = 0, .Kd = -40.0f, .interlimit = 3000, .outlimit = 25000, .DeadBand = 10.0f, .inter_threLow = 50, .inter_threUp = 500  },   // YAW轴归中
-                              {.Kp =  5.0f, .Ki = 0.0f, .Kd = -35.0f,  .interlimit = 2000, .outlimit = 25000, .DeadBand = 0.01f, .inter_threLow = 5, .inter_threUp = 10},        // YAW轴陀螺仪
+                              {.Kp =  5.5f, .Ki = 0.0f, .Kd = -25.0f,  .interlimit = 2000, .outlimit = 25000, .DeadBand = 0.0f, .inter_threLow = 5, .inter_threUp = 10},        // YAW轴陀螺仪
 							  {.Kp = 10.0f, .Ki = 0.0f, .Kd = -45.0f,  .interlimit = 2000, .outlimit = 25000, .DeadBand = 2, .inter_threLow = 5, .inter_threUp = 10},
                               {.Kp = 15.0f, .Ki = 0.0f, .Kd = -40.0f,  .interlimit = 2000, .outlimit = 25000, .DeadBand = 0.001f, .inter_threLow = 5, .inter_threUp = 10},},       // YAW轴发射
 
-                            {{.Kp = 1.0f , .Ki = 0, .Kd = -2.0f,  .interlimit = 3000, .outlimit = 1000, .DeadBand = 0.10f, .inter_threLow = 5, .inter_threUp = 500},   // PITCH轴归中
-                             {.Kp = 1.0f,  .Ki = 0, .Kd = -2.0f, .interlimit = 2000, .outlimit = 1000, .DeadBand = 0.0f, .inter_threLow = 5, .inter_threUp = 10},   // PITCH轴陀螺仪
-                             {.Kp = 2.5f,  .Ki = 0, .Kd = 0.25f, .interlimit = 2000, .outlimit = 1000, .DeadBand = 0.0f, .inter_threLow = 5, .inter_threUp = 10},
-                             {.Kp = 1.8f,  .Ki = 0, .Kd = -5.0f, .interlimit = 2000, .outlimit = 1000, .DeadBand = 0.0f, .inter_threLow = 5, .inter_threUp = 10}}};   // PITCH轴发射
+                            {{.Kp = 1.0f , .Ki = 0, .Kd = -2.0f,  .interlimit = 3000, .outlimit = 100, .DeadBand = 0.10f, .inter_threLow = 5, .inter_threUp = 500},   // PITCH轴归中
+                             {.Kp = 1.2f,  .Ki = 0, .Kd = -2.0f, .interlimit = 2000, .outlimit = 100, .DeadBand = 0.0f, .inter_threLow = 5, .inter_threUp = 10},   // PITCH轴陀螺仪
+                             {.Kp = 2.5f,  .Ki = 0, .Kd = 0.25f, .interlimit = 2000, .outlimit = 100, .DeadBand = 0.0f, .inter_threLow = 5, .inter_threUp = 10},
+                             {.Kp = 1.8f,  .Ki = 0, .Kd = -5.0f, .interlimit = 2000, .outlimit = 100, .DeadBand = 0.0f, .inter_threLow = 5, .inter_threUp = 10}}};   // PITCH轴发射
 						     
-static PID Gimbal_Speed_PID[2][4] = {{{.Kp = 5.0f, .Ki = 0.5f, .Kd = 0.0f, .interlimit = 3000, .outlimit = 25000, .DeadBand = 2, .inter_threLow = 500, .inter_threUp = 1000},
-							   {.Kp = 700.0f, .Ki = 0.50f, .Kd = 0.0f, .interlimit = 3000, .outlimit = 29000, .DeadBand = 0.0f, .inter_threLow = 2.5f, .inter_threUp = 30},
-							   {.Kp = 12.0f,  .Ki = 0.0f, .Kd = 0.0f, .interlimit = 2000, .outlimit = 29000, .DeadBand = 0.0f, .inter_threLow = 100, .inter_threUp = 500},
-							   {.Kp = 250.0f, .Ki = 0.0f, .Kd = 0.0f, .interlimit = 3000, .outlimit = 29000, .DeadBand = 0.0f, .inter_threLow = 50, .inter_threUp = 100}},
+static PID Gimbal_Speed_PID[2][4] = {{{.Kp = 5.0f, .Ki = 0.5f, .Kd = 0.0f, .interlimit = 3000, .outlimit = 24000, .DeadBand = 2, .inter_threLow = 500, .inter_threUp = 1000},
+							   {.Kp = 700.0f, .Ki = 0.5f, .Kd = 0.0f, .interlimit = 3000, .outlimit = 24000, .DeadBand = 0.01f, .inter_threLow = 2.5f, .inter_threUp = 30},
+							   {.Kp = 2.0f,  .Ki = 0.0f, .Kd = 0.0f, .interlimit = 2000, .outlimit = 24000, .DeadBand = 0.0f, .inter_threLow = 100, .inter_threUp = 500},
+							   {.Kp = 250.0f, .Ki = 0.0f, .Kd = 0.0f, .interlimit = 3000, .outlimit = 24000, .DeadBand = 0.0f, .inter_threLow = 50, .inter_threUp = 100}},
 							
-                            {{.Kp = 3.0f,  .Ki = 0.0f,  .Kd = 0.0f, .interlimit = 50, .outlimit = 1000, .DeadBand = 0.0f, .inter_threLow = 500, .inter_threUp = 1000},
-                             {.Kp = 10.0f, .Ki = 0.0f,  .Kd = 0.0f, .interlimit = 50, .outlimit = 1000, .DeadBand = 0.0f, .inter_threLow = 5, .inter_threUp = 15},
-                             {.Kp = 0.8f,  .Ki = 0.0f,  .Kd = 0.0f, .interlimit = 50, .outlimit = 1000, .DeadBand = 0.0f, .inter_threLow = 20, .inter_threUp = 50},
-                             {.Kp = 2.0f,  .Ki = 0.0f,  .Kd = 0.0f, .interlimit = 50, .outlimit = 1000, .DeadBand = 0.0f, .inter_threLow = 10, .inter_threUp = 50}}};
+                            {{.Kp = 3.0f,  .Ki = 0.0f,  .Kd = 0.0f, .interlimit = 50, .outlimit = 80, .DeadBand = 0.0f, .inter_threLow = 500, .inter_threUp = 1000},
+                             {.Kp = 12.0f, .Ki = 0.0f,  .Kd = 0.0f, .interlimit = 50, .outlimit = 80, .DeadBand = 0.0f, .inter_threLow = 5, .inter_threUp = 15},
+                             {.Kp = 1.5f,  .Ki = 0.0f,  .Kd = 0.0f, .interlimit = 50, .outlimit = 80, .DeadBand = 0.0f, .inter_threLow = 20, .inter_threUp = 50},
+                             {.Kp = 2.0f,  .Ki = 0.0f,  .Kd = 0.0f, .interlimit = 50, .outlimit = 80, .DeadBand = 0.0f, .inter_threLow = 10, .inter_threUp = 50}}};
 
 /* 位置环PID为底盘跟随解算旋转速度 */
-static PID_Smis Chassis_Rotate_PIDS = {.Kp = 1.0f, .Ki = 0, .Kd = -15.0f, .interlimit = 1500, .outlimit = 2000*PI, .DeadBand = 10, .inter_threLow = 500, .inter_threUp = 2000};     // 底盘跟随   位置环
-static PID Chassis_Rotate_PID = { .Kp = 6.0f, .Ki = 0.0f, .Kd = 0, .interlimit = 4000 * PI, .outlimit = 10000*PI, .DeadBand = 0, .inter_threLow = 10*PI, .inter_threUp = 4000*PI};     // 速度环
+static PID_Smis Chassis_Rotate_PIDS = {.Kp = 1.0f, .Ki = 0, .Kd = -20.0f, .interlimit = 1500, .outlimit = 2000*PI, .DeadBand = 0, .inter_threLow = 500, .inter_threUp = 2000};     // 底盘跟随   位置环
+static PID Chassis_Rotate_PID = { .Kp = 6.0f, .Ki = 0.0f, .Kd = 0, .interlimit = 4000 * PI, .outlimit = 5000*PI, .DeadBand = 0, .inter_threLow = 10*PI, .inter_threUp = 4000*PI};     // 速度环
 // 前反馈
-static FeedForward_Typedef FF_Mose_rotete = { .K1 = 40.0f, .K2 = 0.0f, .K3 = 0.0f, .OutMax = 8000 * PI, .DWT_CNT = 0};
+static FeedForward_Typedef FF_Mose_rotete = { .K1 = 20.0f, .K2 = 0.0f, .K3 = 0.0f, .OutMax = 8000 * PI, .DWT_CNT = 0};
 static FeedForward_Typedef FF_Remote_rotete = { .K1 = 30.0f, .K2 = 0.0f, .K3 = 0.0f, .OutMax = 8000 * PI, .DWT_CNT = 0};
 static FeedForward_Typedef GimbalYaw_FF = { .K1 = 0.0f, .K2 = 20.0f, .K3 = 0.0f , .OutMax = 3000, .DWT_CNT = 0};
 
@@ -205,7 +205,8 @@ void Gimbal_Task(void)
 	// 推送消息
 	PubPushMessage( gimbal_pub, (void *)&gimbal_feedback_data);
 }
-float rotate_ff, ff_yawspeed, yaw_pidout;
+
+/** 陀螺仪模式 **/
 static void Gimbal_GYRO_Calc()
 {
      /* 电机发送 */
@@ -213,31 +214,23 @@ static void Gimbal_GYRO_Calc()
 	float deadline_pitch ;
 	if(Aim_Ref.auto_mode == 0) {
 		/**  YAW轴解算  遥控器模式  **/
-		PID_Control_Smis( ins->ContinuousYaw, gimbal_get_ctrl->Gyro_Ref.Yaw, &Gimbal_Pos_PID[0][1], ins->gyro[2] - gimbal_get_ctrl->Feedback_Speed.Yaw); //  
-		PID_Control( ins->gyro[2], Gimbal_Pos_PID[0][1].pid_out + gimbal_get_ctrl->Feedback_Speed.Yaw *1.6f - gimbal_get_ctrl->rotate_feedforward * 3.0f, &Gimbal_Speed_PID[0][1]);  // * 2.0f
+		PID_Control_Smis( ins->ContinuousYaw, gimbal_get_ctrl->Gyro_Ref.Yaw, &Gimbal_Pos_PID[0][1], ins->gyro[2] - gimbal_get_ctrl->Feedback_Speed.Yaw); //
+        if(sign(gimbal_get_ctrl->rotate_feedforward) == sign(Gimbal_Pos_PID[0][1].pid_out))
+		    PID_Control( ins->gyro[2], Gimbal_Pos_PID[0][1].pid_out + gimbal_get_ctrl->Feedback_Speed.Yaw *1.6f - gimbal_get_ctrl->rotate_feedforward * 1.0f, &Gimbal_Speed_PID[0][1]);  // * 2.0f
+		else
+		    PID_Control( ins->gyro[2], Gimbal_Pos_PID[0][1].pid_out + gimbal_get_ctrl->Feedback_Speed.Yaw *1.6f - gimbal_get_ctrl->rotate_feedforward * 4.0f, &Gimbal_Speed_PID[0][1]);  // * 2.0f
 		can2_dji_send[0] = (int16_t )Gimbal_Speed_PID[0][1].pid_out;
 		DJIMotor_Transmit(&hcan2, 0x1FF, can2_dji_send);
 
 		/**  PITCH轴解算 **/
-//		PID_Control_Smis( pitch_motor->measure.Angle_DEG, gimbal_get_ctrl->Gyro_Ref.Pitch, &Gimbal_Pos_PID[1][1], pitch_motor->measure.SpeedFilter*PI/30 + gimbal_get_ctrl->Feedback_Speed.Pitch);
-//		PID_Control( pitch_motor->measure.SpeedFilter*PI/30, Gimbal_Pos_PID[1][1].pid_out + gimbal_get_ctrl->Feedback_Speed.Pitch * 2.0f, &Gimbal_Speed_PID[1][1]);
-//		can2_dm_send[0] = (int16_t )Gimbal_Speed_PID[1][1].pid_out;
-//		DJIMotor_Transmit(&hcan2, 0x3FE, can2_dm_send);
-
-        if(gimbal_feedback_data.pitch_encorder > MCH_UP_limit || gimbal_feedback_data.pitch_encorder < MCH_DOWN_limit)
-			can2_dm_send[0] = 0;
-		else {
-			deadline_pitch = ins->gyro[0];
-			deadline_limit(deadline_pitch, 0.2f);
-			PID_Control_Smis( ins->Pitch, gimbal_get_ctrl->Gyro_Ref.Pitch, &Gimbal_Pos_PID[1][1], deadline_pitch);
-			PID_Control( deadline_pitch, -Gimbal_Pos_PID[1][1].pid_out - gimbal_get_ctrl->Feedback_Speed.Pitch, &Gimbal_Speed_PID[1][1]);
-			can2_dm_send[0] = (int16_t )Gimbal_Speed_PID[1][1].pid_out;
-		}
+		// + gimbal_get_ctrl->Feedback_Speed.Pitch*0.5f
+		deadline_pitch = ins->gyro[0]; 
+//		deadline_limit(deadline_pitch, 0.05f);
+		PID_Control_Smis( ins->Pitch, gimbal_get_ctrl->Gyro_Ref.Pitch, &Gimbal_Pos_PID[1][1], deadline_pitch);
+		PID_Control( deadline_pitch, -Gimbal_Pos_PID[1][1].pid_out , &Gimbal_Speed_PID[1][1]);
+		can2_dm_send[0] = (int16_t )Gimbal_Speed_PID[1][1].pid_out;
 
 		DJIMotor_Transmit(&hcan2, 0x3FE, can2_dm_send);
-		yaw_pidout = Gimbal_Pos_PID[1][1].pid_out;
-		rotate_ff = gimbal_get_ctrl->rotate_feedforward;
-		ff_yawspeed = gimbal_get_ctrl->Feedback_Speed.Pitch;
 	} else {
 		/**  YAW轴解算  自瞄模式  **/
 		PID_Control_Smis( ins->ContinuousYaw, Aim_Ref.yaw, &Gimbal_Pos_PID[0][3], ins->gyro[2]);
@@ -385,9 +378,9 @@ static float auto_rotate_param()
 		PID_Control(gimbal_get_ctrl->rotate_feedforward, Chassis_Rotate_PIDS.pid_out + gimbal_get_ctrl->Feedback_Speed.Yaw,&Chassis_Rotate_PID);
 		// 计算旋转速度前馈
 		ff_cahssis_follow = rc_data->RemoteMode == REMOTE_INPUT ? FeedForward_Calc(&FF_Remote_rotete, gimbal_get_ctrl->Feedback_Speed.Yaw * 30)
-						: FeedForward_Calc(&FF_Mose_rotete, gyro_deadband * 35);
+						: FeedForward_Calc(&FF_Mose_rotete, gyro_deadband * 25);
 		rotate_ = Chassis_Rotate_PID.pid_out - ff_cahssis_follow;
-        limit(rotate_, +roate_speed_MAX*0.8f, -roate_speed_MAX*0.8f);		
+        limit(rotate_, +roate_speed_MAX, -roate_speed_MAX);		
 	}
 	else if (gimbal_get_ctrl->chassis_mode == CHASSIS_SPIN)
 	{

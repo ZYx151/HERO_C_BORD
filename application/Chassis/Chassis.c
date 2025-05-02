@@ -13,26 +13,26 @@ extern Gimbal_data_t    receive_vision;
 extern Gimbal_action_t  receive_action; 
 
 // 轮向电机摩擦阻力连续化的角速度阈值
-static float Wheel_Resistance_Omega_Threshold = 0.5f;
+static float Wheel_Resistance_Omega_Threshold = 1.0f;
 // 轮向电机动摩擦阻力电流值
-static float Dynamic_Resistance_Wheel_Current[4] = {0.15f,
-											 0.15f,
-											 0.15f,
-											 0.15f};
-static float Dynamic_Resistance_Wheel_Current_Rpm[4] = {0.80f,
-											 0.80f,
-											 0.80f,
-											 0.80f};
+static float Dynamic_Resistance_Wheel_Current[4] = {0.2f,
+											 0.2f,
+											 0.2f,
+											 0.2f};
+static float Dynamic_Resistance_Wheel_Current_Rpm[4] = {0.50f,
+											 0.50f,
+											 0.50f,
+											 0.50f};
 
 static float Dynamic_Resistance_Wheel_Current_Rpm_Final[4];
 
 /* 斜坡函数（int16_t） */
 static Slope_s slope_X ,slope_Y ,slope_Omega;
 
-static PID Chassis_Speed_PID[4] = {{.Kp = 30.0f, .Ki = 0.00, .Kd = 0, .interlimit = 3000, .outlimit = 12000, .DeadBand = 0.0f, .inter_threLow = 500, .inter_threUp = 1000},  /* 左前轮 */
-								{.Kp = 30.0f, .Ki = 0.00, .Kd = 0, .interlimit = 3000, .outlimit = 12000, .DeadBand = 0.0f, .inter_threLow = 500, .inter_threUp = 1000},  /* 右前轮 */
-								{.Kp = 30.0f, .Ki = 0.00, .Kd = 0, .interlimit = 3000, .outlimit = 12000, .DeadBand = 0.0f, .inter_threLow = 500, .inter_threUp = 1000},  /* 右后轮 */
-								{.Kp = 30.0f, .Ki = 0.00, .Kd = 0, .interlimit = 3000, .outlimit = 12000, .DeadBand = 0.0f, .inter_threLow = 500, .inter_threUp = 1000}}; /* 左后轮 */
+static PID Chassis_Speed_PID[4] = {{.Kp = 30.0f, .Ki = 0.00, .Kd = 0, .interlimit = 3000, .outlimit = 15000, .DeadBand = 0.0f, .inter_threLow = 500, .inter_threUp = 1000},  /* 左前轮 */
+								{.Kp = 30.0f, .Ki = 0.00, .Kd = 0, .interlimit = 3000, .outlimit = 15000, .DeadBand = 0.0f, .inter_threLow = 500, .inter_threUp = 1000},  /* 右前轮 */
+								{.Kp = 30.0f, .Ki = 0.00, .Kd = 0, .interlimit = 3000, .outlimit = 15000, .DeadBand = 0.0f, .inter_threLow = 500, .inter_threUp = 1000},  /* 右后轮 */
+								{.Kp = 30.0f, .Ki = 0.00, .Kd = 0, .interlimit = 3000, .outlimit = 15000, .DeadBand = 0.0f, .inter_threLow = 500, .inter_threUp = 1000}}; /* 左后轮 */
 
 static PID TargetVelocity_PID[3] = {{.Kp = 50.0f, .Ki = 0.00, .Kd = 0, .interlimit = 3000, .outlimit = 16000, .DeadBand = 0.0f, .inter_threLow = 500, .inter_threUp = 1000},
 	                                {.Kp = 50.0f, .Ki = 0.00, .Kd = 0, .interlimit = 3000, .outlimit = 16000, .DeadBand = 0.0f, .inter_threLow = 500, .inter_threUp = 1000},
@@ -70,6 +70,7 @@ static float  chassis_matr[4][2] = {{-1,1}, {-1,-1}, {1,-1}, {1,1}};
 extern Referee_data_t Referee_SendData;
 /* 底盘轮子位置解算 */ 
 static void Pose_Resolution(float v[5][3]);
+float cos_theat, sin_theat, cos_beta, sin_beta, forward_offset, back_offset, wheel_pose[5][3];
 
 /**  底盘初始化  **/
 void Chassis_Init()
@@ -178,7 +179,7 @@ Motor_Init_config_s RF_config = {
 	DJIMotorClose(chassis_motor[lb]);
 	DJIMotorClose(chassis_motor[rb]);
 	/**  功率计算  **/
-    Manager_Init(chassis_motor, HERO, RLS_Enable, 0.0091f, 400, 0.7f); //    0.0187587207f  1.18e-05f // 0.   0.000148522042                1.16999999e-07
+    Manager_Init(chassis_motor, HERO, RLS_Enable, 0.0091f, 450, 0.7f); //    0.0187587207f  1.18e-05f // 0.   0.000148522042                1.16999999e-07
       
     /** 移动速度计算 线速度m/s  **/
 #if USE_MECANUM_CHASSIS
@@ -276,28 +277,29 @@ void mecanum_calculate()
 	static Chassis_speed_s planningVelocity;
     /* 速度规划 */
 	if(receive_action.move_status == rotate) {
-		slope_X.Increase_Value  = 50.0f / 1000.0f;
-		slope_Y.Increase_Value  = 50.0f / 1000.0f;
-        slope_Omega.Increase_Value = (40.0f + chassis_cmd_recv.robot_levels) / 1000.0f ;
-		slope_Omega.Decrease_Value = (10.0f  + chassis_cmd_recv.robot_levels) / 1000.0f ;
+		slope_X.Increase_Value  = (55.0f) / 1000.0f;
+		slope_Y.Increase_Value  = 40.0f / 1000.0f;
+        slope_Omega.Increase_Value = (30.0f) / 1000.0f ;
+		slope_Omega.Decrease_Value = (10.0f) / 1000.0f ;
 	} else {
-		slope_X.Increase_Value  = 50.0f / 1000.0f;
-		slope_Y.Increase_Value  = 50.0f / 1000.0f;
+		receive_action.Key == 2 ? ( slope_X.Increase_Value  = (45.0f) / 1000.0f )
+		     : (slope_X.Increase_Value = (35.0f) / 1000.0f);
+		slope_Y.Increase_Value  = (25.0f) / 1000.0f;
         slope_Omega.Increase_Value = 45.0f / 1000.0f;
-		slope_Omega.Decrease_Value = (50.0f + chassis_cmd_recv.robot_levels) / 1000.0f ;
+		slope_Omega.Decrease_Value = (20.0f) / 1000.0f ;
 	} 
-	slope_X.Decrease_Value = (80.0f + chassis_cmd_recv.robot_levels*2) / 1000.0f ;
-	slope_Y.Decrease_Value = (80.0f + chassis_cmd_recv.robot_levels*2) / 1000.0f ;
+	slope_X.Decrease_Value = (40.0f) / 1000.0f ;
+	slope_Y.Decrease_Value = (30.0f) / 1000.0f ;
 	
 	planningVelocity.X = Slope_Calc(&slope_X, targetVelocity.X, measuredVelocity.X);
     planningVelocity.Y = Slope_Calc(&slope_Y, targetVelocity.Y, measuredVelocity.Y);
     planningVelocity.Omega = Slope_Calc(&slope_Omega, targetVelocity.Omega , measuredVelocity.Omega);
 
 #ifdef USE_MECANUM_CHASSIS // 麦轮
-    speed_target[lf] =( -planningVelocity.X + planningVelocity.Y + planningVelocity.Omega * LF_CENTER ) / RADIUS_WHEEL;
-    speed_target[lb] =( -planningVelocity.X - planningVelocity.Y + planningVelocity.Omega * LB_CENTER ) / RADIUS_WHEEL;
-    speed_target[rb] =( +planningVelocity.X - planningVelocity.Y + planningVelocity.Omega * RB_CENTER ) / RADIUS_WHEEL;
-    speed_target[rf] =( +planningVelocity.X + planningVelocity.Y + planningVelocity.Omega * RF_CENTER ) / RADIUS_WHEEL;
+    speed_target[lf] =( -planningVelocity.X * wheel_pose[lf][2] + planningVelocity.Y + planningVelocity.Omega * LF_CENTER ) / RADIUS_WHEEL;
+    speed_target[lb] =( -planningVelocity.X * wheel_pose[lb][2] - planningVelocity.Y + planningVelocity.Omega * LB_CENTER ) / RADIUS_WHEEL;
+    speed_target[rb] =( +planningVelocity.X * wheel_pose[rb][2] - planningVelocity.Y + planningVelocity.Omega * RB_CENTER ) / RADIUS_WHEEL;
+    speed_target[rf] =( +planningVelocity.X * wheel_pose[rf][2] + planningVelocity.Y + planningVelocity.Omega * RF_CENTER ) / RADIUS_WHEEL;
 #else  // 全向轮
     speed_target[lf] = (-SQRT2 / 2.0f * planningVelocity.X + SQRT2 / 2.0f * planningVelocity.Y + planningVelocity.Omega * CHASSSIWHEEL_TO_CENTER) / RADIUS_WHEEL;
     speed_target[lb] = (-SQRT2 / 2.0f * planningVelocity.X - SQRT2 / 2.0f * planningVelocity.Y + planningVelocity.Omega * CHASSSIWHEEL_TO_CENTER) / RADIUS_WHEEL;
@@ -310,17 +312,18 @@ void mecanum_calculate()
  * @brief 底盘飞坡处理 仅飞坡和爬坡模式调用
  * @todo 待底盘添加陀螺仪之后进行斜坡角度判断 加入角度判断后或可以不用限制模式 可在车底盘中央添加一个测距判断前轮是否先飞出地面
 */
-float cos_theat, sin_theat, cos_beta, sin_beta, forward_offset, back_offset, wheel_pose[5][3];
 void Chassis_Flay()
-{   
+{
 	static float chassis_k[4];
 	DEADLINE_LIMIT(Slope_theta, 3);
+	chassis_feedback_data.chassis_slop = (int16_t)(Slope_theta*sign(ins->Pitch)*200);
 	limit(Slope_theta, 45, -45);
 	
-	if(fabs(Slope_theta) >  5)
+	if(fabs(Slope_theta) > 3)
 	{
-		cos_theat = arm_cos_f32(Slope_theta*ANGLE2RADIAN);         sin_theat = arm_sin_f32(Slope_theta*ANGLE2RADIAN);
-		cos_beta  = arm_cos_f32((Slope_beta+90.0f)*ANGLE2RADIAN);  sin_beta  = arm_sin_f32((Slope_beta+90.0f)*ANGLE2RADIAN);
+	    cos_theat = arm_cos_f32(Slope_theta*ANGLE2RADIAN);         sin_theat = arm_sin_f32(Slope_theta*ANGLE2RADIAN);
+ 	    cos_beta  = arm_cos_f32((Slope_beta+90.0f)*ANGLE2RADIAN);  sin_beta  = arm_sin_f32((Slope_beta+90.0f)*ANGLE2RADIAN);
+		
 		for(uint8_t i = 0; i < 4; i++)
 		{
 			wheel_pose[i][0] = chassis_matr[i][0] * cos_beta - sin_beta * chassis_matr[i][1]; 
@@ -335,18 +338,21 @@ void Chassis_Flay()
 			}
 		}
 		/* 电流增益 */
-		wheel_pose[4][2] = sin_theat/0.8f;
+		wheel_pose[4][2] = sin_theat;// /0.8f;
 		Pose_Resolution(wheel_pose);
 		
-		Dynamic_Resistance_Wheel_Current_Rpm_Final[lf] = Dynamic_Resistance_Wheel_Current[lf] + wheel_pose[lf][2];//Dynamic_Resistance_Wheel_Current_Rpm[lf]*(1-sin_theat/0.8f)*cos_beta;
-		Dynamic_Resistance_Wheel_Current_Rpm_Final[lb] = Dynamic_Resistance_Wheel_Current[lb] + wheel_pose[lb][2];//Dynamic_Resistance_Wheel_Current_Rpm[lb]*(1+sin_theat/0.8f)*cos_beta;
-		Dynamic_Resistance_Wheel_Current_Rpm_Final[rb] = Dynamic_Resistance_Wheel_Current[rb] + wheel_pose[rb][2];//Dynamic_Resistance_Wheel_Current_Rpm[rb]*(1+sin_theat/0.8f)*cos_beta;
-		Dynamic_Resistance_Wheel_Current_Rpm_Final[rf] = Dynamic_Resistance_Wheel_Current[rf] + wheel_pose[rf][2];//Dynamic_Resistance_Wheel_Current_Rpm[rf]*(1-sin_theat/0.8f)*cos_beta;
-	} else 
-		for(uint8_t i = 0; i < 4 ; i++)
+		Dynamic_Resistance_Wheel_Current_Rpm_Final[lf] = Dynamic_Resistance_Wheel_Current[lf];//+ wheel_pose[lf][2];
+		Dynamic_Resistance_Wheel_Current_Rpm_Final[lb] = Dynamic_Resistance_Wheel_Current[lb];//+ wheel_pose[lb][2];
+		Dynamic_Resistance_Wheel_Current_Rpm_Final[rb] = Dynamic_Resistance_Wheel_Current[rb];//+ wheel_pose[rb][2];
+		Dynamic_Resistance_Wheel_Current_Rpm_Final[rf] = Dynamic_Resistance_Wheel_Current[rf];//+ wheel_pose[rf][2];
+	    
+	} else { 
+		for(uint8_t i = 0; i < 4 ; i++) {
 	        Dynamic_Resistance_Wheel_Current_Rpm_Final[i] = Dynamic_Resistance_Wheel_Current[i];
-} 
-
+			wheel_pose[i][2] = 1;
+		}
+	}
+}
 /**
  * @brief 底盘功率重分配
  * 
@@ -360,20 +366,11 @@ void chassis_powerlimit()
 	static PowerObj_s *pobjs[4] = {&chassis_power[0], &chassis_power[1], &chassis_power[2], &chassis_power[3]};
 	// 设定期望值
 	for (int8_t i = 0; i < 4; i ++) {
-		Rampspeed[i] = RAMP_int16( speed_target[i] * MOTOR_DECELE_RATIO, Rampspeed[i], 50.0f);
-		if( fabs(speed_target[i]) <= 0.5f && fabs(chassis_motor[i]->measure.SpeedFilter) < 50.0f)
+		Rampspeed[i] = RAMP_int16( speed_target[i] * MOTOR_DECELE_RATIO, Rampspeed[i], 70.0f);
+		if( fabs(speed_target[i]) <= 0.8f && fabs(chassis_motor[i]->measure.SpeedFilter) < 150.0f)
 			Can2Send_Chassis[i] = Chassis_Speed_PID[i].pid_out = 0;
 		else
-			Can2Send_Chassis[i] = PID_Control(currentAv[i], Rampspeed[i] , &Chassis_Speed_PID[i]);
-		// 底盘摩擦力补偿
-		if( speed_target[i] > Wheel_Resistance_Omega_Threshold) {
-		    Can2Send_Chassis[i] += Dynamic_Resistance_Wheel_Current_Rpm_Final[i] * CURRENT2OUT;
-		} else if( speed_target[i] < -Wheel_Resistance_Omega_Threshold) {
-		    Can2Send_Chassis[i] -= Dynamic_Resistance_Wheel_Current_Rpm_Final[i] * CURRENT2OUT;
-		} else {
-            Can2Send_Chassis[i] += speed_target[i] / Wheel_Resistance_Omega_Threshold * Dynamic_Resistance_Wheel_Current_Rpm_Final[i] * CURRENT2OUT;
-		}
-		
+			Can2Send_Chassis[i] = PID_Control(currentAv[i], Rampspeed[i] , &Chassis_Speed_PID[i]);		
 		speed_sum += ABS(chassis_motor[i]->measure.SpeedFilter);
 		current_sum += ABS(Can2Send_Chassis[i]);
 	}
@@ -387,13 +384,23 @@ void chassis_powerlimit()
 		} else {
 		    chassis_power[j].motor_state = 1;
 		}
+        		// 底盘摩擦力补偿
+		for(uint8_t i; i < 4; i ++) {
+			if( speed_target[i] > Wheel_Resistance_Omega_Threshold) {
+				Can2Send_Chassis[i] += Dynamic_Resistance_Wheel_Current_Rpm_Final[i] * CURRENT2OUT;
+			} else if( speed_target[i] < -Wheel_Resistance_Omega_Threshold) {
+				Can2Send_Chassis[i] -= Dynamic_Resistance_Wheel_Current_Rpm_Final[i] * CURRENT2OUT;
+			} else {
+				Can2Send_Chassis[i] += speed_target[i] / Wheel_Resistance_Omega_Threshold * Dynamic_Resistance_Wheel_Current_Rpm_Final[i] * CURRENT2OUT;
+			}
+		}
 		
 		/**  在底盘功率限制模式中进行功率重分配  **/
 		chassis_power[j].curAv = currentAv[j];
 		chassis_power[j].setAv = Rampspeed[j];
 		chassis_power[j].pidOutput = Can2Send_Chassis[j];
 		chassis_power[j].errorAv = fabs(chassis_power[j].setAv - chassis_power[j].curAv)/19.203f;
-		chassis_power[j].pidMaxOutput = 12000;
+		chassis_power[j].pidMaxOutput = 15000;
 	}
 	    
 	// 底盘功率限制
@@ -427,8 +434,8 @@ void Chassis_Upeadt()
 			targetVelocity.X      = -Referee_SendData.level_gain * chassis_cmd_recv.vx/1500.0f;
 			targetVelocity.Y      =  Referee_SendData.level_gain * chassis_cmd_recv.vy/1500.0f;
             if(receive_action.move_status == rotate )
-                targetVelocity.Omega  =  Referee_SendData.level_gain * chassis_cmd_recv.rotate/1500.0f;
-             else (targetVelocity.Omega  =  chassis_cmd_recv.rotate/1700.0f);
+                targetVelocity.Omega  =  0;//Referee_SendData.level_gain * chassis_cmd_recv.rotate/1500.0f;
+             else (targetVelocity.Omega  =  chassis_cmd_recv.rotate/2000.0f);
 			
 			chassis_cmd_recv.dispatch_mode = chassis_dispatch_without_acc_limit;
 		}
@@ -504,9 +511,9 @@ void Pose_Resolution(float v[5][3])
     float len = sqrt((v[4][0]-v[4][1]) * (v[4][0]-v[4][1]));
 	for(uint8_t i = 0; i < 4; i++) {
 		if(sign(v[i][1]) == 1)
-		    v[i][2] = (v[4][1] - v[i][1]) / len * Dynamic_Resistance_Wheel_Current_Rpm[i] * v[4][2];
+		    v[i][2] = (v[4][0] - v[i][1]) / len * (0.8f - v[4][2])+0.2f;//* Dynamic_Resistance_Wheel_Current_Rpm[i] * v[4][2];
 		else
-		    v[i][2] = (v[4][0] - v[i][1]) / len * Dynamic_Resistance_Wheel_Current_Rpm[i] * v[4][2];
+		    v[i][2] = (v[4][0] - v[i][1]) / len * (0.8f - v[4][2])+0.8f;// * Dynamic_Resistance_Wheel_Current_Rpm[i] * v[4][2];
 	}
 }
 

@@ -24,7 +24,7 @@
 
 /* 机器人重要参数定义,注意根据不同机器人进行修改,浮点数需要以.0或f结尾,无符号以u结尾 */
 // 云台参数
-#define Yaw_Mid_Front   3800       //!< @brief Yaw轴电机中值（机器人前方）
+#define Yaw_Mid_Front   4000       //!< @brief Yaw轴电机中值（机器人前方）
 /* 根据机器人正前方Yaw轴机械角度算出机器人剩下三个方向Yaw轴机械角度（6020正装，反装将左右相反） */
 #if (Yaw_Mid_Front + 2048) > 8191 
 #define Yaw_Mid_Left Yaw_Mid_Front - 6143
@@ -44,23 +44,23 @@
 #define Yaw_Mid_Right Yaw_Mid_Back + 2048
 #endif
 //!< @brief Pitch轴电机归中机械角度
-#define Pitch_Mid        150
+#define Pitch_Mid        7695
 //!< @brief Pitch轴电机上限位与水平位差值
 #define P_ADD_limit      0
 //!< @brief Pitch轴电机下限位与水平位差值
 #define P_LOSE_limit     0
 //!< @brief IMU上限位（Pitch轴）
-#define IMU_UP_limit     17.0f
+#define IMU_UP_limit     16.0f
 //!< @brief IMU下限位（Pitch轴）
-#define IMU_DOWN_limit   -38.0f
+#define IMU_DOWN_limit   -33.0f
 //!< @brief IMU上限位（Pitch轴）
-#define MCH_UP_limit     36.0f
+#define MCH_UP_limit     36.5f
 //!< @brief IMU下限位（Pitch轴）
-#define MCH_DOWN_limit   -28.0f
+#define MCH_DOWN_limit   -21.5f
 
 // 发射参数
 //!< @brief 摩擦轮电机速度环PID的期望值  /5800 3508电机Speed_Max: 
-#define SHOOT_SPEED            5400
+#define SHOOT_SPEED            5475
 //!< @brief 拨盘一圈的装载量
 #define SHOOT_NUM_PER_CIRCLE   5
 //!< @brief 拨弹盘电机连发时速度环PID的期望值 /19.0 (RPM) SHOOT_LOADER_MOTOR_ONE * 弹频
@@ -79,6 +79,7 @@
 #define SHOOT_UNIT_HEAT_TIME 150
 
 /** @brief 机器人底盘修改的参数,单位位 m  **/
+#define ANGLE2RADIAN (2.0f*PI/360.0f)
 #define WHEEL_BASE  0.360           // 纵向轴距(前后方向)
 #define TRACK_WIDTH 0.300           // 横向轮距(左右方向)
 #define RADIUS_WHEEL 0.150          // 轮子半径
@@ -270,6 +271,7 @@ typedef struct  {
     int16_t heat_limit_remain;  // 剩余热量，cooling_limit-cooling_heat
 	int16_t ammo_num;          // 发射的弹丸数目
 	uint8_t game_start;        // 检测比赛是否开始
+	int16_t speed_offset;      // 弹速补偿
 } Shoot_ctrl_cmd_t;
 
 // 对云台的控制量
@@ -285,7 +287,7 @@ typedef struct {
     float rotate_feedforward;  // 小陀螺前馈 云台跟随底盘用
 } Gimbal_ctrl_cmd_t;
 
-
+// 上下板UI绘制通信
 typedef enum {
 	Gimbal_offline = 0,    
 	Gimbal_online  = 1,     
@@ -354,8 +356,7 @@ typedef struct {
 typedef struct {
 	DeviceState_e chassis_status;
 	Chassis_mode_e mode;
-    float chassis_supercap_percent;  // 超级电容回传容量剩余
-    float chassis_battery_voltage;   // 电池电压ACD电池采样
+	int16_t chassis_slop;
 } Chassis_upload_t;
 
 typedef struct {
@@ -404,10 +405,9 @@ typedef struct {
 // 云台<-底盘数据包
 typedef struct  {
     int16_t chassis_gyro;          // 将底盘主控的imu数据发到云台
+	int16_t chassis_slop;          // 底盘所在斜坡倾角
     struct {
 //		uint8_t  robot_color;       // 机器人颜色
-		uint8_t  ammo_num;          // 机器人发射弹丸数目
-		uint8_t  game_start;        // 机器人发射弹丸数目
 //		uint8_t  robot_level;       // 机器人等级
         uint16_t heat_limit_remain; // 剩余热量
         uint16_t robot_levels;      // 实时弹速
@@ -435,7 +435,8 @@ typedef struct{
 } Referee_data_t;
 
 /** 自瞄消息处理后数据 **/
-typedef struct{
+typedef struct {
+	uint8_t id;
 	float yaw;
 	float pitch;
 	float yaw_vel;

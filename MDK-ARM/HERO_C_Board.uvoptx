@@ -103,7 +103,7 @@
         <bEvRecOn>1</bEvRecOn>
         <bSchkAxf>0</bSchkAxf>
         <bTchkAxf>0</bTchkAxf>
-        <nTsel>4</nTsel>
+        <nTsel>3</nTsel>
         <sDll></sDll>
         <sDllPa></sDllPa>
         <sDlgDll></sDlgDll>
@@ -114,13 +114,13 @@
         <tDlgDll></tDlgDll>
         <tDlgPa></tDlgPa>
         <tIfile></tIfile>
-        <pMon>Segger\JL2CM3.dll</pMon>
+        <pMon>BIN\CMSIS_AGDI.dll</pMon>
       </DebugOpt>
       <TargetDriverDllRegistry>
         <SetRegEntry>
           <Number>0</Number>
           <Key>DLGUARM</Key>
-          <Name>T窦</Name>
+          <Name></Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
@@ -167,8 +167,40 @@
         <Bp>
           <Number>0</Number>
           <Type>0</Type>
-          <LineNumber>69</LineNumber>
+          <LineNumber>2416</LineNumber>
           <EnabledFlag>0</EnabledFlag>
+          <Address>134246262</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>1</BreakIfRCount>
+          <Filename>../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_spi.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression>\\HERO_C_Board\../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_spi.c\2416</Expression>
+        </Bp>
+        <Bp>
+          <Number>1</Number>
+          <Type>0</Type>
+          <LineNumber>69</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>134228592</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>1</BreakIfRCount>
+          <Filename>..\application\Gimbal\Gimbal.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression>\\HERO_C_Board\../application/Gimbal/Gimbal.c\69</Expression>
+        </Bp>
+        <Bp>
+          <Number>2</Number>
+          <Type>0</Type>
+          <LineNumber>63</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
           <Address>134228376</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
@@ -178,29 +210,29 @@
           <BreakIfRCount>1</BreakIfRCount>
           <Filename>..\application\cmd\Gimbal_board_cmd.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\HERO_C_Board\../application/cmd/Gimbal_board_cmd.c\69</Expression>
+          <Expression>\\HERO_C_Board\../application/cmd/Gimbal_board_cmd.c\63</Expression>
         </Bp>
         <Bp>
-          <Number>1</Number>
+          <Number>3</Number>
           <Type>0</Type>
-          <LineNumber>0</LineNumber>
-          <EnabledFlag>0</EnabledFlag>
-          <Address>134246586</Address>
+          <LineNumber>110</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>134272010</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>1</BreakIfRCount>
-          <Filename></Filename>
+          <Filename>..\application\Shoot\Shoot.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>0x080070BA</Expression>
+          <Expression>\\HERO_C_Board\../application/Shoot/Shoot.c\110</Expression>
         </Bp>
         <Bp>
-          <Number>2</Number>
+          <Number>4</Number>
           <Type>0</Type>
-          <LineNumber>1</LineNumber>
-          <EnabledFlag>0</EnabledFlag>
+          <LineNumber>62</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
           <Address>0</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
@@ -213,9 +245,9 @@
           <Expression></Expression>
         </Bp>
         <Bp>
-          <Number>3</Number>
+          <Number>5</Number>
           <Type>0</Type>
-          <LineNumber>54</LineNumber>
+          <LineNumber>112</LineNumber>
           <EnabledFlag>1</EnabledFlag>
           <Address>0</Address>
           <ByteObject>0</ByteObject>
@@ -224,7 +256,55 @@
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>0</BreakIfRCount>
-          <Filename>..\application\Shoot\Shoot.c</Filename>
+          <Filename>startup_stm32f407xx.s</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression></Expression>
+        </Bp>
+        <Bp>
+          <Number>6</Number>
+          <Type>0</Type>
+          <LineNumber>115</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>0</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>0</BreakIfRCount>
+          <Filename>startup_stm32f407xx.s</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression></Expression>
+        </Bp>
+        <Bp>
+          <Number>7</Number>
+          <Type>0</Type>
+          <LineNumber>149</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>0</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>0</BreakIfRCount>
+          <Filename>startup_stm32f407xx.s</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression></Expression>
+        </Bp>
+        <Bp>
+          <Number>8</Number>
+          <Type>0</Type>
+          <LineNumber>1</LineNumber>
+          <EnabledFlag>0</EnabledFlag>
+          <Address>0</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>0</BreakIfRCount>
+          <Filename>startup_stm32f407xx.s</Filename>
           <ExecCommand></ExecCommand>
           <Expression></Expression>
         </Bp>
@@ -530,6 +610,81 @@
           <WinNumber>1</WinNumber>
           <ItemText>shoot_ctrl_cmd-&gt;mode</ItemText>
         </Ww>
+        <Ww>
+          <count>60</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>abcsde,0x0A</ItemText>
+        </Ww>
+        <Ww>
+          <count>61</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>asdbs,0x0A</ItemText>
+        </Ww>
+        <Ww>
+          <count>62</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>njv,0x0A</ItemText>
+        </Ww>
+        <Ww>
+          <count>63</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>currentAv</ItemText>
+        </Ww>
+        <Ww>
+          <count>64</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>chassis_power_get.shitf_flag</ItemText>
+        </Ww>
+        <Ww>
+          <count>65</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>chassis_feedback_data,0x0A</ItemText>
+        </Ww>
+        <Ww>
+          <count>66</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>Slope_beta</ItemText>
+        </Ww>
+        <Ww>
+          <count>67</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>sin_beta</ItemText>
+        </Ww>
+        <Ww>
+          <count>68</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>receive_action.Gimbal_status</ItemText>
+        </Ww>
+        <Ww>
+          <count>69</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>slope_thete</ItemText>
+        </Ww>
+        <Ww>
+          <count>70</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>Aim_Rx</ItemText>
+        </Ww>
+        <Ww>
+          <count>71</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>ReceiveVisionData_t</ItemText>
+        </Ww>
+        <Ww>
+          <count>72</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>ReceiveVisionData,0x0A</ItemText>
+        </Ww>
+        <Ww>
+          <count>73</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>send_tims</ItemText>
+        </Ww>
+        <Ww>
+          <count>74</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>last_tim</ItemText>
+        </Ww>
       </WatchWindow1>
       <WatchWindow2>
         <Ww>
@@ -736,6 +891,11 @@
           <count>40</count>
           <WinNumber>2</WinNumber>
           <ItemText>wheel_pose,0x0A</ItemText>
+        </Ww>
+        <Ww>
+          <count>41</count>
+          <WinNumber>2</WinNumber>
+          <ItemText>speed_target,0x0A</ItemText>
         </Ww>
       </WatchWindow2>
       <Tracepoint>
@@ -2492,7 +2652,7 @@
 
   <Group>
     <GroupName>USB</GroupName>
-    <tvExp>0</tvExp>
+    <tvExp>1</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>

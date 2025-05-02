@@ -297,3 +297,26 @@ int Char_ReFresh(String_Data string_Data)
    UI_Seq++;                                                         //包序号+1
    return 0;
 }
+
+void RADA_SEND_UI()
+{
+    UI_Packhead     framehead;
+    UI_Data_Operate datahead;
+    /* 填充帧头+CMD */
+    framehead.SOF         = UI_SOF;
+    framehead.Data_Length = 6 + 45;
+    framehead.Seq         = UI_Seq;
+    framehead.CRC8        = get_CRC8_check_sum((uint8_t*)&framehead,4, 0xff);
+    framehead.CMD_ID      = UI_CMD_Robo_Exchange;
+   /* 填充子帧头 */
+    datahead.Data_ID     = UI_Data_ID_RADA;
+    datahead.Sender_ID   = Robot_ID;
+    datahead.Receiver_ID = Cilent_ID;
+   /* 将数据写入缓冲区 */
+
+    *(uint16_t *)(UI_BUFF + 7 + 6 + 45) = get_CRC16_check_sum(UI_BUFF, 7 + 6 + 45, 0xffff);
+	
+    HAL_UART_Transmit_DMA (&huart6, UI_BUFF, 7 + 6 + 45 + 2);
+    
+   UI_Seq++;                                                         //包序号+1
+}
